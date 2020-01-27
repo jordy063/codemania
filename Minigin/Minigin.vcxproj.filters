@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="engine\Components">
+      <UniqueIdentifier>{c54e554f-6f04-4ef0-b5d3-38b88968a9a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\Content">
+      <UniqueIdentifier>{8c3b558e-0e0d-4da9-b13e-8e400f5be7b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\Graphics">
+      <UniqueIdentifier>{cd7781f5-cfd6-4749-b322-1f5d1422c2e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\Helpers">
+      <UniqueIdentifier>{c25a6fc0-1513-4677-b542-d4c61651a92e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\prefabs">
+      <UniqueIdentifier>{d2d4ccf5-6c12-449a-9d6a-e4012112d31e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\Patterns">
+      <UniqueIdentifier>{18ea0396-2e81-46bc-8838-2658c8661bfb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniginPCH.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TextObject.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Minigin.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObject.h">
+      <Filter>engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>engine\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>engine\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>engine\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCounter.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>engine\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>engine\Patterns</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TextObject.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Minigin.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniginPCH.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCounter.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
