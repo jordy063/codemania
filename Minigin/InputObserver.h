@@ -1,10 +1,6 @@
 #pragma once
 #include "Entity.h"
-
-namespace comps
-{
-	class InputComponent;
-}
+#include "InputComponent.h"
 
 class InputObserver
 {
@@ -13,7 +9,7 @@ public:
 	InputObserver(comps::InputComponent* inputComp);
 	~InputObserver();
 
-	void Update();
+	void Update(comps::Direction direction, float speed);
 private:
 	comps::InputComponent* pInputComp;
 };

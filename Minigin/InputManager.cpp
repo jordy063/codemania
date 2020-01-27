@@ -2,6 +2,7 @@
 #include "InputManager.h"
 #include <SDL.h>
 #include "InputObserver.h"
+#include "InputComponent.h"
 
 
 bool dae::InputManager::ProcessInput()
@@ -41,6 +42,11 @@ bool dae::InputManager::IsPressed(ControllerButton button) const
 	default: return false;
 	}
 }
+void dae::InputManager::Register(InputObserver* inputObserver)
+{
+	UNREFERENCED_PARAMETER(inputObserver);
+	//pInputObserver = inputObserver;
+}
 void dae::InputManager::Register(std::shared_ptr<InputObserver> inputObserver)
 {
 	pInputObserver = inputObserver;
@@ -49,8 +55,14 @@ void dae::InputManager::Notify(SDL_Event e)
 {
 	switch (e.key.keysym.sym)
 	{
-	case SDLK_w:
-		pInputObserver->Update();
+	case SDLK_z:
+		pInputObserver->Update(comps::Direction::UP, 10);
+	case SDLK_s:
+		pInputObserver->Update(comps::Direction::DOWN, 10);
+	case SDLK_d:
+		pInputObserver->Update(comps::Direction::RIGHT, 10);
+	case SDLK_q:
+		pInputObserver->Update(comps::Direction::LEFT, 10);
 	}
 
 }

@@ -39,7 +39,7 @@ void dae::Minigin::Initialize()
 
 	Renderer::GetInstance().Init(window);
 
-	pInputObserver = std::shared_ptr<InputObserver>(new InputObserver());
+	
 }
 
 /**

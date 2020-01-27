@@ -12,6 +12,7 @@ comps::SpriteComponent::SpriteComponent(std::string filename,int rows, int colls
 	,m_UpdateSpeed{UpdateSpeed}
 	,m_FrameNumber{frameBegin}
 	,TextureComponent{ filename }
+	, m_Timer{}
 {
 }
 

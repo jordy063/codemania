@@ -1,8 +1,19 @@
 #include "MiniginPCH.h"
 #include "InputObserver.h"
-#include "InputComponent.h"
 
-void InputObserver::Update()
+
+InputObserver::InputObserver(comps::InputComponent* inputComp)
+	:pInputComp{ inputComp }
 {
-	pInputComp->changeDirection(comps::Direction::DOWN);
+}
+
+InputObserver::~InputObserver()
+{
+	delete pInputComp;
+}
+
+
+void InputObserver::Update(comps::Direction direction,float speed)
+{
+	pInputComp->changeDirection(direction,speed);
 }

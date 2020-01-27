@@ -16,14 +16,18 @@ namespace comps
 	{
 	public:
 
-		InputComponent(std::shared_ptr<PhysicsComponent> physicsComp, std::shared_ptr<SpriteComponent> spriteComp,std::shared_ptr<InputManager> inputManager);
+		InputComponent(std::shared_ptr<PhysicsComponent> physicsComp, std::shared_ptr<SpriteComponent> spriteComp);
 		~InputComponent();
 
-		void changeDirection(Direction direction);
+		virtual void Initialize(const dae::Scene& scene) override;
+		virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
+
+		void changeDirection(Direction direction,float speed);
 
 	private:
 		std::shared_ptr<PhysicsComponent> pPhysicsComp;
 		std::shared_ptr<SpriteComponent> pSpriteComp;
+		//InputObserver* pInputObserver;
 		std::shared_ptr<InputObserver> pInputObserver;
 		std::shared_ptr<dae::InputManager> pInputManager;
 	};

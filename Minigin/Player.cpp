@@ -4,6 +4,7 @@
 #include "TextureComponent.h"
 #include "SpriteComponent.h"
 #include "PhysicsComponent.h"
+#include "InputComponent.h"
 
 
 Player::Player()
@@ -18,6 +19,7 @@ void Player::CreateComponents()
 	
 	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/characterWalk.png", 4, 4, 0, 4, 0.2f));
 	auto physicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_EntityObject->GetTransform()));
+	auto inputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(physicsComp, spriteComp));
 
 	m_EntityObject->AddComponent(spriteComp);
 	m_EntityObject->AddComponent(physicsComp);
