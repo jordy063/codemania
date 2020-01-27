@@ -1,15 +1,17 @@
 ﻿  MiniginPCH.cpp
   BaseComponent.cpp
-  Entity.cpp
-  FPSCounter.cpp
   Font.cpp
   FpsComponent.cpp
+  FPSCounter.cpp
   GameObject.cpp
+  InputComponent.cpp
   InputManager.cpp
   Log.cpp
   Logger.cpp
   Main.cpp
   Minigin.cpp
+D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Minigin\Minigin.cpp(42,69): error C2027: use of undefined type 'InputObserver'
+  Entity.cpp
   PhysicsComponent.cpp
   Player.cpp
   Renderer.cpp
@@ -17,26 +19,13 @@
   Scene.cpp
   SceneManager.cpp
   SpriteComponent.cpp
-  TextComponent.cpp
   TextObject.cpp
   Generating Code...
   Compiling...
   Texture2D.cpp
+  TextComponent.cpp
   TextureComponent.cpp
   Transform.cpp
   TransformComponent.cpp
   Generating Code...
-     Creating library D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.lib and object D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exp
-  Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exe
-  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2\lib\x86\SDL2.dll
-  1 File(s) copied
-  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\libjpeg-9.dll
-  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\libpng16-16.dll
-  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\libtiff-5.dll
-  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\libwebp-7.dll
-  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\SDL2_image.dll
-  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\zlib1.dll
-  6 File(s) copied
-  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_ttf\lib\x86\libfreetype-6.dll
-  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_ttf\lib\x86\SDL2_ttf.dll
-  2 File(s) copied
+D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Minigin\Minigin.h(6): message : see declaration of 'InputObserver'

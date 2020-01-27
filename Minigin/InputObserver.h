@@ -1,34 +1,19 @@
 #pragma once
 #include "Entity.h"
 
-class Observer
+namespace comps
+{
+	class InputComponent;
+}
+
+class InputObserver
 {
 
 public:
-	virtual ~Observer() = default;
-	virtual void Execute(const Entity* actor) = 0;
-};
-class MoveLeftCommand : public Observer
-{
-public:
-	void Execute(const Entity* actor) override {};
+	InputObserver(comps::InputComponent* inputComp);
+	~InputObserver();
 
-};
-class MoveRightCommand : public Observer
-{
-public:
-	void Execute(const Entity* actor) override {};
-
-};
-class MoveUpCommand : public Observer
-{
-public:
-	void Execute(const Entity* actor) override {};
-
-};
-class MoveDownCommand : public Observer
-{
-public:
-	void Execute(const Entity* actor) override {};
-
+	void Update();
+private:
+	comps::InputComponent* pInputComp;
 };

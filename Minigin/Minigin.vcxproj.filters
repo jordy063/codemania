@@ -206,5 +206,8 @@
     <ClCompile Include="InputComponent.cpp">
       <Filter>engine\Components</Filter>
     </ClCompile>
+    <ClCompile Include="InputObserver.cpp">
+      <Filter>engine\Patterns</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

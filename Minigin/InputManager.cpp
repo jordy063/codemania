@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "InputManager.h"
 #include <SDL.h>
+#include "InputObserver.h"
 
 
 bool dae::InputManager::ProcessInput()
@@ -40,4 +41,16 @@ bool dae::InputManager::IsPressed(ControllerButton button) const
 	default: return false;
 	}
 }
+void dae::InputManager::Register(std::shared_ptr<InputObserver> inputObserver)
+{
+	pInputObserver = inputObserver;
+}
+void dae::InputManager::Notify(SDL_Event e)
+{
+	switch (e.key.keysym.sym)
+	{
+	case SDLK_w:
+		pInputObserver->Update();
+	}
 
+}

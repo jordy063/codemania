@@ -3,20 +3,29 @@
 #include "SpriteComponent.h"
 #include "PhysicsComponent.h"
 
-
-
-
-
-class InputComponent : comps::BaseComponent
+namespace dae
 {
-public:
+	class InputManager;
+}
+class InputObserver;
 
-	InputComponent(comps::PhysicsComponent physicsComp, comps::SpriteComponent spriteComp);
-	~InputComponent();
+namespace comps
+{
 
+	class InputComponent : comps::BaseComponent
+	{
+	public:
 
+		InputComponent(std::shared_ptr<PhysicsComponent> physicsComp, std::shared_ptr<SpriteComponent> spriteComp,std::shared_ptr<InputManager> inputManager);
+		~InputComponent();
 
-private:
+		void changeDirection(Direction direction);
 
-};
+	private:
+		std::shared_ptr<PhysicsComponent> pPhysicsComp;
+		std::shared_ptr<SpriteComponent> pSpriteComp;
+		std::shared_ptr<InputObserver> pInputObserver;
+		std::shared_ptr<dae::InputManager> pInputManager;
+	};
+}
 
