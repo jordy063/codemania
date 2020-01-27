@@ -8,6 +8,8 @@ namespace comps
 	public:
 		SpriteComponent(std::string filename, int rows,int colls,int frameBegin,int frameEnd,float UpdateSpeed);
 		~SpriteComponent();
+		void SetActiveRow(int row);
+		void SetBeginEndFrames(int beginFrame, int endFrame);
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -19,8 +21,8 @@ namespace comps
 		const float m_UpdateSpeed;
 		const int m_Rows;
 		const int m_Colls;
-		const int m_FrameBegin;
-		const int m_FrameEnd;
+		int m_FrameBegin;
+		int m_FrameEnd;
 		float m_Timer;
 
 	};

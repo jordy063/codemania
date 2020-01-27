@@ -11,12 +11,12 @@ namespace dae
 
 namespace comps
 {
-	enum HAlign {
+	enum class HAlign {
 		LEFT = 0,
 		CENTER = 1,
 		RIGHT = 2
 	};
-	enum VAlign
+	enum class VAlign
 	{
 		TOP = 0,
 		MIDDLE = 1,
@@ -41,7 +41,7 @@ namespace comps
 	protected:
 		virtual void Initialize(const dae::Scene& scene) = 0;
 		virtual void Update(const dae::Scene& scene,float elapsedSecs, float2 pos) = 0;
-		virtual void Render(const dae::Scene& scene, float2 pos) = 0;
+		virtual void Render(const dae::Scene& scene, float2 pos);
 
 		
 		bool m_IsInitialized;

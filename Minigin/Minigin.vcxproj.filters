@@ -123,6 +123,9 @@
     <ClInclude Include="Observer.h">
       <Filter>engine\Patterns</Filter>
     </ClInclude>
+    <ClInclude Include="InputComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -198,6 +201,9 @@
       <Filter>engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="InputComponent.cpp">
       <Filter>engine\Components</Filter>
     </ClCompile>
   </ItemGroup>
