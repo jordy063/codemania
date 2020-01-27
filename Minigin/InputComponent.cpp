@@ -2,7 +2,7 @@
 #include "InputComponent.h"
 
 
-InputComponent::InputComponent()
+InputComponent::InputComponent(comps::PhysicsComponent physicsComp, comps::SpriteComponent spriteComp)
 {
 }
 

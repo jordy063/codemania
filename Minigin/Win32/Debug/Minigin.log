@@ -1,22 +1,6 @@
-﻿  BaseComponent.cpp
-  Entity.cpp
-  FPSCounter.cpp
-  FpsComponent.cpp
-  GameObject.cpp
-  InputManager.cpp
-  Main.cpp
-  Minigin.cpp
-  Player.cpp
-  Scene.cpp
-  SceneManager.cpp
-  TextComponent.cpp
-  TextureComponent.cpp
+﻿  Minigin.cpp
+  PhysicsComponent.cpp
   Generating Code...
-  LINK : D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exe not found or not built by the last incremental link; performing full link
-     Creating library D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.lib and object D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exp
-TransformComponent.obj : warning LNK4099: PDB 'vc142.pdb' was not found with 'TransformComponent.obj' or at 'D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\vc142.pdb'; linking object as if no debug info
-Transform.obj : warning LNK4099: PDB 'vc142.pdb' was not found with 'Transform.obj' or at 'D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\vc142.pdb'; linking object as if no debug info
-Texture2D.obj : warning LNK4099: PDB 'vc142.pdb' was not found with 'Texture2D.obj' or at 'D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\vc142.pdb'; linking object as if no debug info
   Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exe
   D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2\lib\x86\SDL2.dll
   1 File(s) copied

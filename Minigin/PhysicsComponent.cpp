@@ -4,7 +4,7 @@
 
 
 comps::PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transform)
-	:m_Velocity{0,0}
+	:m_Velocity{0,10}
 	, m_Transform{transform}
 {
 
