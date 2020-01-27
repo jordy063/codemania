@@ -18,6 +18,12 @@ comps::BaseComponent::~BaseComponent()
 	
 }
 
+void comps::BaseComponent::Render(const dae::Scene & scene, float2 pos)
+{
+	UNREFERENCED_PARAMETER(scene);
+	UNREFERENCED_PARAMETER(pos);
+}
+
 void comps::BaseComponent::RootInitialize(const dae::Scene & scene)
 {
 	assert(!m_IsInitialized);

@@ -52,6 +52,8 @@ void dae::Minigin::LoadGame()
 
 	avatar = std::shared_ptr<Player>(new Player());
 	avatar->GetGameObject()->GetTransform()->Translate(100, 100);
+	
+
 	scene.Add(avatar);
 
 

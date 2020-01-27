@@ -17,6 +17,18 @@ comps::SpriteComponent::SpriteComponent(std::string filename,int rows, int colls
 
 comps::SpriteComponent::~SpriteComponent()
 {
+	
+}
+
+void comps::SpriteComponent::SetActiveRow(int row)
+{
+	SetBeginEndFrames(row*m_Colls, row*m_Colls + m_Colls);
+}
+
+void comps::SpriteComponent::SetBeginEndFrames(int beginFrame, int endFrame)
+{
+	m_FrameBegin = beginFrame;
+	m_FrameEnd = endFrame;
 }
 
 void comps::SpriteComponent::Initialize(const dae::Scene & scene)

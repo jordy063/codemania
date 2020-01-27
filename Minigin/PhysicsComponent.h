@@ -1,16 +1,43 @@
 #pragma once
 #include "BaseComponent.h"
-class PhysicsComponent : public comps::BaseComponent
+#include "TransformComponent.h"
+#include <map>
+namespace comps
 {
-public:
-	PhysicsComponent();
-	~PhysicsComponent();
 
-protected:
-	virtual void Initialize(const dae::Scene& scene) override;
-	virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
 
-private: 
-	float2 m_Velocity;
-};
+	enum class Direction
+	{
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN
+	};
+
+	class PhysicsComponent : public comps::BaseComponent
+	{
+	public:
+		PhysicsComponent(std::shared_ptr<TransformComponent> transform);
+		~PhysicsComponent();
+		void SetVelocity(float2 velocity);
+		void SetDirection(float2 direction);
+		void SetDirection(Direction direction);
+		void SetSpeed(float speed);
+		void SetMovement(float2 direction, float speed);
+		void SetMovement(Direction direction, float speed);
+		
+
+	protected:
+		virtual void Initialize(const dae::Scene& scene) override;
+		virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
+		void Move(float elapsedSecs);
+		std::map<Direction, float2> DirToVec;
+
+	private:
+		float2 m_Velocity;
+		std::shared_ptr<TransformComponent> m_Transform ;
+
+
+	};
+}
 
