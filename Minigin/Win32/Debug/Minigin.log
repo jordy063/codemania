@@ -1,4 +1,33 @@
-﻿  Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exe
+﻿  MiniginPCH.cpp
+  BaseComponent.cpp
+  Entity.cpp
+  FPSCounter.cpp
+  Font.cpp
+  FpsComponent.cpp
+  GameObject.cpp
+  InputManager.cpp
+  Log.cpp
+  Logger.cpp
+  Main.cpp
+  Minigin.cpp
+  PhysicsComponent.cpp
+  Player.cpp
+  Renderer.cpp
+  ResourceManager.cpp
+  Scene.cpp
+  SceneManager.cpp
+  SpriteComponent.cpp
+  TextComponent.cpp
+  TextObject.cpp
+  Generating Code...
+  Compiling...
+  Texture2D.cpp
+  TextureComponent.cpp
+  Transform.cpp
+  TransformComponent.cpp
+  Generating Code...
+     Creating library D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.lib and object D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exp
+  Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exe
   D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2\lib\x86\SDL2.dll
   1 File(s) copied
   D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\libjpeg-9.dll

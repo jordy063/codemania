@@ -120,7 +120,7 @@
     <ClInclude Include="Command.h">
       <Filter>engine\Patterns</Filter>
     </ClInclude>
-    <ClInclude Include="Observer.h">
+    <ClInclude Include="InputObserver.h">
       <Filter>engine\Patterns</Filter>
     </ClInclude>
   </ItemGroup>

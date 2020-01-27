@@ -12,6 +12,7 @@
 #include "Logger.h"
 #include "TextureComponent.h"
 #include "TextComponent.h"
+#include "InputObserver.h"
 
 
 
@@ -37,6 +38,8 @@ void dae::Minigin::Initialize()
 	}
 
 	Renderer::GetInstance().Init(window);
+
+	pInputObserver = std::shared_ptr<InputObserver>(new InputObserver());
 }
 
 /**

@@ -3,6 +3,7 @@
 #include "Player.h"
 struct SDL_Window;
 
+class InputObserver;
 namespace dae
 {
 	class Minigin
@@ -17,6 +18,7 @@ namespace dae
 
 	private:
 		std::shared_ptr<Player> avatar;
+		std::shared_ptr<InputObserver> pInputObserver;
 
 	};
 }

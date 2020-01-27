@@ -17,6 +17,8 @@ namespace dae
 	public:
 		bool ProcessInput();
 		bool IsPressed(ControllerButton button) const;
+		void Notify(SDL_Event e);
+
 	private:
 		XINPUT_STATE currentState{};
 	};

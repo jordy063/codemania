@@ -14,7 +14,7 @@ bool dae::InputManager::ProcessInput()
 			return false;
 		}
 		if (e.type == SDL_KEYDOWN) {
-			
+			Notify(e);
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			
