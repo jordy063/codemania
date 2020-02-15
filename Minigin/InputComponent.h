@@ -12,7 +12,7 @@ class InputObserver;
 namespace comps
 {
 
-	class InputComponent : comps::BaseComponent
+	class InputComponent :public comps::BaseComponent
 	{
 	public:
 
@@ -22,7 +22,8 @@ namespace comps
 		virtual void Initialize(const dae::Scene& scene) override;
 		virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
 
-		void changeDirection(Direction direction,float speed);
+		void changeDirection(Direction direction);
+		void StopMoving();
 
 	private:
 		std::shared_ptr<PhysicsComponent> pPhysicsComp;
@@ -30,6 +31,8 @@ namespace comps
 		//InputObserver* pInputObserver;
 		std::shared_ptr<InputObserver> pInputObserver;
 		std::shared_ptr<dae::InputManager> pInputManager;
+		std::map<Direction, int> DirToRow;
+		float m_Speed;
 	};
 }
 

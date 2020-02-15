@@ -14,7 +14,9 @@ d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\wi
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\main.obj
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\logger.obj
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\log.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\inputobserver.obj
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\inputmanager.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\inputcomponent.obj
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\gameobject.obj
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\fpscounter.obj
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\fpscomponent.obj
@@ -26,6 +28,15 @@ d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\wi
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\textcomponent.obj
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\texture2d.obj
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\textobject.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\win32\debug\minigin.exe
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\win32\debug\minigin.ilk
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\win32\debug\minigin.pdb
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\win32\debug\minigin.lib
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\win32\debug\minigin.exp
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\minigin.tlog\cl.command.1.tlog
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\minigin.tlog\cl.read.1.tlog
 d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\minigin.tlog\cl.write.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\minigin.tlog\link.command.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\minigin.tlog\link.read.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\minigin.tlog\link.write.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\win32\debug\minigin.tlog\minigin.write.1u.tlog

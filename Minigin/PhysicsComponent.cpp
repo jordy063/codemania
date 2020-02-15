@@ -10,8 +10,8 @@ comps::PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> tr
 
 	DirToVec[Direction::LEFT] = float2{ -1,0 };
 	DirToVec[Direction::RIGHT] = float2{ 1,0 };
-	DirToVec[Direction::UP] = float2{ 0,1 };
-	DirToVec[Direction::DOWN] = float2{ 0,-1 };
+	DirToVec[Direction::UP] = float2{ 0,-1 };
+	DirToVec[Direction::DOWN] = float2{ 0,1 };
 }
 
 
@@ -55,9 +55,13 @@ void comps::PhysicsComponent::SetDirection(Direction direction)
 }
 void comps::PhysicsComponent::SetSpeed(float speed)
 {
-	float factor = speed / sqrt(pow(m_Velocity.x, 2) + pow(m_Velocity.y, 2));
-	m_Velocity.x *= factor;
-	m_Velocity.y *= factor;
+	float currentSpeed{ sqrt(pow(m_Velocity.x, 2) + pow(m_Velocity.y, 2)) };
+	if (currentSpeed > 0)
+	{
+		float factor = speed / currentSpeed;
+			m_Velocity.x *= factor;
+			m_Velocity.y *= factor;
+	}
 }
 void comps::PhysicsComponent::SetMovement(float2 direction, float speed)
 {

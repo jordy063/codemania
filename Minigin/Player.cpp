@@ -23,4 +23,5 @@ void Player::CreateComponents()
 
 	m_EntityObject->AddComponent(spriteComp);
 	m_EntityObject->AddComponent(physicsComp);
+	m_EntityObject->AddComponent(inputComp);
 }

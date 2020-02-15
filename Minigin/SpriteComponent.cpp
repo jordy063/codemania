@@ -4,6 +4,7 @@
 #include "Renderer.h"
 
 
+
 comps::SpriteComponent::SpriteComponent(std::string filename,int rows, int colls, int frameBegin, int frameEnd, float UpdateSpeed)
 	:m_Rows{rows}
 	,m_Colls{colls}
@@ -24,6 +25,11 @@ comps::SpriteComponent::~SpriteComponent()
 void comps::SpriteComponent::SetActiveRow(int row)
 {
 	SetBeginEndFrames(row*m_Colls, row*m_Colls + m_Colls);
+}
+
+void comps::SpriteComponent::SetActiveRowStop()
+{
+	SetBeginEndFrames(m_FrameBegin, m_FrameBegin+1);
 }
 
 void comps::SpriteComponent::SetBeginEndFrames(int beginFrame, int endFrame)

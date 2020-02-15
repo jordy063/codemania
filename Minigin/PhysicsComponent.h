@@ -2,6 +2,7 @@
 #include "BaseComponent.h"
 #include "TransformComponent.h"
 #include <map>
+
 namespace comps
 {
 
@@ -32,6 +33,7 @@ namespace comps
 		virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
 		void Move(float elapsedSecs);
 		std::map<Direction, float2> DirToVec;
+		
 
 	private:
 		float2 m_Velocity;

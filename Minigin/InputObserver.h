@@ -9,7 +9,8 @@ public:
 	InputObserver(comps::InputComponent* inputComp);
 	~InputObserver();
 
-	void Update(comps::Direction direction, float speed);
+	void Update(comps::Direction direction, bool move);
 private:
 	comps::InputComponent* pInputComp;
+	comps::Direction m_CurrentDirection;
 };

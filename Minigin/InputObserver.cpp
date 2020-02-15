@@ -9,11 +9,26 @@ InputObserver::InputObserver(comps::InputComponent* inputComp)
 
 InputObserver::~InputObserver()
 {
-	delete pInputComp;
+	
 }
 
 
-void InputObserver::Update(comps::Direction direction,float speed)
+void InputObserver::Update(comps::Direction direction,bool move)
 {
-	pInputComp->changeDirection(direction,speed);
+	if (move)
+	{
+		pInputComp->changeDirection(direction);
+		m_CurrentDirection = direction;
+	}
+
+
+	else
+	{
+		if (direction == m_CurrentDirection)
+		{
+			pInputComp->StopMoving();
+		}
+
+	}
+		
 }

@@ -10,6 +10,7 @@ namespace comps
 		~SpriteComponent();
 		void SetActiveRow(int row);
 		void SetBeginEndFrames(int beginFrame, int endFrame);
+		void SetActiveRowStop();
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -24,6 +25,7 @@ namespace comps
 		int m_FrameBegin;
 		int m_FrameEnd;
 		float m_Timer;
+
 
 	};
 }

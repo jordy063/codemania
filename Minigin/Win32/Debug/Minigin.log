@@ -5,28 +5,6 @@
   FPSCounter.cpp
   GameObject.cpp
   InputComponent.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xmemory(200,12): error C2664: 'InputObserver::InputObserver(const InputObserver &)': cannot convert argument 1 from '_Ty' to 'comps::InputComponent *'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xmemory(200,12): error C2664:         with
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xmemory(200,12): error C2664:         [
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xmemory(200,12): error C2664:             _Ty=InputObserver *
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xmemory(200,12): error C2664:         ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xmemory(200,33): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
-D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Minigin\InputObserver.h(9,2): message : see declaration of 'InputObserver::InputObserver'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1492): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,InputObserver*>(_Ty &,InputObserver *&&) noexcept(false)' being compiled
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1492): message :         with
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1492): message :         [
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1492): message :             _Ty=InputObserver
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1492): message :         ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1592): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<InputObserver*>(InputObserver *&&)' being compiled
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1592): message :         with
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1592): message :         [
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1592): message :             _Ty=InputObserver
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1592): message :         ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1593): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<InputObserver*>(InputObserver *&&)' being compiled
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1593): message :         with
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1593): message :         [
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1593): message :             _Ty=InputObserver
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\memory(1593): message :         ]
   InputManager.cpp
   InputObserver.cpp
   Log.cpp
@@ -50,4 +28,17 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
   Transform.cpp
   TransformComponent.cpp
   Generating Code...
-D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Minigin\InputComponent.cpp(11): message : see reference to function template instantiation 'std::shared_ptr<InputObserver> std::make_shared<InputObserver,InputObserver*>(InputObserver *&&)' being compiled
+     Creating library D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.lib and object D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exp
+  Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exe
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2\lib\x86\SDL2.dll
+  1 File(s) copied
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\libjpeg-9.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\libpng16-16.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\libtiff-5.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\libwebp-7.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\SDL2_image.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_image\lib\x86\zlib1.dll
+  6 File(s) copied
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_ttf\lib\x86\libfreetype-6.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_ttf\lib\x86\SDL2_ttf.dll
+  2 File(s) copied
