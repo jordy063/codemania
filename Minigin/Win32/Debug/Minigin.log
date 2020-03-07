@@ -1,4 +1,5 @@
 ﻿  MiniginPCH.cpp
+  AI.cpp
   BaseComponent.cpp
   Command.cpp
   Font.cpp
@@ -18,9 +19,9 @@
   Renderer.cpp
   ResourceManager.cpp
   Scene.cpp
-  SceneManager.cpp
   Generating Code...
   Compiling...
+  SceneManager.cpp
   SpriteComponent.cpp
   TextObject.cpp
   Texture2D.cpp

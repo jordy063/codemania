@@ -126,6 +126,9 @@
     <ClInclude Include="InputComponent.h">
       <Filter>engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -211,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="Command.cpp">
       <Filter>engine\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>engine\prefabs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
