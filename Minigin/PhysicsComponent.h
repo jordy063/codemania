@@ -18,7 +18,7 @@ namespace comps
 	class PhysicsComponent : public comps::BaseComponent
 	{
 	public:
-		PhysicsComponent(std::shared_ptr<TransformComponent> transform);
+		PhysicsComponent(std::shared_ptr<TransformComponent> transform,float defaultSpeed=0);
 		~PhysicsComponent();
 		void SetVelocity(float2 velocity);
 		void SetDirection(float2 direction);
@@ -26,6 +26,7 @@ namespace comps
 		void SetSpeed(float speed);
 		void SetMovement(float2 direction, float speed);
 		void SetMovement(Direction direction, float speed);
+		float GetDefaultSpeed() const;
 		
 
 	protected:
@@ -38,7 +39,7 @@ namespace comps
 	private:
 		float2 m_Velocity;
 		std::shared_ptr<TransformComponent> m_Transform ;
-
+		float m_DefaultSpeed;
 
 	};
 }

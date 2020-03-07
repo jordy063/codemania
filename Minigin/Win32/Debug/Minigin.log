@@ -1,5 +1,6 @@
 ﻿  MiniginPCH.cpp
   BaseComponent.cpp
+  Command.cpp
   Font.cpp
   FpsComponent.cpp
   FPSCounter.cpp
@@ -18,9 +19,9 @@
   ResourceManager.cpp
   Scene.cpp
   SceneManager.cpp
-  SpriteComponent.cpp
   Generating Code...
   Compiling...
+  SpriteComponent.cpp
   TextObject.cpp
   Texture2D.cpp
   TextComponent.cpp

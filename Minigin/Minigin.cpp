@@ -106,7 +106,6 @@ void dae::Minigin::Run()
 
 	{
 
-		
 		int frames{};
 		float SecsPerUpdate{ 0.002f };
 		float SecsPerRender{ 1.0f/30 };

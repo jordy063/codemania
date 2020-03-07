@@ -2,6 +2,7 @@
 #include "BaseComponent.h"
 #include "SpriteComponent.h"
 #include "PhysicsComponent.h"
+#include "Command.h"
 
 namespace dae
 {
@@ -33,6 +34,13 @@ namespace comps
 		std::shared_ptr<dae::InputManager> pInputManager;
 		std::map<Direction, int> DirToRow;
 		float m_Speed;
+
+		//commands
+		MoveLeftCommand m_MoveLeftCommand;
+		MoveRightCommand m_MoveRightCommand;
+		MoveUpCommand m_MoveUpCommand;
+		MoveDownCommand m_MoveDownCommand;
+		StopMovingCommand m_StopMovingCommand;
 	};
 }
 

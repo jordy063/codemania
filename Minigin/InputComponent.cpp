@@ -39,13 +39,44 @@ void comps::InputComponent::Update(const dae::Scene& scene, float elapsedSecs, f
 
 }
 
-void comps::InputComponent::changeDirection(comps::Direction direction)
+void comps::InputComponent::changeDirection(Direction direction)
 {
-	pPhysicsComp->SetMovement(direction, m_Speed);
-	pSpriteComp->SetActiveRow(DirToRow[direction]);
+	
+	switch (direction)
+	{
+		case Direction::LEFT:
+		{
+		
+			m_MoveLeftCommand.Execute(pPhysicsComp, pSpriteComp);
+		}
+		break;
+
+		case Direction::RIGHT:
+		{
+			
+			m_MoveRightCommand.Execute(pPhysicsComp, pSpriteComp);
+		}
+		break;
+
+		case Direction::UP:
+		{
+			
+			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp);
+		}
+		break;
+
+		case Direction::DOWN:
+		{
+			
+			m_MoveDownCommand.Execute(pPhysicsComp, pSpriteComp);
+		}
+		break;
+	}
 }
+
 void comps::InputComponent::StopMoving()
 {
-	pPhysicsComp->SetSpeed(0);
-	pSpriteComp->SetActiveRowStop();
+	
+	m_StopMovingCommand.Execute(pPhysicsComp, pSpriteComp);
 }
+
