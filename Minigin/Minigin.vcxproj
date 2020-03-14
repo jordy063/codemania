@@ -194,6 +194,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="AI.h" />
     <ClInclude Include="AIComponent.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionRectangle.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Font.h" />
@@ -231,6 +232,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionRectangle.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Font.cpp" />

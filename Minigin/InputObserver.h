@@ -9,6 +9,7 @@ public:
 	~InputObserver();
 
 	void Update(comps::Direction direction, bool move);
+	void ShootUpdate();
 private:
 	comps::InputComponent* pInputComp;
 	comps::Direction m_CurrentDirection;

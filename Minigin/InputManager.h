@@ -27,6 +27,7 @@ namespace dae
 		XINPUT_STATE currentState{};
 		//InputObserver* pInputObserver;
 		std::shared_ptr<InputObserver> pInputObserver;
+		bool m_IsShooting = false;
 	};
 
 }

@@ -65,6 +65,17 @@ void dae::InputManager::NotifyInput(SDL_Event e,bool move)
 	case SDLK_q:
 		pInputObserver->Update(comps::Direction::LEFT, move);
 		break;
+	case SDLK_e:
+		if (move && !m_IsShooting)
+		{
+			pInputObserver->ShootUpdate();
+			m_IsShooting = true;
+		}
+		if (!move)
+		{
+			m_IsShooting = false;
+		}
+		
 	}
 
 }

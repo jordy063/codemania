@@ -32,3 +32,8 @@ void InputObserver::Update(comps::Direction direction,bool move)
 	}
 		
 }
+
+void InputObserver::ShootUpdate()
+{
+	pInputComp->ShootBullet(m_CurrentDirection);
+}

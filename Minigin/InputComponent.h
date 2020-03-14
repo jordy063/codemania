@@ -25,6 +25,7 @@ namespace comps
 
 		void changeDirection(Direction direction);
 		void StopMoving();
+		void ShootBullet(Direction direction);
 
 	private:
 		std::shared_ptr<PhysicsComponent> pPhysicsComp;
@@ -34,12 +35,20 @@ namespace comps
 		std::shared_ptr<dae::InputManager> pInputManager;
 		std::map<Direction, int> DirToRow;
 
-		//commands
+		//commands walking
 		MoveLeftCommand m_MoveLeftCommand;
 		MoveRightCommand m_MoveRightCommand;
 		MoveUpCommand m_MoveUpCommand;
 		MoveDownCommand m_MoveDownCommand;
 		StopMovingCommand m_StopMovingCommand;
+
+		//commands shooting
+		ShootLeftCommand m_ShootLeftCommand;
+		ShootRightCommand m_ShootRightCommand;
+		ShootDownCommand m_ShootDownCommand;
+		ShootUpCommand m_ShootUpCommand;
+		
+		float m_timeout;
 	};
 }
 

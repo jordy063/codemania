@@ -138,6 +138,9 @@
     <ClInclude Include="TileMapLoader.h">
       <Filter>engine\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -235,6 +238,9 @@
     </ClCompile>
     <ClCompile Include="TileMapLoader.cpp">
       <Filter>engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>engine\prefabs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
