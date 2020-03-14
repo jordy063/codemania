@@ -7,7 +7,6 @@
 comps::InputComponent::InputComponent(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp)
 	:pPhysicsComp{physicsComp}
 	,pSpriteComp{spriteComp}
-	, m_Speed{30.0f}
 {
 	DirToRow[Direction::LEFT] = 3;
 	DirToRow[Direction::RIGHT] = 1;
@@ -41,34 +40,34 @@ void comps::InputComponent::Update(const dae::Scene& scene, float elapsedSecs, f
 
 void comps::InputComponent::changeDirection(Direction direction)
 {
+	float movementSpeed{ pPhysicsComp->GetMovementSpeed() };
 	
 	switch (direction)
 	{
 		case Direction::LEFT:
 		{
-		
-			m_MoveLeftCommand.Execute(pPhysicsComp, pSpriteComp);
+			m_MoveLeftCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
 		}
 		break;
 
 		case Direction::RIGHT:
 		{
 			
-			m_MoveRightCommand.Execute(pPhysicsComp, pSpriteComp);
+			m_MoveRightCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
 		}
 		break;
 
 		case Direction::UP:
 		{
 			
-			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp);
+			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
 		}
 		break;
 
 		case Direction::DOWN:
 		{
 			
-			m_MoveDownCommand.Execute(pPhysicsComp, pSpriteComp);
+			m_MoveDownCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
 		}
 		break;
 	}
@@ -77,6 +76,6 @@ void comps::InputComponent::changeDirection(Direction direction)
 void comps::InputComponent::StopMoving()
 {
 	
-	m_StopMovingCommand.Execute(pPhysicsComp, pSpriteComp);
+	m_StopMovingCommand.Execute(pPhysicsComp, pSpriteComp,0);
 }
 

@@ -18,7 +18,6 @@ Entity::~Entity()
 void Entity::Initialize()
 {
 	
-
 	InitializeEntityObject();
 
 }

@@ -129,6 +129,15 @@
     <ClInclude Include="AI.h">
       <Filter>engine\prefabs</Filter>
     </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionRectangle.h">
+      <Filter>engine\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapLoader.h">
+      <Filter>engine\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -217,6 +226,15 @@
     </ClCompile>
     <ClCompile Include="AI.cpp">
       <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="AIComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionRectangle.cpp">
+      <Filter>engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapLoader.cpp">
+      <Filter>engine\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

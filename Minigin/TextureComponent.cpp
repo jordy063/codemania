@@ -26,7 +26,6 @@ comps::TextureComponent::~TextureComponent()
 void comps::TextureComponent::SetTexture(const std::string& filename)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
-	
 }
 
 void comps::TextureComponent::SetOffset(float2 offset)

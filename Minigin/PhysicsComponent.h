@@ -24,10 +24,10 @@ namespace comps
 		void SetDirection(float2 direction);
 		void SetDirection(Direction direction);
 		void SetSpeed(float speed);
+		void SetMovementSpeed(float speed);
 		void SetMovement(float2 direction, float speed);
 		void SetMovement(Direction direction, float speed);
-		float GetDefaultSpeed() const;
-		
+		float GetMovementSpeed() const;
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -39,7 +39,7 @@ namespace comps
 	private:
 		float2 m_Velocity;
 		std::shared_ptr<TransformComponent> m_Transform ;
-		float m_DefaultSpeed;
+		float m_MovementSpeed;
 
 	};
 }

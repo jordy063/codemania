@@ -192,7 +192,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AI.h" />
+    <ClInclude Include="AIComponent.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="CollisionRectangle.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FpsComponent.h" />
@@ -221,12 +223,15 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="TextureComponent.h" />
+    <ClInclude Include="TileMapLoader.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
+    <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
+    <ClCompile Include="CollisionRectangle.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FpsComponent.cpp" />
@@ -258,6 +263,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
+    <ClCompile Include="TileMapLoader.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>

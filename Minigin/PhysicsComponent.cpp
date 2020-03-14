@@ -3,10 +3,9 @@
 
 
 
-comps::PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transform,float defaultSpeed)
-	:m_Velocity{0,0}
-	, m_Transform{transform}
-	, m_DefaultSpeed{ defaultSpeed }
+comps::PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transform,float speed)
+	: m_Transform{transform}
+	, m_MovementSpeed{ speed }
 {
 
 	DirToVec[Direction::LEFT] = float2{ -1,0 };
@@ -49,6 +48,7 @@ void comps::PhysicsComponent::SetDirection(float2 direction)
 	float factor = sqrt(pow(m_Velocity.x, 2) + pow(m_Velocity.y, 2)) / sqrt(pow(direction.x, 2) + pow(direction.y, 2));
 	m_Velocity.x = direction.x*factor;
 	m_Velocity.y = direction.y*factor;
+
 }
 void comps::PhysicsComponent::SetDirection(Direction direction)
 {
@@ -75,7 +75,11 @@ void comps::PhysicsComponent::SetMovement(Direction direction, float speed)
 	SetMovement(DirToVec[direction], speed);
 }
 
-float comps::PhysicsComponent::GetDefaultSpeed() const
+float comps::PhysicsComponent::GetMovementSpeed() const
 {
-	return m_DefaultSpeed;
+	return m_MovementSpeed;
+}
+void comps::PhysicsComponent::SetMovementSpeed(float speed)
+{
+	m_MovementSpeed = speed;
 }

@@ -4,35 +4,24 @@
 #include "PhysicsComponent.h"
 #include "Command.h"
 
-namespace dae
-{
-	class InputManager;
-}
-class InputObserver;
-
 namespace comps
 {
-
-	class InputComponent :public comps::BaseComponent
+	class AIComponent : public comps::BaseComponent
 	{
 	public:
-
-		InputComponent(std::shared_ptr<PhysicsComponent> physicsComp, std::shared_ptr<SpriteComponent> spriteComp);
-		~InputComponent();
+		AIComponent(std::shared_ptr<PhysicsComponent> physicsComp, std::shared_ptr<SpriteComponent> spriteComp);
+		~AIComponent();
 
 		virtual void Initialize(const dae::Scene& scene) override;
 		virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
 
-		void changeDirection(Direction direction);
-		void StopMoving();
 
 	private:
 		std::shared_ptr<PhysicsComponent> pPhysicsComp;
 		std::shared_ptr<SpriteComponent> pSpriteComp;
-		//InputObserver* pInputObserver;
-		std::shared_ptr<InputObserver> pInputObserver;
-		std::shared_ptr<dae::InputManager> pInputManager;
+
 		std::map<Direction, int> DirToRow;
+		float m_Speed;
 
 		//commands
 		MoveLeftCommand m_MoveLeftCommand;
@@ -40,6 +29,10 @@ namespace comps
 		MoveUpCommand m_MoveUpCommand;
 		MoveDownCommand m_MoveDownCommand;
 		StopMovingCommand m_StopMovingCommand;
+
+		static int m_Seed;
+		int m_Timer;
 	};
 }
+
 

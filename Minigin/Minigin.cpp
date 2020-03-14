@@ -53,7 +53,6 @@ void dae::Minigin::LoadGame()
 	avatar = std::shared_ptr<Player>(new Player());
 	avatar->GetGameObject()->GetTransform()->Translate(100, 100);
 	
-
 	scene.Add(avatar);
 
 
@@ -105,7 +104,6 @@ void dae::Minigin::Run()
 	LoadGame();
 
 	{
-
 		int frames{};
 		float SecsPerUpdate{ 0.002f };
 		float SecsPerRender{ 1.0f/30 };

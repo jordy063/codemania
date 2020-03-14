@@ -20,9 +20,12 @@ public:
 	void Scale(float x, float y);
 	void Scale(float2 position);
 
+	void SetSpeed(float speed);
+
 	float2 GetPosition() const { return m_Position; };
 	float2 GetRotation() const { return m_Rotation; };
 	float2 GetScale() const { return m_Scale; };
+	float GetVelocity() const { return m_Speed; };
 
 protected:
 	void Initialize(const dae::Scene& scene) override;
@@ -34,5 +37,6 @@ private:
 	float2 m_Position;
 	float2 m_Rotation;
 	float2 m_Scale;
+	float m_Speed;
 };
 

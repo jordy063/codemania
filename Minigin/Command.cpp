@@ -1,9 +1,9 @@
 #include "MiniginPCH.h"
 #include "Command.h"
 
-void changeDirection(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp,comps::Direction direction)
+void changeDirection(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp,comps::Direction direction,float speed)
 {
-	physicsComp->SetMovement(direction, physicsComp->GetDefaultSpeed());
+	physicsComp->SetMovement(direction,speed);
 	int row{};
 	switch(direction){ 
 	case comps::Direction::LEFT:
@@ -25,29 +25,29 @@ void changeDirection(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::
 	}
 	spriteComp->SetActiveRow(row);
 }
-void StopMoving(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp)
+void StopMoving(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed)
 {
-	physicsComp->SetSpeed(0);
+	physicsComp->SetSpeed(speed);
 	spriteComp->SetActiveRowStop();
 }
-void MoveLeftCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp)
+void MoveLeftCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed)
 {
-	changeDirection(physicsComp, spriteComp,comps::Direction::LEFT);
+	changeDirection(physicsComp, spriteComp,comps::Direction::LEFT,speed);
 
 }
-void MoveRightCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp)
+void MoveRightCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed)
 {
-	changeDirection(physicsComp, spriteComp, comps::Direction::RIGHT);
+	changeDirection(physicsComp, spriteComp, comps::Direction::RIGHT,speed);
 }
-void MoveUpCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp)
+void MoveUpCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed)
 {
-	changeDirection(physicsComp, spriteComp, comps::Direction::UP);
+	changeDirection(physicsComp, spriteComp, comps::Direction::UP,speed);
 }
-void MoveDownCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp)
+void MoveDownCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed)
 {
-	changeDirection(physicsComp, spriteComp, comps::Direction::DOWN);
+	changeDirection(physicsComp, spriteComp, comps::Direction::DOWN,speed);
 }
-void StopMovingCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp)
+void StopMovingCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed)
 {
-	StopMoving(physicsComp, spriteComp);
+	StopMoving(physicsComp, spriteComp,speed);
 }

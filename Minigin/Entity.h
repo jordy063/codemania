@@ -20,7 +20,7 @@ public:
 	virtual void Initialize();
 	
 
-	void Update(float elapsedSecs);
+	virtual void Update(float elapsedSecs);
 	void Render();
 
 	std::shared_ptr<dae::GameObject> GetGameObject() const { ; return m_EntityObject; };
