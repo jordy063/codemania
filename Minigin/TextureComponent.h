@@ -13,8 +13,8 @@ namespace comps
 	{
 
 	public:
-		TextureComponent(const std::string& filename);
-		TextureComponent();
+		TextureComponent(const std::string& filename,float width,float height);
+		TextureComponent(float width, float height);
 		virtual ~TextureComponent();
 
 		TextureComponent(const TextureComponent& other) = delete;
@@ -35,6 +35,8 @@ namespace comps
 		std::shared_ptr<dae::Texture2D> m_pTexture;
 		std::pair< HAlign, VAlign> m_Alignment;
 		float2 m_Offset;
+		float m_Width;
+		float m_Height;
 
 
 	private:

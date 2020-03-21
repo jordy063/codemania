@@ -3,12 +3,38 @@
 #include <SDL.h>
 #include "InputObserver.h"
 #include "InputComponent.h"
+#include "XboxController.h"
+#include "Audio.h"
+
 
 
 bool dae::InputManager::ProcessInput()
 {
-	ZeroMemory(&currentState, sizeof(XINPUT_STATE));
-	XInputGetState(0, &currentState);
+	
+
+
+	//DWORD dwResult;
+	//for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
+	//{
+
+
+	//	ZeroMemory(&currentState, sizeof(XINPUT_STATE));
+
+	//	// Simply get the state of the controller from XInput.
+	//	dwResult = XInputGetState(i, &currentState);
+
+	//	if (dwResult == ERROR_SUCCESS)
+	//	{
+	//		// Controller is connected 
+	//		std::cout << "Button A has been pressed" << std::endl;
+	//	}
+	//	else
+	//	{
+	//		// Controller is not connected 
+
+	//	}
+	//}
+	checkButtons();
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -31,7 +57,6 @@ bool dae::InputManager::ProcessInput()
 
 bool dae::InputManager::IsPressed(ControllerButton button) const
 {
-
 	switch (button)
 	{
 	case ControllerButton::ButtonA:
@@ -78,5 +103,75 @@ void dae::InputManager::NotifyInput(SDL_Event e,bool move)
 		
 	}
 
-}
+	//ServiceLocator::GetAudio();
+	//Audio* test;
+	//test->PlaySound()
+	//service->RegisterAudioService()
 
+
+}
+void dae::InputManager::checkButtons()	
+{
+	//if(currentState.Gamepad.wButtons)
+	//if (IsPressed(ControllerButton::ButtonA))
+	//{
+	//	std::cout << "Button A has been pressed" << std::endl;
+	//}	
+	//else if (IsPressed(ControllerButton::ButtonB))
+	//	std::cout << "Button B has been pressed" << std::endl;
+	//else if (IsPressed(ControllerButton::ButtonY))
+	//	std::cout << "Button Y has been pressed" << std::endl;
+	//else if (IsPressed(ControllerButton::ButtonX))
+	//{
+	//	std::cout << "Button X has been pressed" << std::endl;
+	//}
+
+	xboxController xbox(0);
+
+	
+	xbox.getState();
+	for (std::map<WORD, bool>::iterator iter = m_ButtonMap.begin(); iter != m_ButtonMap.end(); ++iter)
+	{
+		WORD k = iter->first;
+		bool isPressed{ xbox.checkButtonPress(k) };
+		if (isPressed != m_ButtonMap[k])
+		{
+			NotifyInputController(k, isPressed);
+
+			m_ButtonMap[k] = isPressed;
+		}
+	}
+}
+void dae::InputManager::NotifyInputController(WORD e, bool move)
+{
+	switch (e)
+	{
+	case XINPUT_GAMEPAD_DPAD_UP:
+		pInputObserver->Update(comps::Direction::UP, move);
+
+		break;
+	case XINPUT_GAMEPAD_DPAD_DOWN:
+		pInputObserver->Update(comps::Direction::DOWN, move);
+		break;
+	case XINPUT_GAMEPAD_DPAD_RIGHT:
+		pInputObserver->Update(comps::Direction::RIGHT, move);
+		break;
+	case XINPUT_GAMEPAD_DPAD_LEFT:
+		pInputObserver->Update(comps::Direction::LEFT, move);
+		break;
+	case XINPUT_GAMEPAD_A:
+		if (move)
+		{
+			pInputObserver->ShootUpdate();
+		}
+		
+
+	}
+
+	//ServiceLocator::GetAudio();
+	//Audio* test;
+	//test->PlaySound()
+	//service->RegisterAudioService()
+
+
+}

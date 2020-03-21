@@ -1,4 +1,6 @@
-﻿  InputComponent.cpp
+﻿  Minigin.cpp
+  TileMapLoader.cpp
+  Generating Code...
   Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exe
   D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2\lib\x86\SDL2.dll
   1 File(s) copied

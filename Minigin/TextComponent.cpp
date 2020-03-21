@@ -6,10 +6,10 @@
 #include "GameObject.h"
 
 
-comps::TextComponent::TextComponent(const std::string& text, std::shared_ptr<dae::Font> font)
+comps::TextComponent::TextComponent(const std::string& text, std::shared_ptr<dae::Font> font,float width, float height)
 	:m_Text(text)
 	, m_pFont(font)
-	,TextureComponent()
+	,TextureComponent(width,height)
 {
 }
 

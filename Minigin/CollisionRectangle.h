@@ -5,9 +5,9 @@
 class CollisionRectangle
 {
 public:
-	CollisionRectangle(std::shared_ptr< Rectangle_> rectangle);
-	std::shared_ptr< Rectangle_> GetRectangle() const;
+	CollisionRectangle(rectangle_* rectangle);
+	std::shared_ptr< rectangle_> GetRectangle() const;
 private:
-	std::shared_ptr< Rectangle_> m_CollisionRect;
+	std::shared_ptr< rectangle_> m_CollisionRect;
 };
 

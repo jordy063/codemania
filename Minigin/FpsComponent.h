@@ -14,8 +14,6 @@ namespace comps
 		virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
 	
 
-		
-
 	};
 
 

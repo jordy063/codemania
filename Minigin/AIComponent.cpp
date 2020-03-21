@@ -6,6 +6,8 @@ comps::AIComponent::AIComponent(std::shared_ptr<PhysicsComponent> physicsComp, s
 	:pPhysicsComp{ physicsComp }
 	, pSpriteComp{ spriteComp }
 	, m_Speed{ 30.0f }
+	, m_ChangeDirectionTime{ 1 }
+	, m_Timer{}
 {
 	std::srand(m_Seed);
 	++m_Seed;
@@ -34,4 +36,30 @@ void comps::AIComponent::Update(const dae::Scene& scene, float elapsedSecs, floa
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
 
+	//add logic for ai
+
+	int randomDirection{ rand() % 4 };
+
+
+	if (m_Timer > m_ChangeDirectionTime)
+	{
+		switch (randomDirection)
+		{
+		case 0:
+			m_MoveDownCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);
+			break;
+		case 1:
+			m_MoveRightCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);
+			break;
+		case 2:
+			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);
+			break;
+		case 3:
+			m_MoveLeftCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);
+			break;
+		}
+		m_Timer = 0;
+	}
+	m_Timer += elapsedSecs;
+	
 }

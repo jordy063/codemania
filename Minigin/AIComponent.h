@@ -31,7 +31,8 @@ namespace comps
 		StopMovingCommand m_StopMovingCommand;
 
 		static int m_Seed;
-		int m_Timer;
+		float m_Timer;
+		float m_ChangeDirectionTime;
 	};
 }
 

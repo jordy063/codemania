@@ -13,6 +13,9 @@
 #include "TextureComponent.h"
 #include "TextComponent.h"
 #include "InputObserver.h"
+#include "AI.h"
+#include "XboxController.h"
+#include "TileMapLoader.h"
 
 
 
@@ -54,7 +57,15 @@ void dae::Minigin::LoadGame()
 	avatar->GetGameObject()->GetTransform()->Translate(100, 100);
 	
 	scene.Add(avatar);
+	
+	auto npc = std::shared_ptr<AI>(new AI());
+	npc->GetGameObject()->GetTransform()->Translate(200, 100);
 
+	scene.Add(npc);
+
+	TileMapLoader* loader;
+	loader = new TileMapLoader(10,{ 0,0 }, &scene);
+	
 
 	/*auto background = std::make_shared<GameObject>();
 	auto texture1 = new comps::TextureComponent("background.jpg");
@@ -104,6 +115,7 @@ void dae::Minigin::Run()
 	LoadGame();
 
 	{
+		
 		int frames{};
 		float SecsPerUpdate{ 0.002f };
 		float SecsPerRender{ 1.0f/30 };
@@ -130,6 +142,7 @@ void dae::Minigin::Run()
 				//if lag < secperUpdate : update lag, if lag too big, update more than once
 				float elapse = min(SecsPerUpdate, lag);
 				sceneManager.Update(elapse);
+				
 				lag -= elapse;
 			}
 			

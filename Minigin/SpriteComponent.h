@@ -6,7 +6,7 @@ namespace comps
 	class SpriteComponent : public TextureComponent
 	{
 	public:
-		SpriteComponent(std::string filename, int rows,int colls,int frameBegin,int frameEnd,float UpdateSpeed);
+		SpriteComponent(std::string filename, int rows,int colls,int frameBegin,int frameEnd,float UpdateSpeed, float width, float height);
 		~SpriteComponent();
 		void SetActiveRow(int row);
 		void SetBeginEndFrames(int beginFrame, int endFrame);

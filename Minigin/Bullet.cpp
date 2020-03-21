@@ -17,7 +17,7 @@ Bullet::Bullet(comps::Direction direction, float speed)
 void Bullet::CreateComponents()
 {
 	float defaultSpeed{ 20.0f };
-	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/flame.png", 1, 7, 0, 6, 0.2f));
+	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/flame.png", 1, 7, 0, 6, 0.2f,16,16));
 	auto physicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_EntityObject->GetTransform(), defaultSpeed));
 
 	m_EntityObject->AddComponent(spriteComp);

@@ -193,6 +193,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
   <ItemGroup>
     <ClInclude Include="AI.h" />
     <ClInclude Include="AIComponent.h" />
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionRectangle.h" />
@@ -209,6 +210,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="MiniginPCH.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="InputObserver.h" />
+    <ClInclude Include="NullAudio.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneObject.h" />
@@ -217,6 +219,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SoundCommand.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="structs.h" />
     <ClInclude Include="targetver.h" />
@@ -227,10 +231,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="TileMapLoader.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="XboxController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="AIComponent.cpp" />
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionRectangle.cpp" />
@@ -260,6 +266,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SoundCommand.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Texture2D.cpp" />
@@ -268,6 +276,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="TileMapLoader.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="XboxController.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

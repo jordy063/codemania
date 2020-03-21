@@ -31,6 +31,9 @@
     <Filter Include="engine\Patterns">
       <UniqueIdentifier>{18ea0396-2e81-46bc-8838-2658c8661bfb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\audio">
+      <UniqueIdentifier>{b23555a8-4772-44a7-802e-37942fc99d5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -141,6 +144,21 @@
     <ClInclude Include="Bullet.h">
       <Filter>engine\prefabs</Filter>
     </ClInclude>
+    <ClInclude Include="XboxController.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Source Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="NullAudio.h">
+      <Filter>Source Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundCommand.h">
+      <Filter>engine\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>engine\Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -241,6 +259,18 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="XboxController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Source Files\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundCommand.cpp">
+      <Filter>engine\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>engine\Content</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

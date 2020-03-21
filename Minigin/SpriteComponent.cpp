@@ -5,14 +5,14 @@
 
 
 
-comps::SpriteComponent::SpriteComponent(std::string filename,int rows, int colls, int frameBegin, int frameEnd, float UpdateSpeed)
+comps::SpriteComponent::SpriteComponent(std::string filename,int rows, int colls, int frameBegin, int frameEnd, float UpdateSpeed,float width,float height)
 	:m_Rows{rows}
 	,m_Colls{colls}
 	,m_FrameBegin{frameBegin}
 	,m_FrameEnd{frameEnd}
 	,m_UpdateSpeed{UpdateSpeed}
 	,m_FrameNumber{frameBegin}
-	,TextureComponent{ filename }
+	, TextureComponent{ filename,width,height }
 	, m_Timer{}
 {
 }
@@ -71,7 +71,7 @@ void comps::SpriteComponent::Render(const dae::Scene & scene, float2 pos)
 	int x = m_FrameNumber % m_Colls;
 	int y = m_FrameNumber / m_Colls;
 
-	Rectangle_ srcRect{ x*width,y*height,width,height };
+	rectangle_ srcRect{ x*width,y*height,width,height };
 
 	if (m_pTexture != nullptr)
 	{
