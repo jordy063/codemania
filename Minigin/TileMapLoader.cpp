@@ -43,6 +43,7 @@ void TileMapLoader::LoadFile(int amountOfChunks, dae::Scene* scene) //pass load 
         bool collisionDataRead{false};
         
         bool collisionDataLevel1Read{false};
+        bool collisionDataLevel2Read{ false };
         bool readTextureData{ false };
         bool textureDataRead{false};
         while (std::getline(myfile, line))
@@ -100,14 +101,31 @@ void TileMapLoader::LoadFile(int amountOfChunks, dae::Scene* scene) //pass load 
                     if (line.find("\"") == std::string::npos)
                     {
                         collisionDataLevel1Read = true;
+                        collisionSkipIndex = 1;
                     }
-
+                    else
                     ReadCollisionData(line);
                 }
+                else if (collisionDataLevel1Read && collisionDataLevel2Read == false)
+                {
+                     //check the values
+
+                        //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                        if (line.find("\"") == std::string::npos)
+                        {
+                            collisionDataLevel2Read = true;
+                            collisionSkipIndex = 0;
+                            myfile.close();
+                        }
+                        else
+                        ReadCollisionData(line);
+                    
+                }
             }
+           
 
         }
-        myfile.close();
+       
 
     }
     //string[] lines = System.IO.File.ReadAllLines(filename);
@@ -132,8 +150,8 @@ intPair TileMapLoader::ReadChunkData(const std::string& sentence)
 {
 
     //read startPos x
-    int startIndex = sentence.find_first_of("\"", 0);
-    int endIndex = sentence.find_first_of("\"", startIndex + 1);
+    size_t startIndex = sentence.find_first_of("\"", 0);
+    size_t endIndex = sentence.find_first_of("\"", startIndex + 1);
     std::string substring = sentence.substr(startIndex + 1, endIndex - startIndex - 1);
     int xPos = std::stoi(substring);
 
@@ -174,11 +192,11 @@ intPair TileMapLoader::ReadChunkData(const std::string& sentence)
 void TileMapLoader::ReadTextureData(const std::string& sentence,intPair chunkPos,int row, dae::Scene* scene)
 {
 
-    int start = 0;
+    size_t start = 0;
     for (int j = 0; j < ChunkWidth; ++j)
     {
 
-        int indexOfComma = sentence.find_first_of(",", start);
+        size_t indexOfComma = sentence.find_first_of(",", start);
         if (j == 15)
         {
             std::string lastNumber = sentence.substr(start, sentence.length() - start);
@@ -236,10 +254,10 @@ void TileMapLoader::ReadTextureData(const std::string& sentence,intPair chunkPos
 void TileMapLoader::ReadCollisionData(const std::string& sentence)
 {
     //read all the collision
-    int startIndex = sentence.find_first_of("\"", 0);
+    size_t startIndex = sentence.find_first_of("\"", 0);
 
         //read ID
-        int endIndex = sentence.find_first_of("\"", startIndex + 1);
+    size_t endIndex = sentence.find_first_of("\"", startIndex + 1);
         
 
         //read x

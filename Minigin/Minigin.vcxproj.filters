@@ -135,9 +135,6 @@
     <ClInclude Include="AIComponent.h">
       <Filter>engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionRectangle.h">
-      <Filter>engine\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="TileMapLoader.h">
       <Filter>engine\Helpers</Filter>
     </ClInclude>
@@ -158,6 +155,12 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager2.h">
+      <Filter>engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingBoxComponent.h">
+      <Filter>engine\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +254,6 @@
     <ClCompile Include="AIComponent.cpp">
       <Filter>engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionRectangle.cpp">
-      <Filter>engine\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="TileMapLoader.cpp">
       <Filter>engine\Helpers</Filter>
     </ClCompile>
@@ -271,6 +271,12 @@
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager2.cpp">
+      <Filter>engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundingBoxComponent.cpp">
+      <Filter>engine\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

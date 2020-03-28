@@ -16,6 +16,8 @@
 #include "AI.h"
 #include "XboxController.h"
 #include "TileMapLoader.h"
+//#include "SoundManager.h"
+#include "SoundManager2.h"
 
 
 
@@ -50,11 +52,15 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame()
 {
-	std::string test{ "demooo" };
-	auto& scene = SceneManager::GetInstance().CreateScene(test);
+	
 
-	avatar = std::shared_ptr<Player>(new Player());
-	avatar->GetGameObject()->GetTransform()->Translate(100, 100);
+	std::string sceneName{ "Bubble Bobble Scene" };
+	auto& scene = SceneManager::GetInstance().CreateScene(sceneName);
+
+	auto loader = std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,0 }, &scene));
+
+	avatar = std::shared_ptr<Player>(new Player(loader));
+	avatar->GetGameObject()->GetTransform()->Translate(100, 50);
 	
 	scene.Add(avatar);
 	
@@ -63,10 +69,12 @@ void dae::Minigin::LoadGame()
 
 	scene.Add(npc);
 
-	TileMapLoader* loader;
-	loader = new TileMapLoader(10,{ 0,0 }, &scene);
 	
 
+	SoundManager2::GetInstance().Init();
+	
+	std::string filename{ "../Sounds/drumloop.wav" };
+	SoundManager2::GetInstance().playMusic(filename);
 	/*auto background = std::make_shared<GameObject>();
 	auto texture1 = new comps::TextureComponent("background.jpg");
 	background->AddComponent(texture1);

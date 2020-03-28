@@ -10,6 +10,7 @@ comps::TextureComponent::TextureComponent(const std::string& filename, float wid
 	:m_Offset{0,0}
 	,m_Width{width}
 	,m_Height{height}
+	
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
 }

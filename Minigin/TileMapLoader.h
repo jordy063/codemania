@@ -1,5 +1,4 @@
 #pragma once
-#include "CollisionRectangle.h"
 #include <list>
 #include "GameObject.h"
 #include "Singleton.h"

@@ -1,30 +1,53 @@
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\minigin.pch
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\vc141.pdb
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\vc141.idb
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\miniginpch.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\texture2d.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\textobject.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\spritecomponent.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\scenemanager.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\scene.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\resourcemanager.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\renderer.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\physicscomponent.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\entity.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\minigin.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\main.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\logger.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\log.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\inputmanager.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\gameobject.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\fpscounter.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\fpscomponent.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\font.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\basecomponent.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\transformcomponent.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\transform.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\texturecomponent.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\textcomponent.obj
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\minigin.tlog\cl.command.1.tlog
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\minigin.tlog\cl.read.1.tlog
-d:\jordy\dae2-redo\programming 4\exam_assignment - copy\minigin\x64\debug\minigin.tlog\cl.write.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\minigin.pch
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\vc142.pdb
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\vc142.idb
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\miniginpch.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\physicscomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\entity.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\minigin.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\main.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\logger.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\log.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\inputobserver.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\inputmanager.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\inputcomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\gameobject.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\fpscounter.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\fpscomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\font.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\command.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\boundingboxcomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\bullet.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\basecomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\audio.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\aicomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\ai.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\xboxcontroller.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\transformcomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\transform.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\tilemaploader.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\texturecomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\textcomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\texture2d.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\textobject.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\spritecomponent.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\soundmanager2.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\soundmanager.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\soundcommand.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\scenemanager.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\scene.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\resourcemanager.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\renderer.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\player.obj
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\x64\debug\minigin.exe
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\x64\debug\minigin.ilk
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\x64\debug\minigin.pdb
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\x64\debug\minigin.lib
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\x64\debug\minigin.exp
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\minigin.tlog\cl.command.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\minigin.tlog\cl.read.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\minigin.tlog\cl.write.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\minigin.tlog\link.command.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\minigin.tlog\link.read.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\minigin.tlog\link.write.1.tlog
+d:\jordy\dae2-redo\programming 4\exam_assignment - copy - copy - copy\minigin\x64\debug\minigin.tlog\minigin.write.1u.tlog

@@ -1,6 +1,45 @@
-﻿  Minigin.cpp
-  TileMapLoader.cpp
+﻿  MiniginPCH.cpp
+  AI.cpp
+  AIComponent.cpp
+  Audio.cpp
+  BaseComponent.cpp
+  Bullet.cpp
+  BoundingBoxComponent.cpp
+  Command.cpp
+  Font.cpp
+  FpsComponent.cpp
+  FPSCounter.cpp
+  GameObject.cpp
+  InputComponent.cpp
+  InputManager.cpp
+  InputObserver.cpp
+  Log.cpp
+  Logger.cpp
+  Main.cpp
+  Minigin.cpp
+  Entity.cpp
+  PhysicsComponent.cpp
   Generating Code...
+  Compiling...
+  Player.cpp
+  Renderer.cpp
+  ResourceManager.cpp
+  Scene.cpp
+  SceneManager.cpp
+  SoundCommand.cpp
+  SoundManager.cpp
+  SoundManager2.cpp
+  SpriteComponent.cpp
+  TextObject.cpp
+  Texture2D.cpp
+  TextComponent.cpp
+  TextureComponent.cpp
+  TileMapLoader.cpp
+  Transform.cpp
+  TransformComponent.cpp
+  XboxController.cpp
+  Generating Code...
+     Creating library D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.lib and object D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exp
   Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\Win32\Debug\Minigin.exe
   D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2\lib\x86\SDL2.dll
   1 File(s) copied
@@ -14,3 +53,13 @@
   D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_ttf\lib\x86\libfreetype-6.dll
   D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_ttf\lib\x86\SDL2_ttf.dll
   2 File(s) copied
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_mixer-2.0.4\lib\x86\libFLAC-8.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_mixer-2.0.4\lib\x86\libmodplug-1.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_mixer-2.0.4\lib\x86\libmpg123-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_mixer-2.0.4\lib\x86\libogg-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_mixer-2.0.4\lib\x86\libopus-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_mixer-2.0.4\lib\x86\libopusfile-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_mixer-2.0.4\lib\x86\libvorbis-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_mixer-2.0.4\lib\x86\libvorbisfile-3.dll
+  D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\3rdParty\SDL2_mixer-2.0.4\lib\x86\SDL2_mixer.dll
+  9 File(s) copied

@@ -3,6 +3,7 @@
 
 
 
+
 comps::PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transform,float speed)
 	: m_Transform{transform}
 	, m_MovementSpeed{ speed }
@@ -78,6 +79,21 @@ void comps::PhysicsComponent::SetMovement(Direction direction, float speed)
 float comps::PhysicsComponent::GetMovementSpeed() const
 {
 	return m_MovementSpeed;
+}
+float2 comps::PhysicsComponent::GetFuturePositionX(float elapsedSecs)
+{
+	float2 currentPos = GetTransform()->GetPosition();
+	return float2{ currentPos.x + m_Velocity.x * elapsedSecs, currentPos.y };
+}
+float2 comps::PhysicsComponent::GetFuturePosition(float elapsedSecs)
+{
+	float2 currentPos = GetTransform()->GetPosition();
+	return float2{ currentPos.x + m_Velocity.x * elapsedSecs , currentPos.y + m_Velocity.y * elapsedSecs };
+}
+float2 comps::PhysicsComponent::GetFuturePositionY(float elapsedSecs)
+{
+	float2 currentPos = GetTransform()->GetPosition();
+	return float2{ currentPos.x, currentPos.y + m_Velocity.y * elapsedSecs };
 }
 void comps::PhysicsComponent::SetMovementSpeed(float speed)
 {

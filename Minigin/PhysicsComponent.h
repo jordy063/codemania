@@ -29,6 +29,9 @@ namespace comps
 		void SetMovement(Direction direction, float speed);
 		float GetMovementSpeed() const;
 		std::shared_ptr<TransformComponent> GetTransform() { return m_Transform; }
+		float2 GetFuturePosition(float elapsedSecs);
+		float2 GetFuturePositionX(float elapsedSecs);
+		float2 GetFuturePositionY(float elapsedSecs);
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
