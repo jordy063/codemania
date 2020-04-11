@@ -5,7 +5,7 @@
 class Player : public Entity
 {
 public:
-	Player(const std::shared_ptr< TileMapLoader> tilemap);
-	void CreateComponents(const std::shared_ptr< TileMapLoader> tilemap);
+	Player(int controllerId, std::shared_ptr<dae::Scene> scene);
+	void CreateComponents(int controllerId, std::shared_ptr<dae::Scene> scene);
 };
 

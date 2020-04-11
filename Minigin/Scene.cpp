@@ -5,6 +5,7 @@
 #include "ResourceManager.h"
 #include "Logger.h"
 #include "FpsComponent.h"
+#include "TileMapLoader.h"
 
 
 
@@ -12,8 +13,7 @@ unsigned int dae::Scene::idCounter = 0;
 
 bool dae::Scene::CreateFPSCounter()
 {
-	m_pFPSCounter = std::shared_ptr<FPSCounter>(new FPSCounter());
-
+	m_pFPSCounter = std::shared_ptr<FPSCounter>(new FPSCounter(SceneManager::GetInstance().GetActiveScene()));
 	
 
 	if (m_pFPSCounter != nullptr)
@@ -43,17 +43,24 @@ dae::Scene::~Scene()
 void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
 {
 	mObjects.push_back(object);
+
 	
 }
-void  dae::Scene::Add(const std::shared_ptr<Entity>& object)
+void dae::Scene::Add(const std::shared_ptr<Entity>& object)
 {
-	mObjects.push_back(object->GetGameObject());
+	AddGameObject(object->GetGameObject());
 }
 
 void dae::Scene::AddGameObject(const std::shared_ptr<GameObject>& object)
 {
+	object->RegisterTileMap(m_pTileMap);
 	Add(object);
 	object->ChangeScene(this);
+}
+
+void dae::Scene::AddTileMap(const std::shared_ptr<TileMapLoader>& tileMapLoader)
+{
+	m_pTileMap = tileMapLoader;
 }
 
 void dae::Scene::Initialize()

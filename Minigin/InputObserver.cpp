@@ -2,8 +2,9 @@
 #include "InputObserver.h"
 
 
-InputObserver::InputObserver(comps::InputComponent* inputComp)
+InputObserver::InputObserver(comps::InputComponent* inputComp,int controllerId)
 	:pInputComp{ inputComp }
+	, m_ControllerId(controllerId)
 {
 }
 

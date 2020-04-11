@@ -55,16 +55,23 @@ void dae::Minigin::LoadGame()
 	
 
 	std::string sceneName{ "Bubble Bobble Scene" };
-	auto& scene = SceneManager::GetInstance().CreateScene(sceneName);
+	auto& scene{ SceneManager::GetInstance().CreateScene(sceneName) };
 
-	auto loader = std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,0 }, &scene));
+	auto loader = std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,0 }, SceneManager::GetInstance().GetActiveScene()));
+	scene.AddTileMap(loader);
 
-	avatar = std::shared_ptr<Player>(new Player(loader));
+	
+	avatar = std::shared_ptr<Player>(new Player(-1, SceneManager::GetInstance().GetActiveScene()));
 	avatar->GetGameObject()->GetTransform()->Translate(100, 50);
 	
 	scene.Add(avatar);
+
+	avatar2 = std::shared_ptr<Player>(new Player( 0, SceneManager::GetInstance().GetActiveScene()));
+	avatar2->GetGameObject()->GetTransform()->Translate(150, 50);
+
+	scene.Add(avatar2);
 	
-	auto npc = std::shared_ptr<AI>(new AI());
+	auto npc = std::shared_ptr<AI>(new AI(SceneManager::GetInstance().GetActiveScene()));
 	npc->GetGameObject()->GetTransform()->Translate(200, 100);
 
 	scene.Add(npc);
@@ -103,6 +110,9 @@ void dae::Minigin::LoadGame()
 
 
 	scene.Initialize();
+
+
+	npc->ClearAI();
 }
 
 void dae::Minigin::Cleanup()

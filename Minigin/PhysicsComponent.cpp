@@ -4,9 +4,12 @@
 
 
 
-comps::PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transform,float speed)
+comps::PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transform, bool gravity,float speed)
 	: m_Transform{transform}
 	, m_MovementSpeed{ speed }
+	, m_UseGravity(gravity)
+	,m_Gravity(200.f)
+	,m_IsAirBorn(true)
 {
 
 	DirToVec[Direction::LEFT] = float2{ -1,0 };
@@ -27,10 +30,13 @@ void comps::PhysicsComponent::Initialize(const dae::Scene & scene)
 
 void comps::PhysicsComponent::Update(const dae::Scene & scene, float elapsedSecs, float2 pos)
 {
+
 	Move(elapsedSecs);
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
+	if(m_UseGravity)
+	m_Velocity.y += m_Gravity * elapsedSecs;
 }
 void comps::PhysicsComponent::Move(float elapsedSecs)
 {
@@ -51,6 +57,18 @@ void comps::PhysicsComponent::SetDirection(float2 direction)
 	m_Velocity.y = direction.y*factor;
 
 }
+float2 comps::PhysicsComponent::GetVelocity()
+{
+	return m_Velocity;
+}
+void comps::PhysicsComponent::SetAirborne(bool airborne)
+{
+	m_IsAirBorn = airborne;
+}
+bool comps::PhysicsComponent::GetAirBorne()
+{
+	return m_IsAirBorn;
+}
 void comps::PhysicsComponent::SetDirection(Direction direction)
 {
 	SetDirection(DirToVec[direction]);
@@ -64,6 +82,14 @@ void comps::PhysicsComponent::SetSpeed(float speed)
 			m_Velocity.x *= factor;
 			m_Velocity.y *= factor;
 	}
+}
+void comps::PhysicsComponent::SetSpeedX(float speed)
+{
+	m_Velocity.x = speed;
+}
+void comps::PhysicsComponent::SetSpeedY(float speed)
+{
+	m_Velocity.y = speed;
 }
 void comps::PhysicsComponent::SetMovement(float2 direction, float speed)
 {

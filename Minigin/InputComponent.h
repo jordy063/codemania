@@ -17,7 +17,7 @@ namespace comps
 	{
 	public:
 
-		InputComponent(std::shared_ptr<PhysicsComponent> physicsComp, std::shared_ptr<SpriteComponent> spriteComp);
+		InputComponent(std::shared_ptr<PhysicsComponent> physicsComp, std::shared_ptr<SpriteComponent> spriteComp,int controllerId);
 		~InputComponent();
 
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -49,6 +49,7 @@ namespace comps
 		ShootUpCommand m_ShootUpCommand;
 		
 		float m_timeout;
+
 	};
 }
 

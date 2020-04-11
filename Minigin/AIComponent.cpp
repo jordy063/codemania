@@ -14,7 +14,7 @@ comps::AIComponent::AIComponent(std::shared_ptr<PhysicsComponent> physicsComp, s
 	DirToRow[Direction::LEFT] = 3;
 	DirToRow[Direction::RIGHT] = 1;
 	DirToRow[Direction::UP] = 2;
-	DirToRow[Direction::DOWN] = 0;
+	//DirToRow[Direction::DOWN] = 0;
 	
 	pSpriteComp->SetActiveRowStop();
 
@@ -39,20 +39,20 @@ void comps::AIComponent::Update(const dae::Scene& scene, float elapsedSecs, floa
 	//add logic for ai
 
 	int randomDirection{ rand() % 4 };
-
+	float jumpSpeed{ 180.0f };
 
 	if (m_Timer > m_ChangeDirectionTime)
 	{
 		switch (randomDirection)
 		{
 		case 0:
-			m_MoveDownCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);
+			
 			break;
 		case 1:
 			m_MoveRightCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);
 			break;
 		case 2:
-			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);
+			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp, jumpSpeed);
 			break;
 		case 3:
 			m_MoveLeftCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);

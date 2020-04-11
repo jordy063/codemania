@@ -2,7 +2,7 @@
 #include "BoundingBoxComponent.h"
 
 
-comps::BoundingBoxComponent::BoundingBoxComponent(std::list < std::shared_ptr<rectangle_>> collisionList, std::shared_ptr<PhysicsComponent> physicsComp, int width, int height)
+comps::BoundingBoxComponent::BoundingBoxComponent(std::list < std::shared_ptr<rectangle_>> collisionList, std::shared_ptr<PhysicsComponent> physicsComp, float width, float height)
 	:m_CollisionList(collisionList)
 	, m_pPhysicsComp(physicsComp)
 	,m_Width(width)
@@ -22,9 +22,9 @@ rectangle_ comps::BoundingBoxComponent::GetBoundingBox(const float elapsedSecs, 
 	}
 
 
-	int xShift = (m_Width * (int)m_Alignment.first) / 2;
-	int yShift = (m_Height * (int)m_Alignment.second) / 2;
-	return rectangle_{ (int)pos.x - xShift, (int)pos.y - yShift, m_Width,m_Height };
+	float xShift = (m_Width * (int)m_Alignment.first) / 2;
+	float yShift = (m_Height * (int)m_Alignment.second) / 2;
+	return rectangle_{ pos.x - xShift, pos.y - yShift, m_Width,m_Height };
 }
 
 void comps::BoundingBoxComponent::SetAlignment(HAlign hAlign, VAlign vAlign)
@@ -43,14 +43,23 @@ void comps::BoundingBoxComponent::Update(const dae::Scene& scene, float elapsedS
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
+	
 
-	if (IsRectangleOverlapping(elapsedSecs*2,false))
+	if (IsRectangleOverlapping(elapsedSecs*2,false) && !IsRectangleOverlapping(0, false))
 	{
-		m_pPhysicsComp->SetSpeed(0);
+		if (m_pPhysicsComp->GetVelocity().y > 0)
+		{
+			m_pPhysicsComp->SetSpeedY(0);
+			m_pPhysicsComp->SetAirborne(false);
+		}
+	}
+	else
+	{
+		m_pPhysicsComp->SetAirborne(true);
 	}
 	if (IsRectangleOverlapping(elapsedSecs * 2, true))
 	{
-		m_pPhysicsComp->SetSpeed(0);
+		m_pPhysicsComp->SetSpeedX(0);
 	}
 
 
@@ -60,17 +69,17 @@ bool comps::BoundingBoxComponent::IsRectangleOverlapping(float elapsedSecs,bool 
 {
 	auto boundingBox{ GetBoundingBox(elapsedSecs,xonly) };
 
-	int boundingboxLeft = boundingBox.posX;
-	int boundingboxRight = boundingBox.posX + boundingBox.width;
-	int boundingboxUp = boundingBox.posY;
-	int boundingboxDown = boundingBox.posY + boundingBox.height;
+	float boundingboxLeft = boundingBox.posX;
+	float boundingboxRight = boundingBox.posX + boundingBox.width;
+	float boundingboxUp = boundingBox.posY;
+	float boundingboxDown = boundingBox.posY + boundingBox.height;
 
 	for (std::shared_ptr<rectangle_> collisionBox : m_CollisionList)
 	{
-		int collisionboxLeft = collisionBox->posX;
-		int collisionboxRight = collisionBox->posX + collisionBox->width;
-		int collisionboxUp = collisionBox->posY;
-		int collisionboxDown = collisionBox->posY + collisionBox->height;
+		float collisionboxLeft = collisionBox->posX;
+		float collisionboxRight = collisionBox->posX + collisionBox->width;
+		float collisionboxUp = collisionBox->posY;
+		float collisionboxDown = collisionBox->posY + collisionBox->height;
 
 
 
@@ -81,3 +90,4 @@ bool comps::BoundingBoxComponent::IsRectangleOverlapping(float elapsedSecs,bool 
 	return false;
 
 }
+

@@ -4,7 +4,7 @@
 #include "InputManager.h"
 #include "Singleton.h"
 
-comps::InputComponent::InputComponent(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp)
+comps::InputComponent::InputComponent(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp,int controllerId)
 	:pPhysicsComp{physicsComp}
 	,pSpriteComp{spriteComp}
 	, m_timeout{0}
@@ -15,9 +15,9 @@ comps::InputComponent::InputComponent(std::shared_ptr<comps::PhysicsComponent> p
 	DirToRow[Direction::DOWN] = 0;
 
 
-	pInputObserver = std::make_shared<InputObserver>(this);
+	pInputObserver = std::make_shared<InputObserver>(this, controllerId);
 	//pInputObserver = new InputObserver(this);
-	dae::InputManager::GetInstance().Register(pInputObserver);
+	dae::InputManager::GetInstance().Register(pInputObserver,controllerId);
 	pSpriteComp->SetActiveRowStop();
 }
 
@@ -42,6 +42,7 @@ void comps::InputComponent::Update(const dae::Scene& scene, float elapsedSecs, f
 void comps::InputComponent::changeDirection(Direction direction)
 {
 	float movementSpeed{ pPhysicsComp->GetMovementSpeed() };
+	float jumpSpeed{ 180 };
 	
 	switch (direction)
 	{
@@ -61,7 +62,7 @@ void comps::InputComponent::changeDirection(Direction direction)
 		case Direction::UP:
 		{
 			
-			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
+			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp, jumpSpeed);
 		}
 		break;
 
@@ -76,6 +77,7 @@ void comps::InputComponent::changeDirection(Direction direction)
 void comps::InputComponent::ShootBullet(Direction direction)
 {
 	float movementSpeed{ 200 };
+
 
 	if (m_timeout > 0)
 		return;

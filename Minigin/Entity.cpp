@@ -34,7 +34,6 @@ void Entity::Render()
 void Entity::CreateEntityObject()
 {
 
-
 	m_EntityObject = std::shared_ptr<dae::GameObject>(new dae::GameObject());
 }
 void Entity::InitializeEntityObject()

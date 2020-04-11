@@ -8,7 +8,7 @@
 #include "BaseComponent.h"
 #include "Scene.h"
 
-
+class TileMapLoader;
 
 namespace dae
 {
@@ -32,12 +32,14 @@ namespace dae
 
 		void AddComponent(std::shared_ptr<comps::BaseComponent> comp);
 		void ChangeScene(Scene* newScene);
+		void Clear();
 
 
 		void Initialize();
 		void PostInitialize(const Scene&) {};
 		void PostDraw(const Scene&) {};
-
+		void RegisterTileMap(std::shared_ptr<TileMapLoader> tileMapLoader);
+		std::shared_ptr<TileMapLoader> GetTileMap() { return m_pTileMap; }
 		
 
 	private:
@@ -45,7 +47,7 @@ namespace dae
 		std::shared_ptr <TransformComponent> m_pTransform;
 		std::vector<std::shared_ptr<comps::BaseComponent>> m_pComponents;
 		Scene* m_pScene;
-
+		std::shared_ptr<TileMapLoader> m_pTileMap;
 
 		
 	};

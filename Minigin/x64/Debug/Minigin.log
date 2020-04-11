@@ -6,6 +6,7 @@
   Bullet.cpp
   BoundingBoxComponent.cpp
   Command.cpp
+  EnemyObserver.cpp
   Font.cpp
   FpsComponent.cpp
   FPSCounter.cpp
@@ -18,9 +19,9 @@
   Main.cpp
   Minigin.cpp
   Entity.cpp
-  PhysicsComponent.cpp
   Generating Code...
   Compiling...
+  PhysicsComponent.cpp
   Player.cpp
   Renderer.cpp
   ResourceManager.cpp

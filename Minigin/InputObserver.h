@@ -5,7 +5,7 @@ class InputObserver
 {
 
 public:
-	InputObserver(comps::InputComponent* inputComp);
+	InputObserver(comps::InputComponent* inputComp,int controllerId);
 	~InputObserver();
 
 	void Update(comps::Direction direction, bool move);
@@ -13,4 +13,5 @@ public:
 private:
 	comps::InputComponent* pInputComp;
 	comps::Direction m_CurrentDirection;
+	int m_ControllerId;
 };

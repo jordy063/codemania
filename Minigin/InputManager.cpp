@@ -34,23 +34,26 @@ bool dae::InputManager::ProcessInput()
 
 	//	}
 	//}
-	checkButtons();
 
+	checkButtons(0);
+	
+	
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) {
 			return false;
 		}
 		if (e.type == SDL_KEYDOWN) {
-			NotifyInput(e,true);
+			NotifyInput(e, true);
 		}
 		if (e.type == SDL_KEYUP) {
-			NotifyInput(e,false);
+			NotifyInput(e, false);
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			
+
 		}
 	}
+	
 
 	return true;
 }
@@ -70,30 +73,30 @@ bool dae::InputManager::IsPressed(ControllerButton button) const
 	default: return false;
 	}
 }
-void dae::InputManager::Register(std::shared_ptr<InputObserver> inputObserver)
+void dae::InputManager::Register(std::shared_ptr<InputObserver> inputObserver,int controllerId)
 {
-	pInputObserver = inputObserver;
+	pInputObserver[controllerId] = inputObserver;
 }
 void dae::InputManager::NotifyInput(SDL_Event e,bool move)
 {
 	switch (e.key.keysym.sym)
 	{
 	case SDLK_z:
-		pInputObserver->Update(comps::Direction::UP, move);
+		pInputObserver[-1]->Update(comps::Direction::UP, move);
 		break;
 	case SDLK_s:
-		pInputObserver->Update(comps::Direction::DOWN, move);
+		pInputObserver[-1]->Update(comps::Direction::DOWN, move);
 		break;
 	case SDLK_d:
-		pInputObserver->Update(comps::Direction::RIGHT, move);
+		pInputObserver[-1]->Update(comps::Direction::RIGHT, move);
 		break;
 	case SDLK_q:
-		pInputObserver->Update(comps::Direction::LEFT, move);
+		pInputObserver[-1]->Update(comps::Direction::LEFT, move);
 		break;
 	case SDLK_e:
 		if (move && !m_IsShooting)
 		{
-			pInputObserver->ShootUpdate();
+			pInputObserver[-1]->ShootUpdate();
 			m_IsShooting = true;
 		}
 		if (!move)
@@ -110,7 +113,7 @@ void dae::InputManager::NotifyInput(SDL_Event e,bool move)
 
 
 }
-void dae::InputManager::checkButtons()	
+void dae::InputManager::checkButtons(int controllerId)
 {
 	//if(currentState.Gamepad.wButtons)
 	//if (IsPressed(ControllerButton::ButtonA))
@@ -126,7 +129,7 @@ void dae::InputManager::checkButtons()
 	//	std::cout << "Button X has been pressed" << std::endl;
 	//}
 
-	xboxController xbox(0);
+	xboxController xbox(controllerId);
 
 	
 	xbox.getState();
@@ -136,33 +139,33 @@ void dae::InputManager::checkButtons()
 		bool isPressed{ xbox.checkButtonPress(k) };
 		if (isPressed != m_ButtonMap[k])
 		{
-			NotifyInputController(k, isPressed);
+			NotifyInputController(k, isPressed,controllerId);
 
 			m_ButtonMap[k] = isPressed;
 		}
 	}
 }
-void dae::InputManager::NotifyInputController(WORD e, bool move)
+void dae::InputManager::NotifyInputController(WORD e, bool move,int controllerId)
 {
 	switch (e)
 	{
 	case XINPUT_GAMEPAD_DPAD_UP:
-		pInputObserver->Update(comps::Direction::UP, move);
+		pInputObserver[controllerId]->Update(comps::Direction::UP, move);
 
 		break;
 	case XINPUT_GAMEPAD_DPAD_DOWN:
-		pInputObserver->Update(comps::Direction::DOWN, move);
+		pInputObserver[controllerId]->Update(comps::Direction::DOWN, move);
 		break;
 	case XINPUT_GAMEPAD_DPAD_RIGHT:
-		pInputObserver->Update(comps::Direction::RIGHT, move);
+		pInputObserver[controllerId]->Update(comps::Direction::RIGHT, move);
 		break;
 	case XINPUT_GAMEPAD_DPAD_LEFT:
-		pInputObserver->Update(comps::Direction::LEFT, move);
+		pInputObserver[controllerId]->Update(comps::Direction::LEFT, move);
 		break;
 	case XINPUT_GAMEPAD_A:
 		if (move)
 		{
-			pInputObserver->ShootUpdate();
+			pInputObserver[controllerId]->ShootUpdate();
 		}
 		
 

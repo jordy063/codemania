@@ -65,8 +65,8 @@ void comps::SpriteComponent::Render(const dae::Scene & scene, float2 pos)
 {
 	UNREFERENCED_PARAMETER(scene);
 	
-	int width = m_pTexture->GetSize().first / m_Colls;
-	int height = m_pTexture->GetSize().second / m_Rows;
+	float width = float(m_pTexture->GetSize().first / m_Colls);
+	float height = float(m_pTexture->GetSize().second / m_Rows);
 
 	int x = m_FrameNumber % m_Colls;
 	int y = m_FrameNumber / m_Colls;

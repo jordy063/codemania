@@ -18,6 +18,7 @@ namespace dae
 
 	private:
 		std::shared_ptr<Player> avatar;
+		std::shared_ptr<Player> avatar2;
 		std::shared_ptr<InputObserver> pInputObserver;
 
 	};

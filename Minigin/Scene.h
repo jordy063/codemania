@@ -6,6 +6,7 @@ namespace comps
 {
 	class TextComponent;
 }
+class TileMapLoader;
 namespace dae
 {
 	class SceneObject;
@@ -18,6 +19,8 @@ namespace dae
 		void Add(const std::shared_ptr<SceneObject>& object);
 		void Add(const std::shared_ptr<Entity>& object);
 		void AddGameObject(const std::shared_ptr<GameObject>& object);
+		void AddTileMap(const std::shared_ptr<TileMapLoader>& tileMapLoader);
+		const std::shared_ptr<TileMapLoader> GetTileMap() { return m_pTileMap; };
 
 		void Initialize();
 		void Update(float elapsedSecs);
@@ -40,6 +43,7 @@ namespace dae
 		std::string mName{};
 		std::vector < std::shared_ptr<SceneObject>> mObjects{};
 		std::shared_ptr<FPSCounter> m_pFPSCounter;
+		std::shared_ptr<TileMapLoader> m_pTileMap;
 		
 
 		float m_Lag;

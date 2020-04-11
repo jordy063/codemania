@@ -162,6 +162,12 @@
     <ClInclude Include="BoundingBoxComponent.h">
       <Filter>engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyObserver.h">
+      <Filter>engine\Patterns</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -278,5 +284,13 @@
     <ClCompile Include="BoundingBoxComponent.cpp">
       <Filter>engine\Components</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyObserver.cpp">
+      <Filter>engine\Patterns</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Minigin.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

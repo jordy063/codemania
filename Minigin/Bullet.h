@@ -4,7 +4,7 @@
 class Bullet : public Entity
 {
 public:
-	Bullet(comps::Direction direction,float speed);
+	Bullet(comps::Direction direction,float speed, std::shared_ptr<dae::Scene> scene);
 	void CreateComponents() override;
 
 private:

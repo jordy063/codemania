@@ -6,10 +6,10 @@ struct float2
 };
 struct rectangle_
 {
-	int posX;
-	int posY;
-	int width;
-	int height;
+	float posX;
+	float posY;
+	float width;
+	float height;
 };
 struct intPair
 {

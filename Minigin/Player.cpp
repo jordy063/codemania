@@ -5,23 +5,24 @@
 #include "PhysicsComponent.h"
 #include "InputComponent.h"
 #include "BoundingBoxComponent.h"
+#include "Scene.h"
 
 
-Player::Player(const std::shared_ptr< TileMapLoader> tilemap)
+Player::Player( int controllerId, std::shared_ptr<dae::Scene> scene)
 {
 	CreateEntityObject();
-
-	CreateComponents(tilemap);
+	scene->Add(m_EntityObject);
+	CreateComponents(controllerId,scene);
 }
 
-void Player::CreateComponents(const std::shared_ptr< TileMapLoader> tilemap)
+void Player::CreateComponents( int controllerId , std::shared_ptr<dae::Scene> scene)
 {
 	
 	float movementSpeed{ 100 };
 	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/characterWalk.png", 4, 4, 0, 4, 0.2f,32,32));
-	auto physicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_EntityObject->GetTransform(), movementSpeed));
-	auto inputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(physicsComp, spriteComp));
-	auto boundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(tilemap->GetCollisionTiles(),physicsComp,16,28));
+	auto physicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_EntityObject->GetTransform(), true , movementSpeed));
+	auto inputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(physicsComp, spriteComp, controllerId));
+	auto boundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene->GetTileMap()->GetCollisionTiles(),physicsComp,16,28));
 
 
 	m_EntityObject->AddComponent(spriteComp);

@@ -26,9 +26,9 @@ void comps::BaseComponent::Render(const dae::Scene & scene, float2 pos)
 
 void comps::BaseComponent::RootInitialize(const dae::Scene & scene)
 {
-	assert(!m_IsInitialized);
 	if (m_IsInitialized)
 		return;
+	assert(!m_IsInitialized);
 
 	Initialize(scene);
 

@@ -37,6 +37,12 @@ void dae::GameObject::ChangeScene(Scene * newScene)
 	}
 }
 
+void dae::GameObject::Clear()
+{
+	m_pComponents.clear();
+	m_pComponents.push_back(m_pTransform);
+}
+
 void dae::GameObject::Initialize()
 {
 	AddComponent(m_pTransform);
@@ -44,6 +50,11 @@ void dae::GameObject::Initialize()
 	{
 		comp->RootInitialize(*m_pScene);
 	}
+}
+
+void dae::GameObject::RegisterTileMap(std::shared_ptr<TileMapLoader> tileMapLoader)
+{
+	m_pTileMap = tileMapLoader;
 }
 
 void dae::GameObject::Update(float elapsedSecs)

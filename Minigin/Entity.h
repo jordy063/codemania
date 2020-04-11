@@ -30,5 +30,6 @@ protected:
 	virtual void CreateComponents();
 	void CreateEntityObject();
 	void InitializeEntityObject();
+	bool m_Alive;
 };
 

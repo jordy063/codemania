@@ -4,12 +4,13 @@
 #include "TextComponent.h"
 #include "GameObject.h"
 #include "FpsComponent.h"
+#include "Scene.h"
 
 
-FPSCounter::FPSCounter()
+FPSCounter::FPSCounter(std::shared_ptr<dae::Scene> scene)
 {
 	CreateEntityObject();
-
+	scene->Add(m_EntityObject);
 	CreateComponents();
 }
 

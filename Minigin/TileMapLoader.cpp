@@ -8,7 +8,7 @@
 
 int TileMapLoader::amountOfTextureLayers = 2;
 
-TileMapLoader::TileMapLoader(int amountOfChunks, intPair transformPos, dae::Scene* scene)
+TileMapLoader::TileMapLoader(int amountOfChunks, intPair transformPos, std::shared_ptr<dae::Scene> scene)
 	:m_TransformPos{transformPos}
 {
     fileStrings[0] = "../Graphics/yellowStripesTile.png";
@@ -19,7 +19,7 @@ TileMapLoader::TileMapLoader(int amountOfChunks, intPair transformPos, dae::Scen
 
 }
 
-void TileMapLoader::LoadFile(int amountOfChunks, dae::Scene* scene) //pass load content
+void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> scene) //pass load content
 {
     UNREFERENCED_PARAMETER(amountOfChunks);
     std::ifstream myfile;
@@ -189,7 +189,7 @@ intPair TileMapLoader::ReadChunkData(const std::string& sentence)
     return { xPos,yPos };
 
 }
-void TileMapLoader::ReadTextureData(const std::string& sentence,intPair chunkPos,int row, dae::Scene* scene)
+void TileMapLoader::ReadTextureData(const std::string& sentence,intPair chunkPos,int row, std::shared_ptr<dae::Scene> scene)
 {
 
     size_t start = 0;
@@ -242,7 +242,6 @@ void TileMapLoader::ReadTextureData(const std::string& sentence,intPair chunkPos
                     TileObject->AddComponent(TextureComp);
                     
                     scene->Add(TileObject);
-                    //PngTiles.Add(new Tile(mapTiles[spriteIndex - 1], new Vector2((xPos - StartPos.X) * ChunkWidth + j * 16 + (int)TransformPos.X, (yPos - StartPos.Y) * ChunkHeight + i * 16 + (int)TransformPos.Y)));
                 }
             }
            
@@ -293,7 +292,9 @@ void TileMapLoader::ReadCollisionData(const std::string& sentence)
         int height = std::stoi(test);
 
         //with info, add collision rectangle to list
-        auto rect = std::shared_ptr<rectangle_>(new rectangle_ { XPos, YPos, width, height });
+        auto scale = TileSize / 16.0f;
+        
+        auto rect = std::shared_ptr<rectangle_>(new rectangle_ { XPos* scale, YPos* scale, width* scale, height* scale });
 
         //works as intended but 
         m_CollisionTiles.push_back(rect);
