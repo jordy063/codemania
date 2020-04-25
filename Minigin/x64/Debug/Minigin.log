@@ -1,26 +1,30 @@
 ﻿  MiniginPCH.cpp
-  AI.cpp
+  Enemy.cpp
   AIComponent.cpp
   Audio.cpp
   BaseComponent.cpp
   Bullet.cpp
   BoundingBoxComponent.cpp
   Command.cpp
+  EnemyManager.cpp
   EnemyObserver.cpp
   Font.cpp
   FpsComponent.cpp
   FPSCounter.cpp
   GameObject.cpp
+  Ghost.cpp
   InputComponent.cpp
   InputManager.cpp
   InputObserver.cpp
+  Item.cpp
+  ItemManager.cpp
   Log.cpp
+  Generating Code...
+  Compiling...
   Logger.cpp
   Main.cpp
   Minigin.cpp
   Entity.cpp
-  Generating Code...
-  Compiling...
   PhysicsComponent.cpp
   Player.cpp
   Renderer.cpp
@@ -37,8 +41,11 @@
   TextureComponent.cpp
   TileMapLoader.cpp
   Transform.cpp
+  Generating Code...
+  Compiling...
   TransformComponent.cpp
   XboxController.cpp
+  ZenChan.cpp
   Generating Code...
      Creating library D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\x64\Debug\Minigin.lib and object D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\x64\Debug\Minigin.exp
   Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\x64\Debug\Minigin.exe

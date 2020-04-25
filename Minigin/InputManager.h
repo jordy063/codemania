@@ -31,13 +31,8 @@ namespace dae
 		//InputObserver* pInputObserver;
 		std::map<int,std::shared_ptr<InputObserver>> pInputObserver;
 		bool m_IsShooting = false;
-		std::map< WORD, bool> m_ButtonMap{
-			std::pair<WORD,bool>{WORD(XINPUT_GAMEPAD_DPAD_UP),false},
-		std::pair<WORD,bool>{WORD(XINPUT_GAMEPAD_DPAD_RIGHT),false},
-		std::pair<WORD,bool>{WORD(XINPUT_GAMEPAD_DPAD_DOWN),false},
-		std::pair<WORD,bool>{WORD(XINPUT_GAMEPAD_DPAD_LEFT),false},
-		std::pair<WORD,bool>{WORD(XINPUT_GAMEPAD_A),false}
-		};
+		std::map< std::pair<int, WORD>, bool> m_ButtonMap;
+	
 	};
 }
 

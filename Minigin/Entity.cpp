@@ -22,13 +22,15 @@ void Entity::Initialize()
 
 }
 
-void Entity::Update(float elapsedSecs)
+void Entity::Update(float elapsedSecs, std::shared_ptr<Player> player)
 {
-	m_EntityObject->Update(elapsedSecs);
+	UNREFERENCED_PARAMETER(elapsedSecs);
+	UNREFERENCED_PARAMETER(player);
 }
 
 void Entity::Render()
 {
+	//never gets called
 	m_EntityObject->Render();
 }
 void Entity::CreateEntityObject()

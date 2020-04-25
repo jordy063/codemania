@@ -8,17 +8,21 @@ comps::InputComponent::InputComponent(std::shared_ptr<comps::PhysicsComponent> p
 	:pPhysicsComp{physicsComp}
 	,pSpriteComp{spriteComp}
 	, m_timeout{0}
+	, m_ShootDuration{1.0}
+	, m_SpriteId(controllerId+1)
 {
-	DirToRow[Direction::LEFT] = 3;
+	DirToRow[Direction::LEFT] = 0 ;
 	DirToRow[Direction::RIGHT] = 1;
-	DirToRow[Direction::UP] = 2;
-	DirToRow[Direction::DOWN] = 0;
-
 
 	pInputObserver = std::make_shared<InputObserver>(this, controllerId);
 	//pInputObserver = new InputObserver(this);
 	dae::InputManager::GetInstance().Register(pInputObserver,controllerId);
 	pSpriteComp->SetActiveRowStop();
+
+	if (m_SpriteId == -1)
+	{
+		m_SpriteId = 1;
+	}
 }
 
 
@@ -37,6 +41,20 @@ void comps::InputComponent::Update(const dae::Scene& scene, float elapsedSecs, f
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
 	m_timeout -= elapsedSecs;
+
+
+	if (m_IsShooting)
+	{
+		m_ShootTimer += elapsedSecs;
+
+		if (m_ShootTimer > m_ShootDuration)
+		{
+			pSpriteComp->SetActiveRow(m_ActiveRow);
+			pSpriteComp->SetActiveRowStop();
+			m_ShootTimer = 0;
+			m_IsShooting = false;
+		}
+	}
 }
 
 void comps::InputComponent::changeDirection(Direction direction)
@@ -48,35 +66,35 @@ void comps::InputComponent::changeDirection(Direction direction)
 	{
 		case Direction::LEFT:
 		{
-			m_MoveLeftCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
+			m_MoveLeftCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed, m_SpriteId);
 		}
 		break;
 
 		case Direction::RIGHT:
 		{
 			
-			m_MoveRightCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
+			m_MoveRightCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed, m_SpriteId);
 		}
 		break;
 
 		case Direction::UP:
 		{
 			
-			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp, jumpSpeed);
+			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp, jumpSpeed, m_SpriteId);
 		}
 		break;
 
 		case Direction::DOWN:
 		{
 			
-			m_MoveDownCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
+			m_MoveDownCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed, m_SpriteId);
 		}
 		break;
 	}
 }
 void comps::InputComponent::ShootBullet(Direction direction)
 {
-	float movementSpeed{ 200 };
+	float movementSpeed{ 20 };
 
 
 	if (m_timeout > 0)
@@ -86,28 +104,31 @@ void comps::InputComponent::ShootBullet(Direction direction)
 	{
 	case Direction::LEFT:
 	{
-		m_ShootLeftCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
+		m_IsShooting = true;
+		m_ShootLeftCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed, m_SpriteId);
+		m_ActiveRow = 1 + 2* m_SpriteId;
 	}
 	break;
 
 	case Direction::RIGHT:
 	{
-
-		m_ShootRightCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
+		m_IsShooting = true;
+		m_ShootRightCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed, m_SpriteId);
+		m_ActiveRow = 0 + 2* m_SpriteId;
 	}
 	break;
 
 	case Direction::UP:
 	{
 
-		m_ShootUpCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
+		m_ShootUpCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed, m_SpriteId);
 	}
 	break;
 
 	case Direction::DOWN:
 	{
 
-		m_ShootDownCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed);
+		m_ShootDownCommand.Execute(pPhysicsComp, pSpriteComp, movementSpeed, m_SpriteId);
 	}
 	break;
 	}
@@ -116,6 +137,6 @@ void comps::InputComponent::ShootBullet(Direction direction)
 void comps::InputComponent::StopMoving()
 {
 	
-	m_StopMovingCommand.Execute(pPhysicsComp, pSpriteComp,0);
+	m_StopMovingCommand.Execute(pPhysicsComp, pSpriteComp,0, m_SpriteId);
 }
 

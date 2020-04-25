@@ -8,7 +8,7 @@ class Command
 	
 public:
 	virtual ~Command() = default;
-	virtual void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) = 0;
+	virtual void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) = 0;
 };
 
 //WALKING
@@ -16,31 +16,31 @@ public:
 class MoveLeftCommand : public Command
 {
 public:
-	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp,std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) override;
+	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp,std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) override;
 
 };
 class MoveRightCommand : public Command
 {
 public:
-	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) override;
+	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) override;
 
 };
 class MoveUpCommand : public Command
 {
 public:
-	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) override;
+	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) override;
 
 };
 class MoveDownCommand : public Command
 {
 public:
-	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) override;
+	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) override;
 
 };
 class StopMovingCommand : public Command
 {
 public:
-	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) override;
+	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) override;
 
 };
 
@@ -49,23 +49,23 @@ public:
 class ShootRightCommand : public Command
 {
 public:
-	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) override;
+	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) override;
 
 };
 class ShootUpCommand : public Command
 {
 public:
-	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) override;
+	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) override;
 
 };
 class ShootDownCommand : public Command
 {
 public:
-	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) override;
+	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) override;
 
 };
 class ShootLeftCommand : public Command
 {
 public:
-	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed) override;
+	void Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id) override;
 };

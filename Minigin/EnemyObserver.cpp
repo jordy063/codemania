@@ -20,9 +20,11 @@ void EnemyObserver::UpCounter()
 void EnemyObserver::DownCounter()
 {
 	m_EnemyCount--;
-
+	//call singleton itemmanager and make item
 	if (m_EnemyCount == 0)
 	{
 		//TODO
+		//start timer
+		//if timer done do level transision
 	}
 }

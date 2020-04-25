@@ -34,9 +34,14 @@ bool dae::InputManager::ProcessInput()
 
 	//	}
 	//}
-
-	checkButtons(0);
-	
+	for (std::map<int, std::shared_ptr<InputObserver>>::iterator iter = pInputObserver.begin(); iter != pInputObserver.end(); ++iter)
+	{
+		int k = iter->first;
+		if (k != -1)
+		{
+			checkButtons(k);
+		}
+	}
 	
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -79,31 +84,66 @@ void dae::InputManager::Register(std::shared_ptr<InputObserver> inputObserver,in
 }
 void dae::InputManager::NotifyInput(SDL_Event e,bool move)
 {
-	switch (e.key.keysym.sym)
+	if (pInputObserver[-1] != nullptr)
 	{
-	case SDLK_z:
-		pInputObserver[-1]->Update(comps::Direction::UP, move);
-		break;
-	case SDLK_s:
-		pInputObserver[-1]->Update(comps::Direction::DOWN, move);
-		break;
-	case SDLK_d:
-		pInputObserver[-1]->Update(comps::Direction::RIGHT, move);
-		break;
-	case SDLK_q:
-		pInputObserver[-1]->Update(comps::Direction::LEFT, move);
-		break;
-	case SDLK_e:
-		if (move && !m_IsShooting)
+
+		switch (e.key.keysym.sym)
 		{
-			pInputObserver[-1]->ShootUpdate();
-			m_IsShooting = true;
+		case SDLK_z:
+			pInputObserver[-1]->Update(comps::Direction::UP, move);
+			break;
+		case SDLK_s:
+			pInputObserver[-1]->Update(comps::Direction::DOWN, move);
+			break;
+		case SDLK_d:
+			pInputObserver[-1]->Update(comps::Direction::RIGHT, move);
+			break;
+		case SDLK_q:
+			pInputObserver[-1]->Update(comps::Direction::LEFT, move);
+			break;
+		case SDLK_e:
+			if (move && !m_IsShooting)
+			{
+				pInputObserver[-1]->ShootUpdate();
+				m_IsShooting = true;
+			}
+			if (!move)
+			{
+				m_IsShooting = false;
+			}
+
 		}
-		if (!move)
+	}
+
+	if (pInputObserver[-2] != nullptr)
+	{
+
+		switch (e.key.keysym.sym)
 		{
-			m_IsShooting = false;
+		case SDLK_UP:
+			pInputObserver[-2]->Update(comps::Direction::UP, move);
+			break;
+		case SDLK_DOWN:
+			pInputObserver[-2]->Update(comps::Direction::DOWN, move);
+			break;
+		case SDLK_RIGHT:
+			pInputObserver[-2]->Update(comps::Direction::RIGHT, move);
+			break;
+		case SDLK_LEFT:
+			pInputObserver[-2]->Update(comps::Direction::LEFT, move);
+			break;
+		case SDLK_RETURN:
+			if (move && !m_IsShooting)
+			{
+				pInputObserver[-2]->ShootUpdate();
+				m_IsShooting = true;
+			}
+			if (!move)
+			{
+				m_IsShooting = false;
+			}
+
 		}
-		
 	}
 
 	//ServiceLocator::GetAudio();
@@ -133,13 +173,17 @@ void dae::InputManager::checkButtons(int controllerId)
 
 	
 	xbox.getState();
-	for (std::map<WORD, bool>::iterator iter = m_ButtonMap.begin(); iter != m_ButtonMap.end(); ++iter)
+	WORD words[5]{ 1,2,4,8,4096 };
+	for (WORD i:words)
 	{
-		WORD k = iter->first;
-		bool isPressed{ xbox.checkButtonPress(k) };
+		std::pair<int, WORD> k{ controllerId , i};
+		bool isPressed{ xbox.checkButtonPress(i) };
+		if (m_ButtonMap.count(k) == 0) {
+			m_ButtonMap[k] = false;
+		}
 		if (isPressed != m_ButtonMap[k])
 		{
-			NotifyInputController(k, isPressed,controllerId);
+			NotifyInputController(i, isPressed,controllerId);
 
 			m_ButtonMap[k] = isPressed;
 		}
@@ -147,30 +191,32 @@ void dae::InputManager::checkButtons(int controllerId)
 }
 void dae::InputManager::NotifyInputController(WORD e, bool move,int controllerId)
 {
-	switch (e)
+	if (pInputObserver[controllerId] != nullptr)
 	{
-	case XINPUT_GAMEPAD_DPAD_UP:
-		pInputObserver[controllerId]->Update(comps::Direction::UP, move);
-
-		break;
-	case XINPUT_GAMEPAD_DPAD_DOWN:
-		pInputObserver[controllerId]->Update(comps::Direction::DOWN, move);
-		break;
-	case XINPUT_GAMEPAD_DPAD_RIGHT:
-		pInputObserver[controllerId]->Update(comps::Direction::RIGHT, move);
-		break;
-	case XINPUT_GAMEPAD_DPAD_LEFT:
-		pInputObserver[controllerId]->Update(comps::Direction::LEFT, move);
-		break;
-	case XINPUT_GAMEPAD_A:
-		if (move)
+		switch (e)
 		{
-			pInputObserver[controllerId]->ShootUpdate();
+		case XINPUT_GAMEPAD_DPAD_UP:
+			pInputObserver[controllerId]->Update(comps::Direction::UP, move);
+
+			break;
+		case XINPUT_GAMEPAD_DPAD_DOWN:
+			pInputObserver[controllerId]->Update(comps::Direction::DOWN, move);
+			break;
+		case XINPUT_GAMEPAD_DPAD_RIGHT:
+			pInputObserver[controllerId]->Update(comps::Direction::RIGHT, move);
+			break;
+		case XINPUT_GAMEPAD_DPAD_LEFT:
+			pInputObserver[controllerId]->Update(comps::Direction::LEFT, move);
+			break;
+		case XINPUT_GAMEPAD_A:
+			if (move)
+			{
+				pInputObserver[controllerId]->ShootUpdate();
+			}
+
+
 		}
-		
-
 	}
-
 	//ServiceLocator::GetAudio();
 	//Audio* test;
 	//test->PlaySound()

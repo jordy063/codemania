@@ -12,9 +12,10 @@ namespace comps
 	class BoundingBoxComponent final : public comps::BaseComponent
 	{
 	public:
-		BoundingBoxComponent(std::list < std::shared_ptr<rectangle_>> collisionList, std::shared_ptr<PhysicsComponent> physicsComp,float width,float height);
+		BoundingBoxComponent(std::list < std::shared_ptr<rectangle_>> collisionWalls, std::list < std::shared_ptr<rectangle_>> collisionPlatforms, std::shared_ptr<PhysicsComponent> physicsComp,float width,float height);
 		rectangle_ GetBoundingBox(const float elapsedSecs, bool xonly) const;
 		void SetAlignment(HAlign hAlign, VAlign vAlign);
+		void SetNewBoundingBox(std::list < std::shared_ptr<rectangle_>> collisionWalls, std::list < std::shared_ptr<rectangle_>> collisionPlatforms);
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -22,13 +23,15 @@ namespace comps
 	private:
 
 
-		std::list < std::shared_ptr<rectangle_>> m_CollisionList;
+		std::list < std::shared_ptr<rectangle_>> m_CollisionWalls;
+		std::list < std::shared_ptr<rectangle_>> m_CollisionPlatforms;
 		std::shared_ptr<PhysicsComponent> m_pPhysicsComp;
 		std::pair< HAlign, VAlign> m_Alignment;
 		float m_Width;
 		float m_Height;
 
-		bool IsRectangleOverlapping(float elapsedSecs, bool xonly);
+		bool IsRectangleOverlapping(float elapsedSecs, bool xonly, std::list < std::shared_ptr<rectangle_>>& collision);
+
 
 	};
 }

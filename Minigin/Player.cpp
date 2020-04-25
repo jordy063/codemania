@@ -8,25 +8,67 @@
 #include "Scene.h"
 
 
-Player::Player( int controllerId, std::shared_ptr<dae::Scene> scene)
+Player::Player( int controllerId,int spriteId, std::shared_ptr<dae::Scene> scene)
+	:m_Health(3)
+	, screenDeathPosition{ 50.0f,300.0f }
 {
 	CreateEntityObject();
+	
 	scene->Add(m_EntityObject);
-	CreateComponents(controllerId,scene);
+	CreateComponents(controllerId,spriteId,scene);
+	
 }
 
-void Player::CreateComponents( int controllerId , std::shared_ptr<dae::Scene> scene)
+void Player::CreateComponents( int controllerId ,int spriteId, std::shared_ptr<dae::Scene> scene)
 {
 	
+	int collsPerRow{ 8 };
 	float movementSpeed{ 100 };
-	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/characterWalk.png", 4, 4, 0, 4, 0.2f,32,32));
-	auto physicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_EntityObject->GetTransform(), true , movementSpeed));
-	auto inputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(physicsComp, spriteComp, controllerId));
-	auto boundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene->GetTileMap()->GetCollisionTiles(),physicsComp,16,28));
+	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/CharacterSprite.png", 13, 8,2* spriteId* collsPerRow, 7 + 2* spriteId* collsPerRow, 0.2f,32,32));
+	m_pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_EntityObject->GetTransform(), true , movementSpeed));
+	auto inputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(m_pPhysicsComp, spriteComp, controllerId));
+	m_pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene->GetTileMap()->GetCollisionWalls(1), scene->GetTileMap()->GetCollisionPlatforms(1), m_pPhysicsComp,16,16));
 
 
 	m_EntityObject->AddComponent(spriteComp);
-	m_EntityObject->AddComponent(boundingBoxComp);
-	m_EntityObject->AddComponent(physicsComp);
+	m_EntityObject->AddComponent(m_pBoundingBox);
+	m_EntityObject->AddComponent(m_pPhysicsComp);
 	m_EntityObject->AddComponent(inputComp);
+
 }
+
+void Player::Update(float elapsedSecs)
+{
+	UNREFERENCED_PARAMETER(elapsedSecs);
+	if (IsInvinsible)
+	{
+		//set a timer, per 0.5 secs we change a bool so that the set texture changes
+		//if the timer is over we set invinsible back to false
+	}
+}
+
+rectangle_ Player::GetBoundingBox() const
+{
+
+	return m_pBoundingBox->GetBoundingBox(0,0);
+}
+
+void Player::TakeDamage()
+{
+	if (IsInvinsible == false)
+	{
+		if (m_Health > 0)
+		{
+			--m_Health;
+		}
+		//also teleport player to the beginning and set the state to flickering for a small amount of time. if it's flickering the player can't take damage
+		GetGameObject()->GetTransform()->Translate(screenDeathPosition);
+		IsInvinsible = true;
+	}
+}
+
+bool Player::IsAirBorne()
+{
+	return m_pPhysicsComp->GetAirBorne();;
+}
+

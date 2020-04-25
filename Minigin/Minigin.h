@@ -1,8 +1,10 @@
 #pragma once
 #include "TextObject.h"
 #include "Player.h"
+#include "Ghost.h"
 struct SDL_Window;
 
+class EnemyManager;
 class InputObserver;
 namespace dae
 {
@@ -13,13 +15,15 @@ namespace dae
 	public:
 		void Initialize();
 		void LoadGame();
+		void Update(float elapsedSecs);
 		void Cleanup();
 		void Run();
 
 	private:
-		std::shared_ptr<Player> avatar;
-		std::shared_ptr<Player> avatar2;
+		std::shared_ptr<Player> m_pPlayer;
+		std::shared_ptr<Player> m_pPlayer2;
+		std::shared_ptr<Enemy> m_pEnemy;
 		std::shared_ptr<InputObserver> pInputObserver;
-
+		std::shared_ptr<EnemyManager> m_pEnemyManager;
 	};
 }

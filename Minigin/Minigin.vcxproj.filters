@@ -129,9 +129,6 @@
     <ClInclude Include="InputComponent.h">
       <Filter>engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="AI.h">
-      <Filter>engine\prefabs</Filter>
-    </ClInclude>
     <ClInclude Include="AIComponent.h">
       <Filter>engine\Components</Filter>
     </ClInclude>
@@ -167,6 +164,24 @@
     </ClInclude>
     <ClInclude Include="EnemyObserver.h">
       <Filter>engine\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="ZenChan.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>engine\prefabs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +269,6 @@
     <ClCompile Include="Command.cpp">
       <Filter>engine\Patterns</Filter>
     </ClCompile>
-    <ClCompile Include="AI.cpp">
-      <Filter>engine\prefabs</Filter>
-    </ClCompile>
     <ClCompile Include="AIComponent.cpp">
       <Filter>engine\Components</Filter>
     </ClCompile>
@@ -286,6 +298,24 @@
     </ClCompile>
     <ClCompile Include="EnemyObserver.cpp">
       <Filter>engine\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="ZenChan.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>engine\prefabs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

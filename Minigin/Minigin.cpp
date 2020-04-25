@@ -13,12 +13,12 @@
 #include "TextureComponent.h"
 #include "TextComponent.h"
 #include "InputObserver.h"
-#include "AI.h"
+#include "Enemy.h"
 #include "XboxController.h"
 #include "TileMapLoader.h"
 //#include "SoundManager.h"
 #include "SoundManager2.h"
-
+#include "EnemyManager.h"
 
 
 
@@ -58,28 +58,24 @@ void dae::Minigin::LoadGame()
 	auto& scene{ SceneManager::GetInstance().CreateScene(sceneName) };
 
 	auto loader = std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,0 }, SceneManager::GetInstance().GetActiveScene()));
+
 	scene.AddTileMap(loader);
 
 	
-	avatar = std::shared_ptr<Player>(new Player(-1, SceneManager::GetInstance().GetActiveScene()));
-	avatar->GetGameObject()->GetTransform()->Translate(100, 50);
+	m_pPlayer = std::shared_ptr<Player>(new Player(0,0, SceneManager::GetInstance().GetActiveScene()));
+	m_pPlayer->GetGameObject()->GetTransform()->Translate(100, 50);
 	
-	scene.Add(avatar);
+	scene.Add(m_pPlayer);
 
-	avatar2 = std::shared_ptr<Player>(new Player( 0, SceneManager::GetInstance().GetActiveScene()));
-	avatar2->GetGameObject()->GetTransform()->Translate(150, 50);
 
-	scene.Add(avatar2);
-	
-	auto npc = std::shared_ptr<AI>(new AI(SceneManager::GetInstance().GetActiveScene()));
-	npc->GetGameObject()->GetTransform()->Translate(200, 100);
+	m_pPlayer2 = std::shared_ptr<Player>(new Player( 1,1, SceneManager::GetInstance().GetActiveScene()));
+	m_pPlayer2->GetGameObject()->GetTransform()->Translate(150, 50);
 
-	scene.Add(npc);
+	scene.Add(m_pPlayer2);
 
-	
-
+	m_pEnemyManager = std::shared_ptr<EnemyManager>(new EnemyManager());
+	m_pEnemyManager->MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 1);
 	SoundManager2::GetInstance().Init();
-	
 	std::string filename{ "../Sounds/drumloop.wav" };
 	SoundManager2::GetInstance().playMusic(filename);
 	/*auto background = std::make_shared<GameObject>();
@@ -112,7 +108,12 @@ void dae::Minigin::LoadGame()
 	scene.Initialize();
 
 
-	npc->ClearAI();
+	//npc->ClearAI();
+}
+
+void dae::Minigin::Update(float elapsedSecs)
+{
+	m_pEnemyManager->Update(elapsedSecs, m_pPlayer);
 }
 
 void dae::Minigin::Cleanup()
@@ -160,7 +161,7 @@ void dae::Minigin::Run()
 				//if lag < secperUpdate : update lag, if lag too big, update more than once
 				float elapse = min(SecsPerUpdate, lag);
 				sceneManager.Update(elapse);
-				
+				Update(elapse);
 				lag -= elapse;
 			}
 			

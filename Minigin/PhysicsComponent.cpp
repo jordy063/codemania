@@ -11,7 +11,10 @@ comps::PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> tr
 	,m_Gravity(200.f)
 	,m_IsAirBorn(true)
 {
-
+	if (m_UseGravity == false)
+	{
+		m_Gravity = 0;
+	}
 	DirToVec[Direction::LEFT] = float2{ -1,0 };
 	DirToVec[Direction::RIGHT] = float2{ 1,0 };
 	DirToVec[Direction::UP] = float2{ 0,-1 };

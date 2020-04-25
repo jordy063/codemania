@@ -8,7 +8,7 @@
 
 int TileMapLoader::amountOfTextureLayers = 2;
 
-TileMapLoader::TileMapLoader(int amountOfChunks, intPair transformPos, std::shared_ptr<dae::Scene> scene)
+TileMapLoader::TileMapLoader(int amountOfChunks, float2 transformPos, std::shared_ptr<dae::Scene> scene)
 	:m_TransformPos{transformPos}
 {
     fileStrings[0] = "../Graphics/yellowStripesTile.png";
@@ -19,11 +19,53 @@ TileMapLoader::TileMapLoader(int amountOfChunks, intPair transformPos, std::shar
 
 }
 
+std::list<std::shared_ptr<rectangle_>> TileMapLoader::GetCollisionWalls(int level) const
+{
+    switch (level)
+    {
+    case 1:
+        return m_CollisionWalls1;
+        break;
+    case 2:
+        return m_CollisionWalls2;
+        break;
+    case 3:
+        return m_CollisionWalls3;
+        break;
+    default:
+        std::cout << "level does not exist" << std::endl;
+        break;
+    }
+    return std::list<std::shared_ptr<rectangle_>>();
+
+}
+
+std::list<std::shared_ptr<rectangle_>> TileMapLoader::GetCollisionPlatforms(int level) const
+{
+    switch (level)
+    {
+    case 1:
+        return m_CollisionPlatforms1;
+        break;
+    case 2:
+        return m_CollisionPlatforms2;
+        break;
+    case 3:
+        return m_CollisionPlatforms3;
+        break;
+    default:
+        std::cout << "level does not exist" << std::endl;
+        break;
+    }
+
+    return std::list<std::shared_ptr<rectangle_>>();
+}
+
 void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> scene) //pass load content
 {
     UNREFERENCED_PARAMETER(amountOfChunks);
     std::ifstream myfile;
-    myfile.open("../Graphics/levelBubbleBobble.tmx");
+    myfile.open("../Graphics/levelBubbleBobbletest.tmx");
     if (myfile.fail())
     {
         std::cout << "could not find file" << std::endl;
@@ -42,8 +84,12 @@ void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> sce
         int xPos{};
         bool collisionDataRead{false};
         
-        bool collisionDataLevel1Read{false};
-        bool collisionDataLevel2Read{ false };
+        bool collisionDataWalls1Read{false};
+        bool collisionDataPlatforms1Read{ false };
+        bool collisionDataWalls2Read{ false };
+        bool collisionDataPlatforms2Read{ false };
+        bool collisionDataWalls3Read{ false };
+        bool collisionDataPlatforms3Read{ false };
         bool readTextureData{ false };
         bool textureDataRead{false};
         while (std::getline(myfile, line))
@@ -93,33 +139,93 @@ void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> sce
                 {
                     collisionSkipIndex += 1;
                 }
-                else if (collisionDataLevel1Read == false)
+                else if (collisionDataWalls1Read == false)
                 {
                     //check the values
 
                     //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
                     if (line.find("\"") == std::string::npos)
                     {
-                        collisionDataLevel1Read = true;
+                        collisionDataWalls1Read = true;
                         collisionSkipIndex = 1;
                     }
                     else
-                    ReadCollisionData(line);
+                    ReadCollisionData(line,m_CollisionWalls1);
                 }
-                else if (collisionDataLevel1Read && collisionDataLevel2Read == false)
+                else if (collisionDataPlatforms1Read == false)
                 {
                      //check the values
 
-                        //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
-                        if (line.find("\"") == std::string::npos)
-                        {
-                            collisionDataLevel2Read = true;
-                            collisionSkipIndex = 0;
-                            myfile.close();
-                        }
-                        else
-                        ReadCollisionData(line);
+                     //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                     if (line.find("\"") == std::string::npos)
+                     {
+                         collisionDataPlatforms1Read = true;
+                         collisionSkipIndex = 1;
+                     
+                     }
+                     else
+                     ReadCollisionData(line,m_CollisionPlatforms1);
                     
+                }
+                else if (collisionDataWalls2Read == false)
+                {
+                    //check the values
+
+                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                    if (line.find("\"") == std::string::npos)
+                    {
+                        collisionDataWalls2Read = true;
+                        collisionSkipIndex = 1;
+                 
+                    }
+                    else
+                        ReadCollisionData(line, m_CollisionWalls2);
+
+                }
+                else if (collisionDataPlatforms2Read == false)
+                {
+                    //check the values
+
+                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                    if (line.find("\"") == std::string::npos)
+                    {
+                        collisionDataPlatforms2Read = true;
+                        collisionSkipIndex = 1;
+                  
+                    }
+                    else
+                        ReadCollisionData(line, m_CollisionPlatforms2);
+
+                }
+                else if (collisionDataWalls3Read == false)
+                {
+                    //check the values
+
+                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                    if (line.find("\"") == std::string::npos)
+                    {
+                        collisionDataWalls3Read = true;
+                        collisionSkipIndex = 1;
+    
+                    }
+                    else
+                        ReadCollisionData(line, m_CollisionWalls3);
+
+                }
+                else if (collisionDataPlatforms3Read == false)
+                {
+                    //check the values
+
+                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                    if (line.find("\"") == std::string::npos)
+                    {
+                        collisionDataPlatforms3Read = true;
+                        collisionSkipIndex = 1;
+                        myfile.close();
+                    }
+                    else
+                        ReadCollisionData(line, m_CollisionPlatforms3);
+
                 }
             }
            
@@ -204,13 +310,13 @@ void TileMapLoader::ReadTextureData(const std::string& sentence,intPair chunkPos
             int spriteIndexOfLast = std::stoi(lastNumber);
             if (spriteIndexOfLast != 0)
             {
-                intPair testPos{ (chunkPos.x - StartPos.x) * TileSize + j * TileSize, (chunkPos.y - StartPos.y) * TileSize + row * TileSize };
-                std::cout << testPos.x << ", " << testPos.y << '\n';
+                float2 TexturePos{ (chunkPos.x - StartPos.x) * TileSize + j * TileSize + m_TransformPos.x, (chunkPos.y - StartPos.y) * TileSize + row * TileSize + m_TransformPos.y};
+                std::cout << TexturePos.x << ", " << TexturePos.y << '\n';
                 int newIndex = spriteIndexOfLast - 1;
 
                 auto TileObject = std::shared_ptr<dae::GameObject>(new dae::GameObject());
                
-                TileObject->GetTransform()->Translate(float(testPos.x),float( testPos.y));
+                TileObject->GetTransform()->Translate(float(TexturePos.x),float( TexturePos.y));
                 std::string test = fileStrings[newIndex];
                 // for next line seperate the texturefile to 4 cause we can't split it. have a string with all filenames that are according to the data written
                 auto TextureComp = std::shared_ptr<comps::TextureComponent>(new comps::TextureComponent(fileStrings[newIndex], TileSize, TileSize));
@@ -229,12 +335,12 @@ void TileMapLoader::ReadTextureData(const std::string& sentence,intPair chunkPos
                 int spriteIndex = std::stoi(last);
                 if (spriteIndex != 0)
                 {
-                    intPair testPos{ (chunkPos.x - StartPos.x) * TileSize + j * TileSize, (chunkPos.y - StartPos.y) * TileSize + row * TileSize };
-                    std::cout << testPos.x << ", " << testPos.y << '\n';
+                    float2 texturePos{ (chunkPos.x - StartPos.x) * TileSize + j * TileSize + m_TransformPos.x, (chunkPos.y - StartPos.y) * TileSize + row * TileSize + m_TransformPos.y };
+                    std::cout << texturePos.x << ", " << texturePos.y << '\n';
                     int newIndex = spriteIndex - 1;
 
                     auto TileObject = std::shared_ptr<dae::GameObject>(new dae::GameObject());
-                    TileObject->GetTransform()->Translate(float(testPos.x),float( testPos.y));
+                    TileObject->GetTransform()->Translate(float(texturePos.x),float( texturePos.y));
                     std::string test = fileStrings[newIndex];
                     // for next line seperate the texturefile to 4 cause we can't split it. have a string with all filenames that are according to the data written
                     auto TextureComp = std::shared_ptr<comps::TextureComponent>(new comps::TextureComponent(fileStrings[newIndex], TileSize, TileSize));
@@ -250,7 +356,7 @@ void TileMapLoader::ReadTextureData(const std::string& sentence,intPair chunkPos
 
     }
 }
-void TileMapLoader::ReadCollisionData(const std::string& sentence)
+void TileMapLoader::ReadCollisionData(const std::string& sentence, std::list<std::shared_ptr<rectangle_>>& collision)
 {
     //read all the collision
     size_t startIndex = sentence.find_first_of("\"", 0);
@@ -294,11 +400,52 @@ void TileMapLoader::ReadCollisionData(const std::string& sentence)
         //with info, add collision rectangle to list
         auto scale = TileSize / 16.0f;
         
-        auto rect = std::shared_ptr<rectangle_>(new rectangle_ { XPos* scale, YPos* scale, width* scale, height* scale });
+        auto rect = std::shared_ptr<rectangle_>(new rectangle_ { XPos* scale + m_TransformPos.x, YPos* scale + m_TransformPos.y, width* scale, height* scale });
 
         //works as intended but 
-        m_CollisionTiles.push_back(rect);
+        collision.push_back(rect);
     
+
+}
+
+void TileMapLoader::MoveTilemap(float2 translation)
+{
+    for (std::shared_ptr<dae::GameObject> tile : PngTiles)
+    {
+        tile->GetTransform()->Translate(translation);
+    }
+
+
+    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionWalls1)
+    {
+        collisionTile->posX += translation.x;
+        collisionTile->posY += translation.y;
+    }
+    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionWalls2)
+    {
+        collisionTile->posX += translation.x;
+        collisionTile->posY += translation.y;
+    }
+    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionWalls3)
+    {
+        collisionTile->posX += translation.x;
+        collisionTile->posY += translation.y;
+    }
+    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionPlatforms1)
+    {
+        collisionTile->posX += translation.x;
+        collisionTile->posY += translation.y;
+    }
+    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionPlatforms2)
+    {
+        collisionTile->posX += translation.x;
+        collisionTile->posY += translation.y;
+    }
+    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionPlatforms3)
+    {
+        collisionTile->posX += translation.x;
+        collisionTile->posY += translation.y;
+    }
 
 }
 

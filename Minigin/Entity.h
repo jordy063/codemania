@@ -5,7 +5,7 @@ namespace dae
 {
 	class GameObject;
 }
-
+class Player;
 class Entity
 {
 public:
@@ -20,10 +20,10 @@ public:
 	virtual void Initialize();
 	
 
-	virtual void Update(float elapsedSecs);
+	virtual void Update(float elapsedSecs, std::shared_ptr<Player> player);
 	void Render();
 
-	std::shared_ptr<dae::GameObject> GetGameObject() const { ; return m_EntityObject; };
+	std::shared_ptr<dae::GameObject> GetGameObject() const { return m_EntityObject; };
 
 protected:
 	std::shared_ptr<dae::GameObject> m_EntityObject;

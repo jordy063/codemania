@@ -49,7 +49,11 @@ namespace comps
 		ShootUpCommand m_ShootUpCommand;
 		
 		float m_timeout;
-
+		float m_ShootTimer;
+		float m_ShootDuration;
+		bool m_IsShooting;
+		int m_ActiveRow;
+		int m_SpriteId;
 	};
 }
 

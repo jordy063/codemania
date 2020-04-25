@@ -38,28 +38,5 @@ void comps::AIComponent::Update(const dae::Scene& scene, float elapsedSecs, floa
 
 	//add logic for ai
 
-	int randomDirection{ rand() % 4 };
-	float jumpSpeed{ 180.0f };
-
-	if (m_Timer > m_ChangeDirectionTime)
-	{
-		switch (randomDirection)
-		{
-		case 0:
-			
-			break;
-		case 1:
-			m_MoveRightCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);
-			break;
-		case 2:
-			m_MoveUpCommand.Execute(pPhysicsComp, pSpriteComp, jumpSpeed);
-			break;
-		case 3:
-			m_MoveLeftCommand.Execute(pPhysicsComp, pSpriteComp, m_Speed);
-			break;
-		}
-		m_Timer = 0;
-	}
-	m_Timer += elapsedSecs;
 	
 }

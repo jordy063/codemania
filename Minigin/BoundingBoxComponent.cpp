@@ -2,8 +2,9 @@
 #include "BoundingBoxComponent.h"
 
 
-comps::BoundingBoxComponent::BoundingBoxComponent(std::list < std::shared_ptr<rectangle_>> collisionList, std::shared_ptr<PhysicsComponent> physicsComp, float width, float height)
-	:m_CollisionList(collisionList)
+comps::BoundingBoxComponent::BoundingBoxComponent(std::list < std::shared_ptr<rectangle_>> collisionWalls, std::list < std::shared_ptr<rectangle_>> collisionPlatforms, std::shared_ptr<PhysicsComponent> physicsComp, float width, float height)
+	:m_CollisionWalls(collisionWalls)
+	,m_CollisionPlatforms(collisionPlatforms)
 	, m_pPhysicsComp(physicsComp)
 	,m_Width(width)
 	,m_Height(height)
@@ -33,6 +34,12 @@ void comps::BoundingBoxComponent::SetAlignment(HAlign hAlign, VAlign vAlign)
 	m_Alignment.second = vAlign;
 }
 
+void comps::BoundingBoxComponent::SetNewBoundingBox(std::list<std::shared_ptr<rectangle_>> collisionWalls, std::list<std::shared_ptr<rectangle_>> collisionPlatforms)
+{
+	m_CollisionWalls = collisionWalls;
+	m_CollisionPlatforms = collisionPlatforms;
+}
+
 void comps::BoundingBoxComponent::Initialize(const dae::Scene& scene)
 {
 	UNREFERENCED_PARAMETER(scene);
@@ -45,7 +52,41 @@ void comps::BoundingBoxComponent::Update(const dae::Scene& scene, float elapsedS
 	UNREFERENCED_PARAMETER(pos);
 	
 
-	if (IsRectangleOverlapping(elapsedSecs*2,false) && !IsRectangleOverlapping(0, false))
+	//if (IsRectangleOverlapping(elapsedSecs * 2, false, m_CollisionWalls) && !IsRectangleOverlapping(0, false, m_CollisionWalls))
+	//{
+	//	if (m_pPhysicsComp->GetVelocity().y > 0)
+	//	{
+	//		m_pPhysicsComp->SetSpeedY(0);
+	//		m_pPhysicsComp->SetAirborne(false);
+	//	}
+	//}
+	//else
+	//{
+	//	m_pPhysicsComp->SetAirborne(true);
+	//}
+	//if (IsRectangleOverlapping(elapsedSecs * 2, true, m_CollisionWalls))
+	//{
+	//	m_pPhysicsComp->SetSpeedX(0);
+	//}
+
+	//if (IsRectangleOverlapping(elapsedSecs * 2, false, m_CollisionPlatforms) && !IsRectangleOverlapping(0, false, m_CollisionPlatforms))
+	//{
+	//	if (m_pPhysicsComp->GetVelocity().y > 0)
+	//	{
+	//		m_pPhysicsComp->SetSpeedY(0);
+	//		m_pPhysicsComp->SetAirborne(false);
+	//	}
+	//}
+	//else
+	//{
+	//	m_pPhysicsComp->SetAirborne(true);
+	//}
+	bool platFormTouchedY{ IsRectangleOverlapping(elapsedSecs * 2,false,m_CollisionPlatforms) };
+	bool platFormTouchedYCurrent{ IsRectangleOverlapping(0, false,m_CollisionPlatforms) };
+	bool wallsTouchedY{ IsRectangleOverlapping(elapsedSecs * 2, false, m_CollisionWalls) };
+
+
+	if (platFormTouchedY && !platFormTouchedYCurrent)
 	{
 		if (m_pPhysicsComp->GetVelocity().y > 0)
 		{
@@ -53,11 +94,17 @@ void comps::BoundingBoxComponent::Update(const dae::Scene& scene, float elapsedS
 			m_pPhysicsComp->SetAirborne(false);
 		}
 	}
-	else
+	if (wallsTouchedY)
+	{
+		m_pPhysicsComp->SetSpeedY(0);
+		m_pPhysicsComp->SetAirborne(false);
+	}
+	if (wallsTouchedY == false && platFormTouchedY == false)
 	{
 		m_pPhysicsComp->SetAirborne(true);
 	}
-	if (IsRectangleOverlapping(elapsedSecs * 2, true))
+
+	if (IsRectangleOverlapping(elapsedSecs * 2, true, m_CollisionWalls))
 	{
 		m_pPhysicsComp->SetSpeedX(0);
 	}
@@ -65,7 +112,7 @@ void comps::BoundingBoxComponent::Update(const dae::Scene& scene, float elapsedS
 
 
 }
-bool comps::BoundingBoxComponent::IsRectangleOverlapping(float elapsedSecs,bool xonly)
+bool comps::BoundingBoxComponent::IsRectangleOverlapping(float elapsedSecs,bool xonly, std::list < std::shared_ptr<rectangle_>>& collision)
 {
 	auto boundingBox{ GetBoundingBox(elapsedSecs,xonly) };
 
@@ -74,7 +121,7 @@ bool comps::BoundingBoxComponent::IsRectangleOverlapping(float elapsedSecs,bool 
 	float boundingboxUp = boundingBox.posY;
 	float boundingboxDown = boundingBox.posY + boundingBox.height;
 
-	for (std::shared_ptr<rectangle_> collisionBox : m_CollisionList)
+	for (std::shared_ptr<rectangle_> collisionBox : collision)
 	{
 		float collisionboxLeft = collisionBox->posX;
 		float collisionboxRight = collisionBox->posX + collisionBox->width;

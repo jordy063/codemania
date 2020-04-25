@@ -37,6 +37,7 @@ namespace comps
 		float2 GetFuturePosition(float elapsedSecs);
 		float2 GetFuturePositionX(float elapsedSecs);
 		float2 GetFuturePositionY(float elapsedSecs);
+		bool GetGravityEnabled() const { return m_UseGravity; }
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
