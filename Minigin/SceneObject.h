@@ -6,7 +6,7 @@ namespace dae
 	public:
 		virtual void Initialize() = 0;
 		virtual void Update(float elapsedSecs) = 0;
-		virtual void Render() const = 0;
+		virtual void Render() = 0;
 
 		SceneObject() {};
 		virtual ~SceneObject() = default;

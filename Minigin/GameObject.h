@@ -7,8 +7,9 @@
 #include "SceneObject.h"
 #include "BaseComponent.h"
 #include "Scene.h"
+#include <map>
 
-
+class TileMapLoader;
 
 namespace dae
 {
@@ -16,7 +17,7 @@ namespace dae
 	{
 	public:
 		
-		void Render() const override;
+		void Render() override;
 		void Update(float elapsedSecs) override;
 		void SetPosition(float x, float y);
 		void SetScale(float x, float y);
@@ -30,23 +31,41 @@ namespace dae
 
 		std::shared_ptr <TransformComponent> GetTransform() const { return m_pTransform; }
 
-		void AddComponent(std::shared_ptr<comps::BaseComponent> comp);
+		void AddComponent(std::shared_ptr<comps::BaseComponent> comp, ComponentType type);
 		void ChangeScene(Scene* newScene);
+		void Clear();
 
 
 		void Initialize();
 		void PostInitialize(const Scene&) {};
 		void PostDraw(const Scene&) {};
+		void RegisterTileMap(std::shared_ptr<TileMapLoader> tileMapLoader);
+		std::shared_ptr<TileMapLoader> GetTileMap() { return m_pTileMap; }
 
-		
+		//template <class T>
+		//bool HasComponent()
+		//{
+		//	return GetComponent<T>() != nullptr;
+		//}
+
+		//template <class T>
+		std::shared_ptr<comps::BaseComponent> GetComponent(ComponentType type)
+		{
+			unsigned int key = type;
+			if(key >= 0 && key < m_pComponents.size())
+			return m_pComponents[key];
+			
+			
+			return nullptr;
+		}
 
 	private:
-		
 		std::shared_ptr <TransformComponent> m_pTransform;
-		std::vector<std::shared_ptr<comps::BaseComponent>> m_pComponents;
+		std::map<int,std::shared_ptr<comps::BaseComponent>> m_pComponents;
+		//std::vector<std::shared_ptr<comps::BaseComponent>> m_pComponents;
 		Scene* m_pScene;
-
-
+		std::shared_ptr<TileMapLoader> m_pTileMap;
+		std::vector<ComponentType> m_Types;
 		
 	};
 }

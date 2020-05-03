@@ -4,14 +4,17 @@
 #include "Renderer.h"
 
 
-comps::SpriteComponent::SpriteComponent(std::string filename,int rows, int colls, int frameBegin, int frameEnd, float UpdateSpeed)
+
+comps::SpriteComponent::SpriteComponent(std::string filename,int rows, int colls, int spriteIndex,float updateSpeed,float width,float height)
 	:m_Rows{rows}
 	,m_Colls{colls}
-	,m_FrameBegin{frameBegin}
-	,m_FrameEnd{frameEnd}
-	,m_UpdateSpeed{UpdateSpeed}
-	,m_FrameNumber{frameBegin}
-	,TextureComponent{ filename }
+	,m_FrameBegin{ spriteIndex*2 * colls}
+	,m_FrameEnd{ spriteIndex * 2 + 1* colls }
+	,m_UpdateSpeed{ updateSpeed }
+	,m_FrameNumber{ spriteIndex * 2 }
+	, TextureComponent{ filename,width,height }
+	, m_Timer{}
+	, m_SpriteIndex{spriteIndex}
 {
 }
 
@@ -22,13 +25,27 @@ comps::SpriteComponent::~SpriteComponent()
 
 void comps::SpriteComponent::SetActiveRow(int row)
 {
-	SetBeginEndFrames(row*m_Colls, row*m_Colls + m_Colls);
+	//calculate which row is asked with the spriteID
+	//row + id*2
+	int actualRow = row + m_SpriteIndex * 2;
+	SetBeginEndFrames(actualRow *m_Colls, actualRow *m_Colls + m_Colls);
+}
+
+void comps::SpriteComponent::SetActiveRowStop()
+{
+	SetBeginEndFrames(m_FrameBegin, m_FrameBegin+1);
 }
 
 void comps::SpriteComponent::SetBeginEndFrames(int beginFrame, int endFrame)
 {
 	m_FrameBegin = beginFrame;
 	m_FrameEnd = endFrame;
+}
+
+void comps::SpriteComponent::SetBeginEndFrames(int beginFrame, int endFrame,int collsApart)
+{
+	m_FrameBegin = beginFrame + m_SpriteIndex* collsApart;
+	m_FrameEnd = endFrame + m_SpriteIndex * collsApart;
 }
 
 void comps::SpriteComponent::Initialize(const dae::Scene & scene)
@@ -58,13 +75,13 @@ void comps::SpriteComponent::Render(const dae::Scene & scene, float2 pos)
 {
 	UNREFERENCED_PARAMETER(scene);
 	
-	int width = m_pTexture->GetSize().first / m_Colls;
-	int height = m_pTexture->GetSize().second / m_Rows;
+	float width = float(m_pTexture->GetSize().first / m_Colls);
+	float height = float(m_pTexture->GetSize().second / m_Rows);
 
 	int x = m_FrameNumber % m_Colls;
 	int y = m_FrameNumber / m_Colls;
 
-	Rectangle_ srcRect{ x*width,y*height,width,height };
+	rectangle_ srcRect{ x*width,y*height,width,height };
 
 	if (m_pTexture != nullptr)
 	{

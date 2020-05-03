@@ -6,6 +6,7 @@ TransformComponent::TransformComponent()
 	:m_Position{0,0}
 	,m_Rotation{0,0}
 	,m_Scale{1,1}
+	,m_Speed{0}
 {
 }
 
@@ -59,4 +60,9 @@ void TransformComponent::Scale(float x, float y)
 void TransformComponent::Scale(float2 position)
 {
 	Scale(position.x, position.y);
+}
+
+void TransformComponent::SetSpeed(float speed)
+{
+	m_Speed = speed;
 }
