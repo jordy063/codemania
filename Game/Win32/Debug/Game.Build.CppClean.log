@@ -1,7 +1,11 @@
+d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\game.pch
+d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\vc142.pdb
+d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\vc142.idb
+d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\bubblecomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\bullet.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\bulletmanager.obj
-d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\command.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\enemy.obj
+d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\enemymanager.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\enemyobserver.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\ghost.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\ghostaicomponent.obj
@@ -15,7 +19,7 @@ d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\player.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\playercomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\tilemaploader.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\zenchan.obj
-d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\game.pch
-d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\vc142.idb
-d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\vc142.pdb
+d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\zenchanaicomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\game.tlog\cl.command.1.tlog
+d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\game.tlog\cl.read.1.tlog
+d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\game.tlog\cl.write.1.tlog

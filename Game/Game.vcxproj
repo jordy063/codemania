@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BubbleComponent.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Command.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="ZenChanAIComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BubbleComponent.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Command.cpp" />

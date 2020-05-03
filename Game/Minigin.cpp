@@ -79,6 +79,7 @@ void dae::Minigin::LoadGame()
 	m_pPlayer2->GetGameObject()->GetTransform()->Translate(150, 50);*/
 
 	//scene.Add(m_pPlayer2);
+	BulletManager::GetInstance().RegisterPlayer(m_pPlayer);
 	EnemyManager::GetInstance().RegisterPlayer(m_pPlayer);
 	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 1);
 	

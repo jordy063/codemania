@@ -18,7 +18,7 @@ namespace comps
 		GhostAIComponent(std::shared_ptr<dae::GameObject> pPlayerObject
 			, std::shared_ptr<comps::SpriteComponent> pSpriteComp, std::shared_ptr<comps::PhysicsComponent> pPhysicsComp,
 			std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
-
+		~GhostAIComponent() = default;;
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
 		virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
