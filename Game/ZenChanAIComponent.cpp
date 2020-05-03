@@ -5,20 +5,17 @@
 #include "PhysicsComponent.h"
 
 
-comps::ZenChanAIComponent::ZenChanAIComponent(std::shared_ptr<comps::BoundingBoxComponent> pPlayerBoundingBoxComp,
-	std::shared_ptr<comps::HealthComponent> pPlayerHealthComp, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
-	std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox, std::shared_ptr<comps::PhysicsComponent> pPlayerPhysicsComp)
+comps::ZenChanAIComponent::ZenChanAIComponent(std::shared_ptr<dae::GameObject> pPlayerObject, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
+	std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
 	:m_pPhysicsComp(pPhysicsComp)
 	,m_pBoundingBoxComp(pBoundingBox)
-	,m_pPlayerBoundingBox(pPlayerBoundingBoxComp)
-	,m_pPlayerHealthComp(pPlayerHealthComp)
 	,m_pSpriteComp(pSpriteComp)
-	, m_pPlayerPhysicsComp(pPlayerPhysicsComp)
 	, m_SpriteId(1)
 	, m_Timer(0)
 	, m_ChangeDirectionTime(2)
 	, m_JumpTimer(0)
 	, m_JumpTime(1.0f)
+	,m_pPlayer(pPlayerObject)
 {
 	m_Speed = { 30.0f,15.0f };
 }
@@ -27,7 +24,14 @@ comps::ZenChanAIComponent::ZenChanAIComponent(std::shared_ptr<comps::BoundingBox
 void comps::ZenChanAIComponent::Initialize(const dae::Scene& scene)
 {
 	UNREFERENCED_PARAMETER(scene);
+	auto boundingBoxComp = m_pPlayer->GetComponent(ComponentType::BOUNDINGBOXCOMP);
+	m_pPlayerBoundingBox = std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp);
 
+	auto healthComp = m_pPlayer->GetComponent(ComponentType::HEALTHCOMPONENT);
+	m_pPlayerHealthComp = std::dynamic_pointer_cast<comps::HealthComponent>(healthComp);
+
+	auto physicsComp = m_pPlayer->GetComponent(ComponentType::PHYSICSCOMP);
+	m_pPlayerPhysicsComp = std::dynamic_pointer_cast<comps::PhysicsComponent>(physicsComp);
 }
 
 void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSecs, float2 pos)

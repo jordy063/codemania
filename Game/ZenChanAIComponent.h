@@ -16,9 +16,9 @@ namespace comps
 	class ZenChanAIComponent final : public comps::BaseComponent
 	{
 	public:
-		ZenChanAIComponent(std::shared_ptr<comps::BoundingBoxComponent> pPlayerBoundingBoxComp, std::shared_ptr<comps::HealthComponent> pPlayerHealthComp
-			, std::shared_ptr<comps::SpriteComponent> pSpriteComp, std::shared_ptr<comps::PhysicsComponent> pPhysicsComp,
-			std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox, std::shared_ptr<comps::PhysicsComponent> pPlayerPhysicsComp);
+		ZenChanAIComponent(std::shared_ptr<dae::GameObject> pPlayerObject
+			,std::shared_ptr<comps::SpriteComponent> pSpriteComp, std::shared_ptr<comps::PhysicsComponent> pPhysicsComp,
+			std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -50,5 +50,6 @@ namespace comps
 		float m_JumpTime;
 		bool m_JumpTimeSet = false;
 		bool DoRandomJumps = false;
+		std::shared_ptr<dae::GameObject> m_pPlayer;
 	};
 }

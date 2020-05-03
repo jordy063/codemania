@@ -15,7 +15,7 @@ namespace comps
 	class GhostAIComponent final : public comps::BaseComponent
 	{
 	public:
-		GhostAIComponent(std::shared_ptr<dae::GameObject> playerObject
+		GhostAIComponent(std::shared_ptr<dae::GameObject> pPlayerObject
 			, std::shared_ptr<comps::SpriteComponent> pSpriteComp, std::shared_ptr<comps::PhysicsComponent> pPhysicsComp,
 			std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 

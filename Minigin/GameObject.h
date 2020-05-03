@@ -52,7 +52,7 @@ namespace dae
 		std::shared_ptr<comps::BaseComponent> GetComponent(ComponentType type)
 		{
 			unsigned int key = type;
-			if(key >= 0 && key < m_pComponents.size())
+			if(key >= 0 && key <= ComponentType::FPSCOMPONENT)
 			return m_pComponents[key];
 			
 			

@@ -5,182 +5,194 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Components">
+    <Filter Include="engine">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="engine\Components">
       <UniqueIdentifier>{c54e554f-6f04-4ef0-b5d3-38b88968a9a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\scene">
+      <UniqueIdentifier>{217cbf1b-b761-4abf-822a-126583f83ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\helpers">
+      <UniqueIdentifier>{ade3cf2b-ad5d-4805-ba43-918fd03283da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\graphics">
+      <UniqueIdentifier>{996b3b6f-270a-4a9f-9c79-104a52705a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\prefabs">
+      <UniqueIdentifier>{1467ba42-4250-466d-99a0-bfa290cdf2ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BaseComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Header Files</Filter>
+      <Filter>engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="SpriteComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="MiniginPCH.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio.h">
-      <Filter>Header Files</Filter>
+      <Filter>engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="BoundingBoxComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="XboxController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="structs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
+      <Filter>engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="FpsComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="FPSCounter.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObject.h">
+      <Filter>engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>engine\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>engine\helpers</Filter>
     </ClInclude>
     <ClInclude Include="TileMapLoader.h">
-      <Filter>Header Files</Filter>
+      <Filter>engine\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniginPCH.h">
+      <Filter>engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCounter.h">
+      <Filter>engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>engine\helpers</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager2.h">
-      <Filter>Header Files</Filter>
+      <Filter>engine\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="XboxController.h">
+      <Filter>engine\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>engine\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>engine\prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>engine\prefabs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BaseComponent.cpp">
-      <Filter>Header Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="SpriteComponent.cpp">
-      <Filter>Header Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="MiniginPCH.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="BoundingBoxComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="XboxController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="FpsComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="FPSCounter.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>engine\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>engine\helpers</Filter>
     </ClCompile>
     <ClCompile Include="TileMapLoader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>engine\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniginPCH.cpp">
+      <Filter>engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCounter.cpp">
+      <Filter>engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>engine\helpers</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager2.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>engine\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="XboxController.cpp">
+      <Filter>engine\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>engine\prefabs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

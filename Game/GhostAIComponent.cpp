@@ -6,13 +6,13 @@
 #include "HealthComponent.h"
 
 //here we'll have to pass the gameobject of the player and get the components. that way we can pass a list of players 
-comps::GhostAIComponent::GhostAIComponent(std::shared_ptr<dae::GameObject> playerObject
+comps::GhostAIComponent::GhostAIComponent(std::shared_ptr<dae::GameObject> pPlayerObject
 	, std::shared_ptr<comps::SpriteComponent> pSpriteComp, std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
 	:m_pPhysicsComp(pPhysicsComp)
 	,m_pSpriteComp(pSpriteComp)
 	,m_pBoundingBoxComp(pBoundingBox)
 	, m_IsAnimationStarted(false)
-	, m_pPlayer(playerObject)
+	, m_pPlayer(pPlayerObject)
 {
 	m_Speed = { 60.0f,30.0f };
 
