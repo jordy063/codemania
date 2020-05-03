@@ -1,0 +1,55 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Minigin.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  MiniginPCH.cpp
+  BaseComponent.cpp
+  BoundingBoxComponent.cpp
+  BulletManager.cpp
+  Command.cpp
+  Enemy.cpp
+  Audio.cpp
+  Bullet.cpp
+  EnemyManager.cpp
+  EnemyObserver.cpp
+  Font.cpp
+  FpsComponent.cpp
+  FPSCounter.cpp
+  GameObject.cpp
+  Ghost.cpp
+  GhostAIComponent.cpp
+  HealthComponent.cpp
+  InputComponent.cpp
+  InputManager.cpp
+  InputObserver.cpp
+  Item.cpp
+  Generating Code...
+  Compiling...
+  ItemManager.cpp
+  Log.cpp
+  Logger.cpp
+  Main.cpp
+  Minigin.cpp
+  Entity.cpp
+  PhysicsComponent.cpp
+  Player.cpp
+  PlayerComponent.cpp
+  Renderer.cpp
+  ResourceManager.cpp
+  Scene.cpp
+  SceneManager.cpp
+  SoundCommand.cpp
+  SoundManager.cpp
+  SoundManager2.cpp
+  SpriteComponent.cpp
+  TextComponent.cpp
+  TextObject.cpp
+  Texture2D.cpp
+  Generating Code...
+  Compiling...
+  TextureComponent.cpp
+  TileMapLoader.cpp
+  Transform.cpp
+  TransformComponent.cpp
+  XboxController.cpp
+  ZenChan.cpp
+  ZenChanAIComponent.cpp
+  Generating Code...
+LINK : fatal error LNK1104: cannot open file 'D:\Jordy\DAE2-Redo\programming 4\Exam_Assignment - Copy - Copy - Copy\x64\Debug\PlatEngine.lib'

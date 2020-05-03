@@ -24,6 +24,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Minigin</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Game</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -94,7 +95,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)PlatEngine;$(SolutionDir)3rdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>MiniginPCH.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -119,7 +120,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\x86\*.dll" "$(OutputPath)" /R
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)PlatEngine;$(SolutionDir)3rdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>MiniginPCH.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -146,7 +147,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\x64\*.dll" "$(OutputPath)" /R
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)PlatEngine;$(SolutionDir)3rdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>MiniginPCH.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -175,7 +176,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\x86\*.dll" "$(OutputPath)" /R
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)PlatEngine;$(SolutionDir)3rdParty\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>MiniginPCH.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -195,72 +196,64 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\x64\*.dll" "$(OutputPath)" /R
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="AIComponent.h" />
-    <ClInclude Include="Audio.h" />
-    <ClInclude Include="BaseComponent.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="BoundingBoxComponent.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemyObserver.h" />
     <ClInclude Include="Font.h" />
-    <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ghost.h" />
-    <ClInclude Include="InputComponent.h" />
+    <ClInclude Include="GhostAIComponent.h" />
+    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InputObserver.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Minigin.h" />
-    <ClInclude Include="MiniginPCH.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="InputObserver.h" />
+    <ClInclude Include="MiniginPCH.h" />
     <ClInclude Include="NullAudio.h" />
-    <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="SceneObject.h" />
+    <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundCommand.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SoundManager2.h" />
-    <ClInclude Include="SpriteComponent.h" />
-    <ClInclude Include="structs.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Texture2D.h" />
-    <ClInclude Include="TextComponent.h" />
-    <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="TileMapLoader.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="XboxController.h" />
     <ClInclude Include="ZenChan.h" />
+    <ClInclude Include="ZenChanAIComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="AIComponent.cpp" />
-    <ClCompile Include="Audio.cpp" />
-    <ClCompile Include="BaseComponent.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="BoundingBoxComponent.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EnemyObserver.cpp" />
     <ClCompile Include="Font.cpp" />
-    <ClCompile Include="FpsComponent.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ghost.cpp" />
-    <ClCompile Include="InputComponent.cpp" />
+    <ClCompile Include="GhostAIComponent.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputObserver.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -269,16 +262,15 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\x64\*.dll" "$(OutputPath)" /R
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="MiniginPCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MiniginPCH.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -286,19 +278,21 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\x64\*.dll" "$(OutputPath)" /R
     <ClCompile Include="SoundCommand.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SoundManager2.cpp" />
-    <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Texture2D.cpp" />
-    <ClCompile Include="TextComponent.cpp" />
-    <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="TileMapLoader.cpp" />
     <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="XboxController.cpp" />
     <ClCompile Include="ZenChan.cpp" />
+    <ClCompile Include="ZenChanAIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Minigin.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlatEngine\PlatEngine.vcxproj">
+      <Project>{f1a1d279-0cc9-47d3-a1c7-c0399b5270ae}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,19 @@
+﻿  BaseComponent.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\Minigin\BaseComponent.cpp': No such file or directory
+  BoundingBoxComponent.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\Minigin\BoundingBoxComponent.cpp': No such file or directory
+  FpsComponent.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\Minigin\FpsComponent.cpp': No such file or directory
+  InputComponent.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\Minigin\InputComponent.cpp': No such file or directory
+  PhysicsComponent.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\Minigin\PhysicsComponent.cpp': No such file or directory
+  SpriteComponent.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\Minigin\SpriteComponent.cpp': No such file or directory
+  TextComponent.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\Minigin\TextComponent.cpp': No such file or directory
+  TextureComponent.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\Minigin\TextureComponent.cpp': No such file or directory
+  TransformComponent.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\Minigin\TransformComponent.cpp': No such file or directory
+  Generating Code...
