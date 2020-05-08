@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "GameObject.h"
 #include "BulletManager.h"
+#include "SoundManager2.h"
 
 void MakeBullet(std::shared_ptr<comps::PhysicsComponent> physicsComp, comps::Direction direction,int id)
 {

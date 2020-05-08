@@ -125,6 +125,10 @@ float2 comps::PhysicsComponent::GetFuturePositionY(float elapsedSecs)
 	float2 currentPos = GetTransform()->GetPosition();
 	return float2{ currentPos.x, currentPos.y + m_Velocity.y * elapsedSecs };
 }
+void comps::PhysicsComponent::SetGravity(bool isActive)
+{
+	m_UseGravity = isActive;
+}
 void comps::PhysicsComponent::SetMovementSpeed(float speed)
 {
 	m_MovementSpeed = speed;

@@ -1,0 +1,6 @@
+nl
+{
+"nl": {"menu_start" : "start", "menu_quit" : "stoppen", "menu_options": "opties"},
+"en": {"menu_start" : "start", "menu_quit" : "quit", "menu_options": "options"}
+}
+

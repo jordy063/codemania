@@ -25,6 +25,7 @@
 #include "HealthComponent.h"
 #include "ZenChanAIComponent.h"
 #include "structs.h"
+#include "Menu.h"
 
 
 
@@ -67,6 +68,8 @@ void dae::Minigin::LoadGame()
 
 	scene.AddTileMap(loader);
 
+	m_pMenu = std::shared_ptr<Menu>(new Menu({ 0,0 }));
+
 	MakePlayer(-1, 0, scene);
 	
 	/*m_pPlayer = std::shared_ptr<Player>(new Player(-1,0, SceneManager::GetInstance().GetActiveScene()));
@@ -86,6 +89,8 @@ void dae::Minigin::LoadGame()
 	SoundManager2::GetInstance().Init();
 	std::string filename{ "../Sounds/drumloop.wav" };
 	SoundManager2::GetInstance().playMusic(filename);
+
+
 	/*auto background = std::make_shared<GameObject>();
 	auto texture1 = new comps::TextureComponent("background.jpg");
 	background->AddComponent(texture1);

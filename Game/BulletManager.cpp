@@ -53,11 +53,28 @@ void BulletManager::RegisterPlayer(std::shared_ptr<dae::GameObject> pPlayerObjec
 void BulletManager::Update()
 {
 	//for all enemies check if they overlap
-	for (std::shared_ptr<Bullet> bullet : m_pBullets)
+	/*for (std::shared_ptr<Bullet> bullet : m_pBullets)
 	{
 		EnemyManager::GetInstance().CheckIfHit(bullet);
-	}
+	}*/
 
 	//if they do change the enemy to a different sprite depending on the type Also set it in a certain state
 	//while in that state it goes up for a small amount of time and has collision
+}
+
+void BulletManager::AddBoundingBoxToList(std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
+{
+	
+	
+	m_pTriggeredBullets.push_back(pBoundingBox);
+
+	auto rect = std::shared_ptr<rectangle_>(new rectangle_{ pBoundingBox->GetBoundingBox(0,0) });
+	m_pBulletCollisionList.push_back(rect);
+	for (std::shared_ptr<comps::BoundingBoxComponent> boundingBox : m_pTriggeredBullets)
+	{
+		//we need all boundingboxes
+		boundingBox->SetExtraCollisions(m_pBulletCollisionList);
+		//set the current list of boundingboxes in the boundingboxcomp
+
+	}
 }

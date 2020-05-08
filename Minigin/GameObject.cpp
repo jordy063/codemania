@@ -41,6 +41,7 @@ void dae::GameObject::ChangeScene(Scene * newScene)
 void dae::GameObject::Clear()
 {
 	m_pComponents.clear();
+	m_Types.clear();
 	//m_pComponents.push_back(m_pTransform);
 }
 

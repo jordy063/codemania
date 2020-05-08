@@ -62,6 +62,19 @@ bool comps::BoundingBoxComponent::IsOverlapping(std::shared_ptr<BoundingBoxCompo
 	return false;
 }
 
+void comps::BoundingBoxComponent::SetExtraCollisions(std::list<std::shared_ptr<rectangle_>> extraCollisionList)
+{
+	for (std::shared_ptr<rectangle_> boundingBox : extraCollisionList)
+	{
+		auto currentBoundingBox = GetBoundingBox(0, 0);
+		if (currentBoundingBox.posX != boundingBox->posX && currentBoundingBox.posY != boundingBox->posY)
+		{
+			m_ExtraCollisions.push_back(boundingBox);
+		}
+	}
+
+}
+
 void comps::BoundingBoxComponent::Initialize(const dae::Scene& scene)
 {
 	UNREFERENCED_PARAMETER(scene);
@@ -130,6 +143,23 @@ void comps::BoundingBoxComponent::Update(const dae::Scene& scene, float elapsedS
 	{
 		m_pPhysicsComp->SetSpeedX(0);
 	}
+
+	//also check for bullets. if they touch stop
+	//shouldn't happen for normal bullets, only when they go up
+	if (IsRectangleOverlapping(elapsedSecs * 2, true, m_ExtraCollisions))
+	{
+		m_pPhysicsComp->SetSpeedX(0);
+		m_pPhysicsComp->SetSpeedY(0);
+	}
+	/*for (std::shared_ptr<rectangle_> boundingBox : m_ExtraCollisions)
+	{
+		if (GetBoundingBox(0, 0).posX != boundingBox->posX && GetBoundingBox(0, 0).posY != boundingBox->posY && GetBoundingBox(0, 0).height != boundingBox->height && GetBoundingBox(0, 0).width != boundingBox->width)
+		{
+			auto futureBoundingBox = GetBoundingBox(elapsedSecs, false);
+
+		
+		}
+	}*/
 
 
 

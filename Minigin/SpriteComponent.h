@@ -12,6 +12,8 @@ namespace comps
 		void SetBeginEndFrames(int beginFrame, int endFrame);
 		void SetBeginEndFrames(int beginFrame, int endFrame,int collsApart);
 		void SetActiveRowStop();
+		int GetSpriteIndex() const { return m_SpriteIndex; }
+
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;

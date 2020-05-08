@@ -30,6 +30,11 @@ namespace comps
 		int m_SpriteId;
 		comps::Direction m_Direction;
 		bool speedSet = false;
+		bool m_IsOverlapping = false;
+		float m_GoUpTimer;
+		float m_GoUpTime;
+		bool m_IsTimerReached = false;
+		bool m_HasHitEnemy = false;
 	};
 }
 

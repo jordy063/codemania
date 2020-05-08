@@ -17,6 +17,7 @@ namespace comps
 		void SetAlignment(HAlign hAlign, VAlign vAlign);
 		void SetNewBoundingBox(std::list < std::shared_ptr<rectangle_>> collisionWalls, std::list < std::shared_ptr<rectangle_>> collisionPlatforms);
 		bool IsOverlapping(std::shared_ptr< BoundingBoxComponent> pBoundingBox);
+		void SetExtraCollisions(std::list<std::shared_ptr<rectangle_>> extraCollisionList);
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -26,6 +27,7 @@ namespace comps
 
 		std::list < std::shared_ptr<rectangle_>> m_CollisionWalls;
 		std::list < std::shared_ptr<rectangle_>> m_CollisionPlatforms;
+		std::list < std::shared_ptr<rectangle_>> m_ExtraCollisions;
 		std::shared_ptr<PhysicsComponent> m_pPhysicsComp;
 		std::pair< HAlign, VAlign> m_Alignment;
 		float m_Width;

@@ -2,6 +2,7 @@
 #include "BaseComponent.h"
 #include "TransformComponent.h"
 #include <map>
+#include <SDL_image.h>
 
 namespace comps
 {
@@ -38,6 +39,7 @@ namespace comps
 		float2 GetFuturePositionX(float elapsedSecs);
 		float2 GetFuturePositionY(float elapsedSecs);
 		bool GetGravityEnabled() const { return m_UseGravity; }
+		void SetGravity(bool isActive);
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
