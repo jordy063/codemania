@@ -24,8 +24,8 @@ void Bullet::CreateComponents(int id,std::shared_ptr<dae::Scene> scene)
 	float defaultSpeed{ 20.0f };
 	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Bubble.png", 4, 8,id,0.2f,16,16));
 	auto physicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_EntityObject->GetTransform(),false, defaultSpeed));
-	m_pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene->GetTileMap()->GetCollisionWalls(1),
-		scene->GetTileMap()->GetCollisionPlatforms(1), physicsComp, 16, 16));
+	/*m_pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene->GetTileMap()->GetCollisionWalls(1),
+		scene->GetTileMap()->GetCollisionPlatforms(1), physicsComp, 16, 16));*/
 
 	m_EntityObject->AddComponent(spriteComp, ComponentType::SPRITECOMP);
 	m_EntityObject->AddComponent(m_pBoundingBox,ComponentType::BOUNDINGBOXCOMP);

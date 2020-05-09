@@ -8,6 +8,7 @@ namespace comps
 	class SpriteComponent;
 	class InputComponent;
 	class BoundingBoxComponent;
+	class CollisionComponent;
 	class HealthComponent;
 }
 namespace comps
@@ -16,7 +17,7 @@ namespace comps
 	{
 	public:
 		BubbleComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,
-			std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction, int id);
+			std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction, int id);
 		~BubbleComponent() = default;
 
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -24,6 +25,7 @@ namespace comps
 	private:
 		std::shared_ptr<comps::PhysicsComponent> m_pPhysicsComp;
 		std::shared_ptr<comps::BoundingBoxComponent> m_pBoundingBoxComp;
+		std::shared_ptr<comps::CollisionComponent> m_pCollisionComp;
 		std::shared_ptr<comps::SpriteComponent> m_pSpriteComp;
 
 		float m_BulletSpeed;
@@ -35,6 +37,8 @@ namespace comps
 		float m_GoUpTime;
 		bool m_IsTimerReached = false;
 		bool m_HasHitEnemy = false;
+
+
 	};
 }
 

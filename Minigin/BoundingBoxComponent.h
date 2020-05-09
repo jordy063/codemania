@@ -12,12 +12,12 @@ namespace comps
 	class BoundingBoxComponent final : public comps::BaseComponent
 	{
 	public:
-		BoundingBoxComponent(std::list < std::shared_ptr<rectangle_>> collisionWalls, std::list < std::shared_ptr<rectangle_>> collisionPlatforms, std::shared_ptr<PhysicsComponent> physicsComp,float width,float height);
+		BoundingBoxComponent(float width,float height, std::shared_ptr<comps::PhysicsComponent> pPhysicsComp);
+		~BoundingBoxComponent() = default;
 		rectangle_ GetBoundingBox(const float elapsedSecs, bool xonly) const;
 		void SetAlignment(HAlign hAlign, VAlign vAlign);
-		void SetNewBoundingBox(std::list < std::shared_ptr<rectangle_>> collisionWalls, std::list < std::shared_ptr<rectangle_>> collisionPlatforms);
 		bool IsOverlapping(std::shared_ptr< BoundingBoxComponent> pBoundingBox);
-		void SetExtraCollisions(std::list<std::shared_ptr<rectangle_>> extraCollisionList);
+
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -25,15 +25,10 @@ namespace comps
 	private:
 
 
-		std::list < std::shared_ptr<rectangle_>> m_CollisionWalls;
-		std::list < std::shared_ptr<rectangle_>> m_CollisionPlatforms;
-		std::list < std::shared_ptr<rectangle_>> m_ExtraCollisions;
 		std::shared_ptr<PhysicsComponent> m_pPhysicsComp;
 		std::pair< HAlign, VAlign> m_Alignment;
 		float m_Width;
 		float m_Height;
-
-		bool IsRectangleOverlapping(float elapsedSecs, bool xonly, std::list < std::shared_ptr<rectangle_>>& collision);
 
 
 	};

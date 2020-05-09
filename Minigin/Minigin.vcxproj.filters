@@ -117,6 +117,9 @@
     <ClInclude Include="Transform.h">
       <Filter>engine\prefabs</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>engine\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -193,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>engine\prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp">
+      <Filter>engine\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

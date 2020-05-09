@@ -7,6 +7,7 @@
 #include "InputComponent.h"
 #include "Scene.h"
 #include "TileMapLoader.h"
+#include "CollisionComponent.h"
 
 PlayerComponent::PlayerComponent(int controllerId, int spriteId)
     :m_ControllerId(controllerId)
@@ -24,11 +25,16 @@ void PlayerComponent::Initialize(const dae::Scene& scene)
 	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/CharacterSprite.png", 13, 8, m_SpriteId, 0.2f, 32, 32));
 	m_pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(playerObject->GetTransform(), true, movementSpeed));
 	auto inputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(m_pPhysicsComp, spriteComp, m_ControllerId));
-	m_pBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene.GetTileMap()->GetCollisionWalls(1), scene.GetTileMap()->GetCollisionPlatforms(1), m_pPhysicsComp, 16, 16));
+	//m_pBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene.GetTileMap()->GetCollisionWalls(1), scene.GetTileMap()->GetCollisionPlatforms(1), m_pPhysicsComp, 16, 16));
 
+	m_pBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, m_pPhysicsComp));
+
+	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(1),
+		scene.GetTileMap()->GetCollisionPlatforms(1), m_pPhysicsComp, m_pBoundingBoxComp));
 
 	playerObject->AddComponent(spriteComp, ComponentType::SPRITECOMP);
 	playerObject->AddComponent(m_pBoundingBoxComp, ComponentType::BOUNDINGBOXCOMP);
+	playerObject->AddComponent(pCollisionComp, ComponentType::COLLISIONCOMPONENT);
 	playerObject->AddComponent(m_pPhysicsComp, ComponentType::PHYSICSCOMP);
 	playerObject->AddComponent(inputComp, ComponentType::INPUTCOMPONENT);
 }

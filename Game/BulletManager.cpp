@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "TileMapLoader.h"
 #include "BubbleComponent.h"
+#include "CollisionComponent.h"
 
 void BulletManager::MakeBullet(const float2& position, comps::Direction direction, int id)
 {
@@ -29,12 +30,16 @@ void BulletManager::MakeBullet(const float2& position, comps::Direction directio
 	float defaultSpeed{ 20.0f };
 	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Bubble.png", 4, 8, id, 0.2f, 16, 16));
 	auto physicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(bulletObject->GetTransform(), false, defaultSpeed));
-	auto BoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(1),
-		dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(1), physicsComp, 16, 16));
-	auto bubbleComp = std::shared_ptr<comps::BubbleComponent>(new comps::BubbleComponent(physicsComp,BoundingBox,spriteComp,direction,id));
+
+	auto BoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, physicsComp));
+
+	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(1),
+		dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(1), physicsComp, BoundingBox));
+	auto bubbleComp = std::shared_ptr<comps::BubbleComponent>(new comps::BubbleComponent(physicsComp,BoundingBox,pCollisionComp,spriteComp,direction,id));
 
 	bulletObject->AddComponent(spriteComp, ComponentType::SPRITECOMP);
 	bulletObject->AddComponent(BoundingBox, ComponentType::BOUNDINGBOXCOMP);
+	bulletObject->AddComponent(pCollisionComp, ComponentType::COLLISIONCOMPONENT);
 	bulletObject->AddComponent(physicsComp, ComponentType::PHYSICSCOMP);
 	bulletObject->AddComponent(bubbleComp, ComponentType::BUBBLECOMPONENT);
 
@@ -62,18 +67,16 @@ void BulletManager::Update()
 	//while in that state it goes up for a small amount of time and has collision
 }
 
-void BulletManager::AddBoundingBoxToList(std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
+void BulletManager::AddBoundingBoxToList(std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
 {
 	
-	
 	m_pTriggeredBullets.push_back(pBoundingBox);
-
-	auto rect = std::shared_ptr<rectangle_>(new rectangle_{ pBoundingBox->GetBoundingBox(0,0) });
-	m_pBulletCollisionList.push_back(rect);
+	
+	
 	for (std::shared_ptr<comps::BoundingBoxComponent> boundingBox : m_pTriggeredBullets)
 	{
-		//we need all boundingboxes
-		boundingBox->SetExtraCollisions(m_pBulletCollisionList);
+		//we need all boundingboxes 
+		pCollisionComp->SetExtraCollisions(m_pTriggeredBullets);
 		//set the current list of boundingboxes in the boundingboxcomp
 
 	}

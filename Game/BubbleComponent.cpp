@@ -3,19 +3,23 @@
 #include "PhysicsComponent.h"
 #include "SpriteComponent.h"
 #include "BoundingBoxComponent.h"
+#include "CollisionComponent.h"
 #include "EnemyManager.h"
 #include "BulletManager.h"
 
 
-comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp, std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction,int id)
+comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,
+	std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction,int id)
 	:m_pPhysicsComp(pPhysicsComp)
 	, m_pBoundingBoxComp(pBoundingBoxComp)
 	, m_pSpriteComp(pSpriteBoxComp)
+	, m_pCollisionComp(pCollisionComp)
 	, m_BulletSpeed(30.f)
 	, m_Direction(direction)
 	, m_SpriteId(id)
 	,m_GoUpTimer(0)
 	,m_GoUpTime(2.0f)
+
 	
 {
 }
@@ -60,9 +64,11 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 		m_pPhysicsComp->SetSpeedX(0);
 		m_pPhysicsComp->SetGravity(false);
 		m_pPhysicsComp->SetMovement(comps::Direction::UP, m_BulletSpeed / 2);
-		BulletManager::GetInstance().AddBoundingBoxToList(m_pBoundingBoxComp);
+		BulletManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp,m_pBoundingBoxComp);
 		m_IsTimerReached = true;
 	}
+
+
 
 
 	//check if bullet overlaps with enemy. if so we change our sprite,clear the enemy,make him go up and add them to the list(maybe with bool) if the bool is true we can fill up a list in the bulletmanager and then whenever an enemy is hit 

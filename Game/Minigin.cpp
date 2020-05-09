@@ -26,6 +26,7 @@
 #include "ZenChanAIComponent.h"
 #include "structs.h"
 #include "Menu.h"
+#include "CollisionComponent.h"
 
 
 
@@ -206,15 +207,19 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene)
 	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/CharacterSprite.png", 13, 8, spriteId, 0.2f, 32, 32));
 	auto pPlayerPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_pPlayer->GetTransform(), true, movementSpeed));
 	auto pPlayerinputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(pPlayerPhysicsComp, pPlayerspriteComp, controllerId));
-	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene.GetTileMap()->GetCollisionWalls(1),
-		scene.GetTileMap()->GetCollisionPlatforms(1), pPlayerPhysicsComp, 16, 16));
+	
+	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16,pPlayerPhysicsComp));
+	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(1),
+		scene.GetTileMap()->GetCollisionPlatforms(1), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
 	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(3));
 
 
 	m_pPlayer->AddComponent(pPlayerspriteComp, ComponentType::SPRITECOMP);
 	m_pPlayer->AddComponent(pPlayerHealthComp, ComponentType::HEALTHCOMPONENT);
 	m_pPlayer->AddComponent(pPlayerBoundingBoxComp, ComponentType::BOUNDINGBOXCOMP);
+	m_pPlayer->AddComponent(pPlayerCollisionComp, ComponentType::COLLISIONCOMPONENT);
 	m_pPlayer->AddComponent(pPlayerPhysicsComp, ComponentType::PHYSICSCOMP);
+
 	m_pPlayer->AddComponent(pPlayerinputComp, ComponentType::PLAYERCOMPONENT);
 
 	

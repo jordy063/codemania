@@ -86,7 +86,7 @@ void dae::InputManager::NotifyInput(SDL_Event e,bool move)
 {
 	if (pInputObserver[-1] != nullptr)
 	{
-
+		std::cout << e.key.keysym.sym << "," << move << '\n';
 		switch (e.key.keysym.sym)
 		{
 		case SDLK_z:

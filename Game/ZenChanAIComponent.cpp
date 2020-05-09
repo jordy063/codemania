@@ -75,7 +75,7 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 		if (m_JumpTimer > m_JumpTime)
 		{
 			//jump
-			float jumpSpeed{ 180.0f };
+			float jumpSpeed{ 250.0f };
 			m_MoveUpCommand.Execute(m_pPhysicsComp, m_pSpriteComp, jumpSpeed);
 			m_JumpTimer = 0;
 			m_JumpTimeSet = false;

@@ -2,14 +2,14 @@
 #include "BoundingBoxComponent.h"
 
 
-comps::BoundingBoxComponent::BoundingBoxComponent(std::list < std::shared_ptr<rectangle_>> collisionWalls, std::list < std::shared_ptr<rectangle_>> collisionPlatforms, std::shared_ptr<PhysicsComponent> physicsComp, float width, float height)
-	:m_CollisionWalls(collisionWalls)
-	,m_CollisionPlatforms(collisionPlatforms)
-	, m_pPhysicsComp(physicsComp)
-	,m_Width(width)
+comps::BoundingBoxComponent::BoundingBoxComponent(float width, float height,std::shared_ptr<comps::PhysicsComponent> pPhysicsComp)
+	:m_Width(width)
 	,m_Height(height)
+	,m_pPhysicsComp(pPhysicsComp)
+
 {
 }
+
 
 rectangle_ comps::BoundingBoxComponent::GetBoundingBox(const float elapsedSecs, bool xonly) const
 {
@@ -34,12 +34,6 @@ void comps::BoundingBoxComponent::SetAlignment(HAlign hAlign, VAlign vAlign)
 	m_Alignment.second = vAlign;
 }
 
-void comps::BoundingBoxComponent::SetNewBoundingBox(std::list<std::shared_ptr<rectangle_>> collisionWalls, std::list<std::shared_ptr<rectangle_>> collisionPlatforms)
-{
-	m_CollisionWalls = collisionWalls;
-	m_CollisionPlatforms = collisionPlatforms;
-}
-
 bool comps::BoundingBoxComponent::IsOverlapping(std::shared_ptr<BoundingBoxComponent> pBoundingBox)
 {
 	rectangle_ BoundingBox1 = pBoundingBox->GetBoundingBox(0,false);
@@ -62,18 +56,6 @@ bool comps::BoundingBoxComponent::IsOverlapping(std::shared_ptr<BoundingBoxCompo
 	return false;
 }
 
-void comps::BoundingBoxComponent::SetExtraCollisions(std::list<std::shared_ptr<rectangle_>> extraCollisionList)
-{
-	for (std::shared_ptr<rectangle_> boundingBox : extraCollisionList)
-	{
-		auto currentBoundingBox = GetBoundingBox(0, 0);
-		if (currentBoundingBox.posX != boundingBox->posX && currentBoundingBox.posY != boundingBox->posY)
-		{
-			m_ExtraCollisions.push_back(boundingBox);
-		}
-	}
-
-}
 
 void comps::BoundingBoxComponent::Initialize(const dae::Scene& scene)
 {
@@ -85,108 +67,8 @@ void comps::BoundingBoxComponent::Update(const dae::Scene& scene, float elapsedS
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
-	
-
-	//if (IsRectangleOverlapping(elapsedSecs * 2, false, m_CollisionWalls) && !IsRectangleOverlapping(0, false, m_CollisionWalls))
-	//{
-	//	if (m_pPhysicsComp->GetVelocity().y > 0)
-	//	{
-	//		m_pPhysicsComp->SetSpeedY(0);
-	//		m_pPhysicsComp->SetAirborne(false);
-	//	}
-	//}
-	//else
-	//{
-	//	m_pPhysicsComp->SetAirborne(true);
-	//}
-	//if (IsRectangleOverlapping(elapsedSecs * 2, true, m_CollisionWalls))
-	//{
-	//	m_pPhysicsComp->SetSpeedX(0);
-	//}
-
-	//if (IsRectangleOverlapping(elapsedSecs * 2, false, m_CollisionPlatforms) && !IsRectangleOverlapping(0, false, m_CollisionPlatforms))
-	//{
-	//	if (m_pPhysicsComp->GetVelocity().y > 0)
-	//	{
-	//		m_pPhysicsComp->SetSpeedY(0);
-	//		m_pPhysicsComp->SetAirborne(false);
-	//	}
-	//}
-	//else
-	//{
-	//	m_pPhysicsComp->SetAirborne(true);
-	//}
-	bool platFormTouchedY{ IsRectangleOverlapping(elapsedSecs * 2,false,m_CollisionPlatforms) };
-	bool platFormTouchedYCurrent{ IsRectangleOverlapping(0, false,m_CollisionPlatforms) };
-	bool wallsTouchedY{ IsRectangleOverlapping(elapsedSecs * 2, false, m_CollisionWalls) };
-
-
-	if (platFormTouchedY && !platFormTouchedYCurrent)
-	{
-		if (m_pPhysicsComp->GetVelocity().y > 0)
-		{
-			m_pPhysicsComp->SetSpeedY(0);
-			m_pPhysicsComp->SetAirborne(false);
-		}
-	}
-	if (wallsTouchedY)
-	{
-		m_pPhysicsComp->SetSpeedY(0);
-		m_pPhysicsComp->SetAirborne(false);
-	}
-	if (wallsTouchedY == false && platFormTouchedY == false)
-	{
-		m_pPhysicsComp->SetAirborne(true);
-	}
-
-	if (IsRectangleOverlapping(elapsedSecs * 2, true, m_CollisionWalls))
-	{
-		m_pPhysicsComp->SetSpeedX(0);
-	}
-
-	//also check for bullets. if they touch stop
-	//shouldn't happen for normal bullets, only when they go up
-	if (IsRectangleOverlapping(elapsedSecs * 2, true, m_ExtraCollisions))
-	{
-		m_pPhysicsComp->SetSpeedX(0);
-		m_pPhysicsComp->SetSpeedY(0);
-	}
-	/*for (std::shared_ptr<rectangle_> boundingBox : m_ExtraCollisions)
-	{
-		if (GetBoundingBox(0, 0).posX != boundingBox->posX && GetBoundingBox(0, 0).posY != boundingBox->posY && GetBoundingBox(0, 0).height != boundingBox->height && GetBoundingBox(0, 0).width != boundingBox->width)
-		{
-			auto futureBoundingBox = GetBoundingBox(elapsedSecs, false);
-
-		
-		}
-	}*/
-
-
 
 }
-bool comps::BoundingBoxComponent::IsRectangleOverlapping(float elapsedSecs,bool xonly, std::list < std::shared_ptr<rectangle_>>& collision)
-{
-	auto boundingBox{ GetBoundingBox(elapsedSecs,xonly) };
-
-	float boundingboxLeft = boundingBox.posX;
-	float boundingboxRight = boundingBox.posX + boundingBox.width;
-	float boundingboxUp = boundingBox.posY;
-	float boundingboxDown = boundingBox.posY + boundingBox.height;
-
-	for (std::shared_ptr<rectangle_> collisionBox : collision)
-	{
-		float collisionboxLeft = collisionBox->posX;
-		float collisionboxRight = collisionBox->posX + collisionBox->width;
-		float collisionboxUp = collisionBox->posY;
-		float collisionboxDown = collisionBox->posY + collisionBox->height;
 
 
-
-		if (collisionboxLeft < boundingboxRight && boundingboxLeft < collisionboxRight && boundingboxUp < collisionboxDown&& collisionboxUp < boundingboxDown)
-			return true;
-
-	}
-	return false;
-
-}
 

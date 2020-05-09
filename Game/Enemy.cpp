@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "BoundingBoxComponent.h"
 #include "EnemyObserver.h"
+#include "CollisionComponent.h"
 #include "Player.h"
 
 int Enemy::m_Seed = 0;
@@ -37,15 +38,17 @@ void Enemy::CreateComponents(std::shared_ptr<dae::Scene> scene,int level,int id,
 	
 	pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8,id,0.2f,16,16));
 	pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_EntityObject->GetTransform(), gravity, m_Speed.x));
-	m_pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene->GetTileMap()->GetCollisionWalls(level),
-		scene->GetTileMap()->GetCollisionPlatforms(level), pPhysicsComp, 16, 16));
-
+	
+	m_pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent( 16, 16, pPhysicsComp));
+	auto m_pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(level),
+		scene->GetTileMap()->GetCollisionPlatforms(level), pPhysicsComp, m_pBoundingBox));
 	//add AIcomponent and do the same as in playerclass
 	
 
 	m_EntityObject->AddComponent(pSpriteComp, ComponentType::SPRITECOMP);
 	m_EntityObject->AddComponent(m_pBoundingBox, ComponentType::BOUNDINGBOXCOMP);
 	m_EntityObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
+	m_EntityObject->AddComponent(m_pCollisionComp, ComponentType::PHYSICSCOMP);
 
 }
 

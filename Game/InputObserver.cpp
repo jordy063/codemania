@@ -19,12 +19,14 @@ void InputObserver::Update(comps::Direction direction,bool move)
 	if (move)
 	{
 		pInputComp->changeDirection(direction);
+		if (direction == comps::Direction::LEFT || direction == comps::Direction::RIGHT)
 		m_CurrentDirection = direction;
 	}
 
 
 	else
 	{
+		
 		if (direction == m_CurrentDirection)
 		{
 			pInputComp->StopMoving();
