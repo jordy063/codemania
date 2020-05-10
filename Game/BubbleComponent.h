@@ -17,7 +17,8 @@ namespace comps
 	{
 	public:
 		BubbleComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,
-			std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction, int id);
+			std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction, int id
+			);
 		~BubbleComponent() = default;
 
 		virtual void Initialize(const dae::Scene& scene) override;
@@ -38,6 +39,8 @@ namespace comps
 		bool m_IsTimerReached = false;
 		bool m_HasHitEnemy = false;
 
+		float m_LifeTime;
+		bool m_IsActive = true;
 
 	};
 }

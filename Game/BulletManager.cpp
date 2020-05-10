@@ -43,7 +43,7 @@ void BulletManager::MakeBullet(const float2& position, comps::Direction directio
 	bulletObject->AddComponent(physicsComp, ComponentType::PHYSICSCOMP);
 	bulletObject->AddComponent(bubbleComp, ComponentType::BUBBLECOMPONENT);
 
-	
+	m_pBullets.push_back(bulletObject);
 
 	//this has to be in a component allong with overrlap of character
 	/*physicsComp->SetMovement(direction, m_Speed);
@@ -78,6 +78,46 @@ void BulletManager::AddBoundingBoxToList(std::shared_ptr<comps::CollisionCompone
 		//we need all boundingboxes 
 		pCollisionComp->SetExtraCollisions(m_pTriggeredBullets);
 		//set the current list of boundingboxes in the boundingboxcomp
-
 	}
+}
+
+void BulletManager::RemoveBullet(std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
+{
+	//get the boundingboxcomp of every gameobject and check if those boundingboxes are the same
+	//here we should update the collision comp of every gameobject
+	m_pTriggeredBullets.remove(pBoundingBox);
+	std::shared_ptr<dae::GameObject> pGameObjectToRemove{ nullptr };
+
+	for (std::shared_ptr<dae::GameObject> pGameObject : m_pBullets)
+	{
+		
+		auto boundingboxP = pGameObject->GetComponent(ComponentType::BOUNDINGBOXCOMP);
+		auto boundingbox = std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingboxP);
+
+		if (boundingbox == pBoundingBox)
+		{
+			pGameObject->Clear();
+			pGameObjectToRemove = pGameObject;
+			
+		}
+	}
+	if (pGameObjectToRemove != nullptr)
+	{
+		m_pBullets.remove(pGameObjectToRemove);
+	}
+
+	for (std::shared_ptr<dae::GameObject> pGameObject : m_pBullets)
+	{
+		auto collisionP = pGameObject->GetComponent(ComponentType::COLLISIONCOMPONENT);
+		auto collision = std::dynamic_pointer_cast<comps::CollisionComponent>(collisionP);
+
+
+			//we need all boundingboxes 
+			collision->SetExtraCollisions(m_pTriggeredBullets);
+			//set the current list of boundingboxes in the boundingboxcomp
+		
+	}
+
+
+
 }

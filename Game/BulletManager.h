@@ -18,11 +18,11 @@ public:
 	void RegisterPlayer(std::shared_ptr<dae::GameObject> pPlayerObject);
 	void Update();
 	void AddBoundingBoxToList(std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
+	void RemoveBullet(std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 
 private:
-	std::vector<std::shared_ptr<Bullet>> m_pBullets;
 	std::list<std::shared_ptr<comps::BoundingBoxComponent>> m_pTriggeredBullets;
-	std::list<std::shared_ptr<rectangle_>> m_pBulletCollisionList;
 	std::shared_ptr<dae::GameObject> m_pPlayerObject;
+	std::list<std::shared_ptr<dae::GameObject>> m_pBullets;
 };
 

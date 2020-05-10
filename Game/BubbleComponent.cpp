@@ -19,7 +19,7 @@ comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent>
 	, m_SpriteId(id)
 	,m_GoUpTimer(0)
 	,m_GoUpTime(2.0f)
-
+	, m_LifeTime(10)
 	
 {
 }
@@ -59,18 +59,21 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 		}
 	}
 	m_GoUpTimer += elapsedSecs;
-	if (m_GoUpTimer > m_GoUpTime && m_IsTimerReached == false)
+	if (m_GoUpTimer > m_GoUpTime&& m_IsTimerReached == false)
 	{
 		m_pPhysicsComp->SetSpeedX(0);
 		m_pPhysicsComp->SetGravity(false);
 		m_pPhysicsComp->SetMovement(comps::Direction::UP, m_BulletSpeed / 2);
-		BulletManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp,m_pBoundingBoxComp);
+		BulletManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp, m_pBoundingBoxComp);
 		m_IsTimerReached = true;
 	}
-
-
-
-
+	if (m_HasHitEnemy == false)
+	{
+		if (m_GoUpTimer > m_LifeTime)
+		{
+			BulletManager::GetInstance().RemoveBullet( m_pBoundingBoxComp);
+		}
+	}
 	//check if bullet overlaps with enemy. if so we change our sprite,clear the enemy,make him go up and add them to the list(maybe with bool) if the bool is true we can fill up a list in the bulletmanager and then whenever an enemy is hit 
 	//also check if the bullet reached travel time. if so we add the bullet to the list and make him go up
 }
