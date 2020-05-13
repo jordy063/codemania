@@ -15,7 +15,9 @@ TileMapLoader::TileMapLoader(int amountOfChunks, float2 transformPos, std::share
     fileStrings[1] = "../Graphics/blueStipleTile.png";
     fileStrings[2] = "../Graphics/blueStripeTile.png";
     fileStrings[3] = "../Graphics/GoldTile.png";
+    m_CurrentLevel = 0;
  LoadFile(amountOfChunks,scene);
+
 
 }
 
@@ -39,10 +41,55 @@ std::list<std::shared_ptr<rectangle_>> TileMapLoader::GetCollisionWalls(int leve
     return std::list<std::shared_ptr<rectangle_>>();
 
 }
+std::list<std::shared_ptr<rectangle_>> TileMapLoader::GetCollisionWalls() const
+{
+    switch (m_CurrentLevel)
+    {
+    case 1:
+        return m_CollisionWalls1;
+        break;
+    case 2:
+        return m_CollisionWalls2;
+        break;
+    case 3:
+        return m_CollisionWalls3;
+        break;
+    default:
+        std::cout << "level does not exist" << std::endl;
+        break;
+    }
+    return std::list<std::shared_ptr<rectangle_>>();
+
+}
+
+void TileMapLoader::UpdateLevel(int level)
+{
+    m_CurrentLevel = level;
+}
 
 std::list<std::shared_ptr<rectangle_>> TileMapLoader::GetCollisionPlatforms(int level) const
 {
     switch (level)
+    {
+    case 1:
+        return m_CollisionPlatforms1;
+        break;
+    case 2:
+        return m_CollisionPlatforms2;
+        break;
+    case 3:
+        return m_CollisionPlatforms3;
+        break;
+    default:
+        std::cout << "level does not exist" << std::endl;
+        break;
+    }
+
+    return std::list<std::shared_ptr<rectangle_>>();
+}
+std::list<std::shared_ptr<rectangle_>> TileMapLoader::GetCollisionPlatforms() const
+{
+    switch (m_CurrentLevel)
     {
     case 1:
         return m_CollisionPlatforms1;
@@ -408,46 +455,7 @@ void TileMapLoader::ReadCollisionData(const std::string& sentence, std::list<std
 
 }
 
-void TileMapLoader::MoveTilemap(float2 translation)
-{
-    for (std::shared_ptr<dae::GameObject> tile : PngTiles)
-    {
-        tile->GetTransform()->Translate(translation);
-    }
 
-
-    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionWalls1)
-    {
-        collisionTile->posX += translation.x;
-        collisionTile->posY += translation.y;
-    }
-    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionWalls2)
-    {
-        collisionTile->posX += translation.x;
-        collisionTile->posY += translation.y;
-    }
-    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionWalls3)
-    {
-        collisionTile->posX += translation.x;
-        collisionTile->posY += translation.y;
-    }
-    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionPlatforms1)
-    {
-        collisionTile->posX += translation.x;
-        collisionTile->posY += translation.y;
-    }
-    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionPlatforms2)
-    {
-        collisionTile->posX += translation.x;
-        collisionTile->posY += translation.y;
-    }
-    for (std::shared_ptr<rectangle_> collisionTile : m_CollisionPlatforms3)
-    {
-        collisionTile->posX += translation.x;
-        collisionTile->posY += translation.y;
-    }
-
-}
 
 void TileMapLoader::UpdateLevel()
 {

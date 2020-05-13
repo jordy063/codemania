@@ -66,6 +66,7 @@ void dae::Minigin::LoadGame()
 	auto& scene{ SceneManager::GetInstance().CreateScene(sceneName) };
 
 	auto loader = std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,0 }, SceneManager::GetInstance().GetActiveScene()));
+	loader->UpdateLevel(2);
 
 	scene.AddTileMap(loader);
 
@@ -209,8 +210,8 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene)
 	auto pPlayerinputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(pPlayerPhysicsComp, pPlayerspriteComp, controllerId));
 	
 	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16,pPlayerPhysicsComp));
-	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(1),
-		scene.GetTileMap()->GetCollisionPlatforms(1), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
+	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(),
+		scene.GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
 	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(3));
 
 

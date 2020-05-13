@@ -31,6 +31,11 @@ void comps::CollisionComponent::SetCollision(std::list<std::shared_ptr<rectangle
 	m_CollisionPlatforms = collisionPlatforms;
 }
 
+void comps::CollisionComponent::SetActive(bool isActive)
+{
+	m_IsActive = isActive;
+}
+
 void comps::CollisionComponent::Initialize(const dae::Scene& scene)
 {
 	UNREFERENCED_PARAMETER(scene);
@@ -42,48 +47,51 @@ void comps::CollisionComponent::Update(const dae::Scene& scene, float elapsedSec
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
 
-	bool platFormTouchedY{ IsRectangleOverlapping(elapsedSecs * 2,false,m_CollisionPlatforms) };
-	bool platFormTouchedYCurrent{ IsRectangleOverlapping(0, false,m_CollisionPlatforms) };
-	bool wallsTouchedY{ IsRectangleOverlapping(elapsedSecs * 2, false, m_CollisionWalls) };
-
-
-	if (platFormTouchedY && !platFormTouchedYCurrent)
+	if (m_IsActive)
 	{
-		if (m_pPhysicsComp->GetVelocity().y > 0)
+
+		bool platFormTouchedY{ IsRectangleOverlapping(elapsedSecs * 2,false,m_CollisionPlatforms) };
+		bool platFormTouchedYCurrent{ IsRectangleOverlapping(0, false,m_CollisionPlatforms) };
+		bool wallsTouchedY{ IsRectangleOverlapping(elapsedSecs * 2, false, m_CollisionWalls) };
+
+
+		if (platFormTouchedY && !platFormTouchedYCurrent)
+		{
+			if (m_pPhysicsComp->GetVelocity().y > 0)
+			{
+				m_pPhysicsComp->SetSpeedY(0);
+				m_pPhysicsComp->SetAirborne(false);
+			}
+		}
+		if (wallsTouchedY)
 		{
 			m_pPhysicsComp->SetSpeedY(0);
 			m_pPhysicsComp->SetAirborne(false);
 		}
-	}
-	if (wallsTouchedY)
-	{
-		m_pPhysicsComp->SetSpeedY(0);
-		m_pPhysicsComp->SetAirborne(false);
-	}
-	if (wallsTouchedY == false && platFormTouchedY == false)
-	{
-		m_pPhysicsComp->SetAirborne(true);
-	}
+		if (wallsTouchedY == false && platFormTouchedY == false)
+		{
+			m_pPhysicsComp->SetAirborne(true);
+		}
 
-	if (IsRectangleOverlapping(elapsedSecs * 2, true, m_CollisionWalls))
-	{
-		m_pPhysicsComp->SetSpeedX(0);
+		if (IsRectangleOverlapping(elapsedSecs * 2, true, m_CollisionWalls))
+		{
+			m_pPhysicsComp->SetSpeedX(0);
+		}
+
+		//also check for bullets. if they touch stop
+		//shouldn't happen for normal bullets, only when they go up
+
+		GetCollisionList();
+		if (IsRectangleOverlapping(elapsedSecs * 2, true, m_CollisionList))
+		{
+			m_pPhysicsComp->SetSpeedX(0);
+			m_pPhysicsComp->SetSpeedY(0);
+		}
 	}
-
-	//also check for bullets. if they touch stop
-	//shouldn't happen for normal bullets, only when they go up
-
-	GetCollisionList();
-	if (IsRectangleOverlapping(elapsedSecs * 2, true, m_CollisionList))
-	{
-		m_pPhysicsComp->SetSpeedX(0);
-		m_pPhysicsComp->SetSpeedY(0);
-	}
-
 
 }
 
-bool comps::CollisionComponent::IsRectangleOverlapping(float elapsedSecs, bool xonly, std::list<std::shared_ptr<rectangle_>>& collision)
+bool comps::CollisionComponent::IsRectangleOverlapping(float elapsedSecs, bool xonly, std::list<std::shared_ptr<rectangle_>>& collision) const
 {
 	auto boundingBox{m_pBoundingBoxComp->GetBoundingBox(elapsedSecs,xonly) };
 

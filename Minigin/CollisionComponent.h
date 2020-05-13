@@ -19,6 +19,8 @@ namespace comps
 		~CollisionComponent() = default;
 		void SetExtraCollisions(std::list<std::shared_ptr<comps::BoundingBoxComponent>> extraCollisionList);
 		void SetCollision(std::list < std::shared_ptr<rectangle_>> collisionWalls, std::list < std::shared_ptr<rectangle_>> collisionPlatforms);
+		void SetActive(bool isActive);
+
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
 		virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
@@ -33,10 +35,10 @@ namespace comps
 		std::pair< HAlign, VAlign> m_Alignment;
 		
 
-		bool IsRectangleOverlapping(float elapsedSecs, bool xonly, std::list < std::shared_ptr<rectangle_>>& collision);
+		bool IsRectangleOverlapping(float elapsedSecs, bool xonly, std::list < std::shared_ptr<rectangle_>>& collision) const;
 		void GetCollisionList();
 		std::list < std::shared_ptr<rectangle_>> m_CollisionList;
-
+		bool m_IsActive = true;
 	};
 }
 

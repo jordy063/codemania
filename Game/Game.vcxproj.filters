@@ -87,7 +87,7 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
-    <ClInclude Include="LevelTranslaterComponent.h">
+    <ClInclude Include="LevelObserver.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -155,7 +155,7 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Header Files\helpers</Filter>
     </ClCompile>
-    <ClCompile Include="LevelTranslaterComponent.cpp">
+    <ClCompile Include="LevelObserver.cpp">
       <Filter>Header Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
