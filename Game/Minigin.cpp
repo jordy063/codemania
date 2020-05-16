@@ -27,6 +27,7 @@
 #include "structs.h"
 #include "Menu.h"
 #include "CollisionComponent.h"
+#include "LevelManager.h"
 
 
 
@@ -131,6 +132,8 @@ void dae::Minigin::Update(float elapsedSecs)
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	//EnemyManager::GetInstance().Update(elapsedSecs, m_pPlayer);
 	//BulletManager::GetInstance().Update();
+	LevelManager::GetInstance().Update( elapsedSecs);
+
 }
 
 void dae::Minigin::Cleanup()
@@ -165,29 +168,36 @@ void dae::Minigin::Run()
 		bool doContinue = true;
 		while (doContinue)
 		{
-			auto currentTime = std::chrono::high_resolution_clock::now();
-			float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
-			lastTime = currentTime;
-			lag += elapsedSec;
-			lag_render += elapsedSec;
-			doContinue = input.ProcessInput();
-			
+			/*if (menu) {
+				Meneumanager.Render();
+				Meneumanager.Update();
+			}*/
+			/*else
+			{*/
+				auto currentTime = std::chrono::high_resolution_clock::now();
+				float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
+				lastTime = currentTime;
+				lag += elapsedSec;
+				lag_render += elapsedSec;
+				doContinue = input.ProcessInput();
 
-			while (lag > 0)
-			{
-				//if lag < secperUpdate : update lag, if lag too big, update more than once
-				float elapse = min(secsPerUpdate, lag);
-				sceneManager.Update(elapse);
-				Update(elapse);
-				lag -= elapse;
-			}
-			
-			if (lag_render >= secsPerRender)
-			{
-				lag_render -= secsPerRender;
-				renderer.Render();
-				frames++;
-			}
+
+				while (lag > 0)
+				{
+					//if lag < secperUpdate : update lag, if lag too big, update more than once
+					float elapse = min(secsPerUpdate, lag);
+					sceneManager.Update(elapse);
+					Update(elapse);
+					lag -= elapse;
+				}
+
+				if (lag_render >= secsPerRender)
+				{
+					lag_render -= secsPerRender;
+					renderer.Render();
+					frames++;
+				}
+			/*}*/
 			
 		}
 	}
@@ -226,6 +236,7 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene)
 	
 	m_pPlayer->GetTransform()->Translate(100, 50);
 
+	LevelManager::GetInstance().RegisterTransformCompLeft(m_pPlayer->GetTransform());
 
 	////enemy test
 	//auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());

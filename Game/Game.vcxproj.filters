@@ -87,8 +87,11 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
-    <ClInclude Include="LevelObserver.h">
+    <ClInclude Include="ItemComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,8 +158,11 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Header Files\helpers</Filter>
     </ClCompile>
-    <ClCompile Include="LevelObserver.cpp">
+    <ClCompile Include="ItemComponent.cpp">
       <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>Header Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

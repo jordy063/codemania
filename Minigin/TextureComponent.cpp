@@ -4,6 +4,8 @@
 #include "Renderer.h"
 #include "Texture2D.h"
 #include "GameObject.h"
+#include "LevelManager.h"
+
 
 
 comps::TextureComponent::TextureComponent(const std::string& filename, float width, float height)
@@ -64,8 +66,8 @@ void comps::TextureComponent::Render(const dae::Scene & scene, float2 pos)
 
 		auto texSize = m_pTexture->GetSize();
 
-		int xShift = int(m_Offset.x) + (texSize.first * (int)m_Alignment.first) / 2;
-		int yShift = int(m_Offset.y) + (texSize.second * (int)m_Alignment.second) / 2;
+		int xShift = int(m_Offset.x) + (texSize.first * (int)m_Alignment.first) / 2 + (int)LevelManager::GetInstance().GetTranslationX();
+		int yShift = int(m_Offset.y) + (texSize.second * (int)m_Alignment.second) / 2 + (int)LevelManager::GetInstance().GetTranslationY();
 		dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x - xShift, pos.y - yShift, m_Width, m_Height);
 	}
 }

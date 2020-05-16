@@ -120,6 +120,9 @@
     <ClInclude Include="CollisionComponent.h">
       <Filter>engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>engine\helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -199,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>engine\helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

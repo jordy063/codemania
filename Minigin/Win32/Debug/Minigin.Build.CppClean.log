@@ -10,6 +10,7 @@ d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\font.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\fpscomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\fpscounter.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\gameobject.obj
+d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\levelmanager.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\log.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\logger.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\miniginpch.obj
@@ -19,14 +20,14 @@ d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\resourcemanager
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\scene.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\scenemanager.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\soundmanager2.obj
-d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\spritecomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\textcomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\texture2d.obj
-d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\texturecomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\tilemaploader.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\transform.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\transformcomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\xboxcontroller.obj
+d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\spritecomponent.obj
+d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\texturecomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\win32\debug\minigin.lib
 d:\jordy\dae2-redo\programming 4\examproject\win32\debug\minigin.pdb
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\minigin.tlog\cl.command.1.tlog

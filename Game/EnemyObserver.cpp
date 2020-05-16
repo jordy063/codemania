@@ -1,3 +1,4 @@
+
 #include "MiniginPCH.h"
 #include "EnemyObserver.h"
 #include "SceneManager.h"
@@ -23,6 +24,7 @@ void EnemyObserver::DownCounter()
 	//call singleton itemmanager and make item
 	if (m_EnemyCount == 0)
 	{
+		//LevelManager::GetInstance().UpgradeLevel();
 		//TODO
 		//start timer
 		//if timer done do level transision
