@@ -6,6 +6,7 @@
 #include "CollisionComponent.h"
 #include "EnemyManager.h"
 #include "BulletManager.h"
+#include "EnemyObserver.h"
 
 
 comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,
@@ -56,6 +57,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 			m_pPhysicsComp->SetMovement(comps::Direction::UP, m_BulletSpeed / 2);
 			//change the sprite + physicscomp and add the collision
 			m_HasHitEnemy = true;
+			EnemyObserver::GetInstance().DownCounter();
 		}
 	}
 	m_GoUpTimer += elapsedSecs;
@@ -76,4 +78,8 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	}
 	//check if bullet overlaps with enemy. if so we change our sprite,clear the enemy,make him go up and add them to the list(maybe with bool) if the bool is true we can fill up a list in the bulletmanager and then whenever an enemy is hit 
 	//also check if the bullet reached travel time. if so we add the bullet to the list and make him go up
+
+
+
+	//if the bullet has an enemy and player comes near it we call the enemyManagerDowncounter and remove the bullet
 }

@@ -29,6 +29,7 @@ void comps::CollisionComponent::SetCollision(std::list<std::shared_ptr<rectangle
 {
 	m_CollisionWalls = collisionWalls;
 	m_CollisionPlatforms = collisionPlatforms;
+	m_pPhysicsComp->SetSpeedY(0);
 }
 
 void comps::CollisionComponent::SetActive(bool isActive)

@@ -30,8 +30,8 @@ void Player::CreateComponents( int controllerId ,int spriteId, std::shared_ptr<d
 	//m_pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene->GetTileMap()->GetCollisionWalls(1), scene->GetTileMap()->GetCollisionPlatforms(1), m_pPhysicsComp,16,16));
 	m_pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, m_pPhysicsComp));
 
-	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(1),
-		scene->GetTileMap()->GetCollisionPlatforms(1), m_pPhysicsComp, m_pBoundingBox));
+	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
+		scene->GetTileMap()->GetCollisionPlatforms(), m_pPhysicsComp, m_pBoundingBox));
 
 	m_EntityObject->AddComponent(spriteComp,ComponentType::SPRITECOMP);
 	m_EntityObject->AddComponent(m_pBoundingBox,ComponentType::BOUNDINGBOXCOMP);

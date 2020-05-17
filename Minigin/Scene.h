@@ -20,6 +20,7 @@ namespace dae
 		void Add(const std::shared_ptr<Entity>& object);
 		void AddGameObject(const std::shared_ptr<GameObject>& object);
 		void AddTileMap(const std::shared_ptr<TileMapLoader>& tileMapLoader);
+
 		const std::shared_ptr<TileMapLoader>& GetTileMap() const{ return m_pTileMap; };
 
 		void Initialize();

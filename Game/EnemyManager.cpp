@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "ZenChanAIComponent.h"
 #include "CollisionComponent.h"
+#include "EnemyObserver.h"
 
 
 void EnemyManager::MakeEnemies(std::shared_ptr<dae::Scene> scene,int level)
@@ -84,6 +85,7 @@ void EnemyManager::RegisterPlayer(std::shared_ptr<dae::GameObject> playerObject)
 
 void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
 {
+	
 	//make a buffer, translate it and add it to list
 	/*auto enemy = std::shared_ptr <Enemy>(new Ghost(scene, 1));
 	enemy->GetGameObject()->GetTransform()->Translate(150, 100);
@@ -128,6 +130,9 @@ void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
 
 void EnemyManager::MakeZenChan(float2 pos, std::shared_ptr<dae::Scene> scene)
 {
+
+	EnemyObserver::GetInstance().UpCounter();
+
 	auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
 	scene->Add(enemyObject);
 	enemyObject->GetTransform()->Translate(pos.x, pos.y);
@@ -137,8 +142,8 @@ void EnemyManager::MakeZenChan(float2 pos, std::shared_ptr<dae::Scene> scene)
 
 	auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, pPhysicsComp));
 
-	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(1),
-		scene->GetTileMap()->GetCollisionPlatforms(1), pPhysicsComp,pBoundingBox));
+	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
+		scene->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp,pBoundingBox));
 	auto pZenChanAiComp = std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(m_pPlayerObject, pSpriteComp, pPhysicsComp, pBoundingBox));
 
 	//add AIcomponent and do the same as in playerclass
@@ -153,6 +158,7 @@ void EnemyManager::MakeZenChan(float2 pos, std::shared_ptr<dae::Scene> scene)
 }
 void EnemyManager::MakeGhost(float2 pos, std::shared_ptr<dae::Scene> scene)
 {
+	EnemyObserver::GetInstance().UpCounter();
 	auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
 	scene->Add(enemyObject);
 	enemyObject->GetTransform()->Translate(pos.x, pos.y);
@@ -161,8 +167,8 @@ void EnemyManager::MakeGhost(float2 pos, std::shared_ptr<dae::Scene> scene)
 	auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(), false, 30.0f));
 	auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, pPhysicsComp));
 
-	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(1),
-		scene->GetTileMap()->GetCollisionPlatforms(1), pPhysicsComp, pBoundingBox));
+	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
+		scene->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp, pBoundingBox));
 	auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayerObject, pSpriteComp, pPhysicsComp, pBoundingBox));
 
 	//add AIcomponent and do the same as in playerclass

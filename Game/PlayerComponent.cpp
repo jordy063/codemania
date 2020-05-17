@@ -29,8 +29,8 @@ void PlayerComponent::Initialize(const dae::Scene& scene)
 
 	m_pBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, m_pPhysicsComp));
 
-	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(1),
-		scene.GetTileMap()->GetCollisionPlatforms(1), m_pPhysicsComp, m_pBoundingBoxComp));
+	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(),
+		scene.GetTileMap()->GetCollisionPlatforms(), m_pPhysicsComp, m_pBoundingBoxComp));
 
 	playerObject->AddComponent(spriteComp, ComponentType::SPRITECOMP);
 	playerObject->AddComponent(m_pBoundingBoxComp, ComponentType::BOUNDINGBOXCOMP);

@@ -78,9 +78,6 @@
     <ClInclude Include="Minigin.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="TileMapLoader.h">
-      <Filter>Header Files\helpers</Filter>
-    </ClInclude>
     <ClInclude Include="BubbleComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -148,9 +145,6 @@
     </ClCompile>
     <ClCompile Include="InputObserver.cpp">
       <Filter>Header Files\Patterns</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMapLoader.cpp">
-      <Filter>Header Files\helpers</Filter>
     </ClCompile>
     <ClCompile Include="BubbleComponent.cpp">
       <Filter>Header Files\Components</Filter>

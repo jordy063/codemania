@@ -16,7 +16,6 @@ d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\inputmanager.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\inputobserver.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\itemcomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\itemmanager.obj
-d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\levelobserver.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\main.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\menu.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\minigin.obj
@@ -27,8 +26,8 @@ d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\zenchan.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\zenchanaicomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\win32\debug\game.lib
 d:\jordy\dae2-redo\programming 4\examproject\win32\debug\game.exp
-d:\jordy\dae2-redo\programming 4\examproject\win32\debug\game.exe
 d:\jordy\dae2-redo\programming 4\examproject\win32\debug\game.ilk
+d:\jordy\dae2-redo\programming 4\examproject\win32\debug\game.exe
 d:\jordy\dae2-redo\programming 4\examproject\win32\debug\game.pdb
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\game.tlog\cl.command.1.tlog
 d:\jordy\dae2-redo\programming 4\examproject\game\win32\debug\game.tlog\cl.read.1.tlog

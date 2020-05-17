@@ -33,8 +33,8 @@ void BulletManager::MakeBullet(const float2& position, comps::Direction directio
 
 	auto BoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, physicsComp));
 
-	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(1),
-		dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(1), physicsComp, BoundingBox));
+	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(),
+		dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(), physicsComp, BoundingBox));
 	auto bubbleComp = std::shared_ptr<comps::BubbleComponent>(new comps::BubbleComponent(physicsComp,BoundingBox,pCollisionComp,spriteComp,direction,id));
 
 	bulletObject->AddComponent(spriteComp, ComponentType::SPRITECOMP);

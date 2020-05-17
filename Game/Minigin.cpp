@@ -67,7 +67,6 @@ void dae::Minigin::LoadGame()
 	auto& scene{ SceneManager::GetInstance().CreateScene(sceneName) };
 
 	auto loader = std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,0 }, SceneManager::GetInstance().GetActiveScene()));
-	loader->UpdateLevel(2);
 
 	scene.AddTileMap(loader);
 
@@ -236,7 +235,7 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene)
 	
 	m_pPlayer->GetTransform()->Translate(100, 50);
 
-	LevelManager::GetInstance().RegisterTransformCompLeft(m_pPlayer->GetTransform());
+	LevelManager::GetInstance().RegisterTransformCompLeft(m_pPlayer->GetTransform(), pPlayerCollisionComp);
 
 	////enemy test
 	//auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());

@@ -35,13 +35,13 @@ Enemy::Enemy(std::shared_ptr<dae::Scene> scene, int level,int id, bool gravity)
 
 void Enemy::CreateComponents(std::shared_ptr<dae::Scene> scene,int level,int id, bool gravity)
 {
-	
+	UNREFERENCED_PARAMETER(level);
 	pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8,id,0.2f,16,16));
 	pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_EntityObject->GetTransform(), gravity, m_Speed.x));
 	
 	m_pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent( 16, 16, pPhysicsComp));
-	auto m_pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(level),
-		scene->GetTileMap()->GetCollisionPlatforms(level), pPhysicsComp, m_pBoundingBox));
+	auto m_pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
+		scene->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp, m_pBoundingBox));
 	//add AIcomponent and do the same as in playerclass
 	
 
