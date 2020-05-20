@@ -50,32 +50,32 @@ void EnemyManager::Update(float elapsedSecs, std::shared_ptr<Player> player)
 
 }
 
-bool EnemyManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox,int& index)
+int EnemyManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox,int& index)
 {
 	UNREFERENCED_PARAMETER(pBulletBoundingBox);
 	//GetBoundingBoxOfBullet and check with all enemies
 	//pBullet->
 
-	for (std::shared_ptr<dae::GameObject> enemy : m_pEnemies)
+	for (std::pair<std::shared_ptr<dae::GameObject>,int> enemy : m_pEnemies)
 	{
 
-		auto boundingBoxComp = enemy->GetComponent(ComponentType::BOUNDINGBOXCOMP);
+		auto boundingBoxComp = enemy.first->GetComponent(ComponentType::BOUNDINGBOXCOMP);
 		auto actualBoundingBox = std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp);
 
 		if (actualBoundingBox->IsOverlapping(pBulletBoundingBox))
 		{
-			auto spriteComp = enemy->GetComponent(ComponentType::SPRITECOMP);
+			auto spriteComp = enemy.first->GetComponent(ComponentType::SPRITECOMP);
 			auto actualSpriteComp = std::dynamic_pointer_cast<comps::SpriteComponent>(spriteComp);
 
 			index = actualSpriteComp->GetSpriteIndex();
 
 			//the enemy is hit so we can turn it into a bubble and clear our bullet
 			m_pEnemies.remove(enemy);
-			enemy->Clear();
-			return true;
+			enemy.first->Clear();
+			return enemy.second;
 		}
 	}
-	return false;
+	return -1;
 }
 
 void EnemyManager::RegisterPlayer(std::shared_ptr<dae::GameObject> playerObject)
@@ -85,37 +85,6 @@ void EnemyManager::RegisterPlayer(std::shared_ptr<dae::GameObject> playerObject)
 
 void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
 {
-	
-	//make a buffer, translate it and add it to list
-	/*auto enemy = std::shared_ptr <Enemy>(new Ghost(scene, 1));
-	enemy->GetGameObject()->GetTransform()->Translate(150, 100);
-	m_pEnemies.push_back(enemy);
-
-	scene->Add(enemy);
-	enemy = std::shared_ptr <Enemy>(new Ghost(scene, 1));
-	enemy->GetGameObject()->GetTransform()->Translate(250, 100);
-	m_pEnemies.push_back(enemy);
-	scene->Add(enemy);
-
-	enemy = std::shared_ptr <Enemy>(new ZenChan(scene, 1));
-	enemy->GetGameObject()->GetTransform()->Translate(200, 100);
-	m_pEnemies.push_back(enemy);
-	scene->Add(enemy);*/
-
-
-	//auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
-	//enemyObject->GetTransform()->Translate(150, 100);
-
-	//auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8, 1, 0.2f, 16, 16));
-	//auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(),false,30.0f));
-	//auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene->GetTileMap()->GetCollisionWalls(1),
-	//	scene->GetTileMap()->GetCollisionPlatforms(1), pPhysicsComp, 16, 16));
-
-	////add AIcomponent and do the same as in playerclass
-
-	//enemyObject->AddComponent(pSpriteComp, ComponentType::SPRITECOMP);
-	//enemyObject->AddComponent(pBoundingBox, ComponentType::BOUNDINGBOXCOMP);
-	//enemyObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
 
 
 	//enemy test
@@ -153,8 +122,9 @@ void EnemyManager::MakeZenChan(float2 pos, std::shared_ptr<dae::Scene> scene)
 	enemyObject->AddComponent(pCollisionComp, ComponentType::COLLISIONCOMPONENT);
 	enemyObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
 	enemyObject->AddComponent(pZenChanAiComp, ComponentType::ZENCHANCOMPONENT);
+	
 
-	m_pEnemies.push_back(enemyObject);
+	m_pEnemies.push_back({ enemyObject,ItemType::FRIES });
 }
 void EnemyManager::MakeGhost(float2 pos, std::shared_ptr<dae::Scene> scene)
 {
@@ -179,6 +149,6 @@ void EnemyManager::MakeGhost(float2 pos, std::shared_ptr<dae::Scene> scene)
 	enemyObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
 	enemyObject->AddComponent(ghostAiComp, ComponentType::GHOSTAICOMPONENT);
 
-	m_pEnemies.push_back(enemyObject);
+	m_pEnemies.push_back({ enemyObject,ItemType::MELON });
 }
 

@@ -19,10 +19,11 @@ public:
 	void Update();
 	void AddBoundingBoxToList(std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 	void RemoveBullet(std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
+	bool CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox);
 
 private:
 	std::list<std::shared_ptr<comps::BoundingBoxComponent>> m_pTriggeredBullets;
-	std::shared_ptr<dae::GameObject> m_pPlayerObject;
 	std::list<std::shared_ptr<dae::GameObject>> m_pBullets;
+	std::shared_ptr<comps::BoundingBoxComponent> m_pPlayerBoundingBox;
 };
 

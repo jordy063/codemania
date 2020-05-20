@@ -7,6 +7,7 @@
 #include "EnemyManager.h"
 #include "BulletManager.h"
 #include "EnemyObserver.h"
+#include "ItemManager.h"
 
 
 comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,
@@ -21,7 +22,7 @@ comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent>
 	,m_GoUpTimer(0)
 	,m_GoUpTime(2.0f)
 	, m_LifeTime(10)
-	
+	, m_EnemyId(-1)
 {
 }
 
@@ -39,6 +40,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 		m_pSpriteComp->SetBeginEndFrames(m_SpriteId * 8, 7 + m_SpriteId * 8);
 		speedSet = true;
 	}
+	
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
@@ -46,9 +48,11 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 
 	//call a function of the enemy manager which takes a rectangle/boundingbox
 	int index{};
+	//if enemy is hit
 	if (m_HasHitEnemy == false)
 	{
-		if (EnemyManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, index))
+		int enemyId = EnemyManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, index);
+		if (enemyId != -1)
 		{
 			//this should be according to the type of enemy
 			m_pSpriteComp->SetBeginEndFrames(16 + index * 8, 24 + 8 * index);
@@ -58,8 +62,12 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 			//change the sprite + physicscomp and add the collision
 			m_HasHitEnemy = true;
 			EnemyObserver::GetInstance().DownCounter();
+
+			
+			m_EnemyId = enemyId;
 		}
 	}
+	//checks if the bullet should go up
 	m_GoUpTimer += elapsedSecs;
 	if (m_GoUpTimer > m_GoUpTime&& m_IsTimerReached == false)
 	{
@@ -69,11 +77,24 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 		BulletManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp, m_pBoundingBoxComp);
 		m_IsTimerReached = true;
 	}
+
+	//if nothing is hit
 	if (m_HasHitEnemy == false)
 	{
 		if (m_GoUpTimer > m_LifeTime)
 		{
 			BulletManager::GetInstance().RemoveBullet( m_pBoundingBoxComp);
+		}
+	}
+	else
+	{
+		if (BulletManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
+		{
+			//spawn item
+			//spriteid will be the type of the enemy
+			ItemType type = static_cast<ItemType>(m_EnemyId);
+			ItemManager::GetInstance().makeItem(m_pPhysicsComp->GetTransform()->GetPosition(), type);
+			BulletManager::GetInstance().RemoveBullet(m_pBoundingBoxComp);
 		}
 	}
 	//check if bullet overlaps with enemy. if so we change our sprite,clear the enemy,make him go up and add them to the list(maybe with bool) if the bool is true we can fill up a list in the bulletmanager and then whenever an enemy is hit 

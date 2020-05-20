@@ -64,7 +64,11 @@ void comps::SpriteComponent::Update(const dae::Scene & scene,float elapsedSecs, 
 	m_Timer += elapsedSecs;
 
 	//timer/update updates from 0 - ..., floor rounds it to the lowest int, % makes it so that you get 0 % 4 for example which is 0(it updates 0,1,2,3,0
-	m_FrameNumber = m_FrameBegin + int(floor(m_Timer / m_UpdateSpeed)) % (m_FrameEnd - m_FrameBegin);
+	if (m_FrameBegin != m_FrameEnd)
+		m_FrameNumber = m_FrameBegin + int(floor(m_Timer / m_UpdateSpeed)) % (m_FrameEnd - m_FrameBegin);
+	else
+		m_FrameNumber = m_FrameBegin;
+	
 
 
 

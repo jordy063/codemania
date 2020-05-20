@@ -1,10 +1,18 @@
 #include "MiniginPCH.h"
 #include "ItemComponent.h"
+#include "PhysicsComponent.h"
+#include "SpriteComponent.h"
+#include "BoundingBoxComponent.h"
+#include "ItemManager.h"
 
-comps::ItemComponent::ItemComponent(std::shared_ptr<dae::GameObject> pPlayerObject)
+comps::ItemComponent::ItemComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::SpriteComponent> pSpriteComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,ItemType type)
+	:m_pBoundingBoxComp(pBoundingBoxComp)
+	,m_pPhysicsComp(pPhysicsComp)
+	,m_pSpriteComp(pSpriteComp)
+	,m_ItemType(type)
 {
 	//here we ask the components we want
-	UNREFERENCED_PARAMETER(pPlayerObject);
+	
 }
 
 void comps::ItemComponent::Initialize(const dae::Scene& scene)
@@ -18,6 +26,39 @@ void comps::ItemComponent::Update(const dae::Scene& scene, float elapsedSecs, fl
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
+	
+	if (m_HasJumped == false)
+	{
+		m_pPhysicsComp->SetSpeedX(15);
+		m_pPhysicsComp->SetSpeedY(-250);
+		m_pSpriteComp->SetBeginEndFrames(m_ItemType * 4,3 + m_ItemType * 4);
+		m_HasJumped = true;
+	}
+
+	else if(m_pPhysicsComp->GetAirBorne() == false && IsLootAble == false)
+	{
+		m_pPhysicsComp->SetSpeedX(0);
+		m_pSpriteComp->SetBeginEndFrames(10 + m_ItemType, 10 + m_ItemType);
+		IsLootAble = true;
+
+		//lower it a little bit
+	}
+
+	else if (IsLootAble)
+	{
+		if (ItemManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
+		{
+			ItemManager::GetInstance().DoEffect(m_ItemType);
+			ItemManager::GetInstance().RemoveItem(m_pBoundingBoxComp);
+		}
+	}
+	//if they bullet hits an enemy we make an item.
+	//an item has a physicscomponent with gravity but we give it a certain force.
+	//depending on the enemy the first frames will be the death animation of that enemy
+	//if it touches the ground we change the sprite to an item and only then the player can pick it up
+
+
+
 
 	//check if the player overlaps with this boundingbox
 

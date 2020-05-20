@@ -52,7 +52,9 @@ void BulletManager::MakeBullet(const float2& position, comps::Direction directio
 
 void BulletManager::RegisterPlayer(std::shared_ptr<dae::GameObject> pPlayerObject)
 {
-	m_pPlayerObject = pPlayerObject;
+	
+	auto boundingBoxComp = pPlayerObject->GetComponent(ComponentType::BOUNDINGBOXCOMP);
+	m_pPlayerBoundingBox = std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp);
 }
 
 void BulletManager::Update()
@@ -120,4 +122,12 @@ void BulletManager::RemoveBullet(std::shared_ptr<comps::BoundingBoxComponent> pB
 
 
 
+}
+
+bool BulletManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox)
+{
+	//checks if player and current bullet overlap
+	
+	return m_pPlayerBoundingBox->IsOverlapping(pBulletBoundingBox);
+	
 }

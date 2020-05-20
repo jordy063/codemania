@@ -28,7 +28,7 @@
 #include "Menu.h"
 #include "CollisionComponent.h"
 #include "LevelManager.h"
-
+#include "ItemManager.h"
 
 
 void dae::Minigin::Initialize()
@@ -74,50 +74,16 @@ void dae::Minigin::LoadGame()
 
 	MakePlayer(-1, 0, scene);
 	
-	/*m_pPlayer = std::shared_ptr<Player>(new Player(-1,0, SceneManager::GetInstance().GetActiveScene()));
-	m_pPlayer->GetGameObject()->GetTransform()->Translate(100, 50);
-	
-	scene.Add(m_pPlayer);
 
-
-	m_pPlayer2 = std::shared_ptr<Player>(new Player( 1,1, SceneManager::GetInstance().GetActiveScene()));
-	m_pPlayer2->GetGameObject()->GetTransform()->Translate(150, 50);*/
-
-	//scene.Add(m_pPlayer2);
 	BulletManager::GetInstance().RegisterPlayer(m_pPlayer);
 	EnemyManager::GetInstance().RegisterPlayer(m_pPlayer);
+	ItemManager::GetInstance().RegisterPlayer(m_pPlayer);
 	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 1);
 	
 	SoundManager2::GetInstance().Init();
 	std::string filename{ "../Sounds/drumloop.wav" };
 	SoundManager2::GetInstance().playMusic(filename);
 
-
-	/*auto background = std::make_shared<GameObject>();
-	auto texture1 = new comps::TextureComponent("background.jpg");
-	background->AddComponent(texture1);
-	scene.AddGameObject(background);*/
-
-	/*auto logo = std::make_shared<GameObject>();
-	auto texture2 = new comps::TextureComponent("logo.png");
-	
-	logo->AddComponent(texture2);
-	logo->SetPosition(216, 180);
-	scene.AddGameObject(logo);*/
-
-	/*go = std::make_shared<GameObject>();
-	go->SetTexture("logo.png");
-	go->SetPosition(216, 180);
-	scene.AddGameObject(go);*/
-
-	/*auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto title = std::make_shared<GameObject>();
-
-	auto titleText = new comps::TextComponent("Programming 4 Assignment", font);
-	title->AddComponent(titleText);
-	title->SetPosition(80, 20);
-
-	scene.Add(title);*/
 
 
 	scene.Initialize();
@@ -128,9 +94,8 @@ void dae::Minigin::LoadGame()
 
 void dae::Minigin::Update(float elapsedSecs)
 {
-	UNREFERENCED_PARAMETER(elapsedSecs);
-	//EnemyManager::GetInstance().Update(elapsedSecs, m_pPlayer);
-	//BulletManager::GetInstance().Update();
+
+	
 	LevelManager::GetInstance().Update( elapsedSecs);
 
 }
