@@ -1,13 +1,13 @@
 #pragma once
 #include "TextureComponent.h"
 #include <string>
+#include <SDL_pixels.h>
 
 namespace dae
 {
 	class Font;
 	class Texture2D;
 }
-
 
 namespace comps
 {
@@ -18,7 +18,7 @@ namespace comps
 	{
 	public:
 
-		TextComponent(const std::string& text, std::shared_ptr<dae::Font> font,float width, float height);
+		TextComponent(const std::string& text, std::shared_ptr<dae::Font> font,float width, float height, SDL_Color color);
 		virtual ~TextComponent();
 
 
@@ -28,6 +28,7 @@ namespace comps
 		TextComponent& operator=(TextComponent&& other) noexcept = delete;
 
 		void SetText(std::string text);
+		void SetColor(SDL_Color color);
 
 	protected:
 		void Initialize(const dae::Scene& scene) override;
@@ -36,6 +37,7 @@ namespace comps
 
 	private:
 		std::string m_Text;
+		SDL_Color m_Color;
 		std::shared_ptr<dae::Font> m_pFont;
 	};
 }

@@ -25,7 +25,6 @@ namespace dae
 		std::shared_ptr<Player> m_pPlayer2;
 		std::shared_ptr<Enemy> m_pEnemy;
 		std::shared_ptr<InputObserver> pInputObserver;
-		std::shared_ptr<Menu> m_pMenu;
 		void MakePlayer(int controllerId, int spriteId,Scene& scene);
 		
 	};

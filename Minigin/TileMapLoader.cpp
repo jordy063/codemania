@@ -72,7 +72,7 @@ void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> sce
 {
     UNREFERENCED_PARAMETER(amountOfChunks);
     std::ifstream myfile;
-    myfile.open("../Graphics/levelBubbleBobbletest.tmx");
+    myfile.open("../Graphics/BubbleBobbleLevel.tmx");
     if (myfile.fail())
     {
         std::cout << "could not find file" << std::endl;

@@ -6,12 +6,13 @@
 #include "Font.h"
 #include "Texture2D.h"
 #include "Renderer.h"
+#include "LevelManager.h"
 
 
 void comps::FpsComponent::Initialize(const dae::Scene & scene)
 {
 	UNREFERENCED_PARAMETER(scene);
-	
+	m_AllowScrolling = false;
 }
 
 void comps::FpsComponent::Update(const dae::Scene & scene, float elapsedSecs, float2 pos)

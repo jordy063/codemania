@@ -90,6 +90,12 @@
     <ClInclude Include="ItemManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="MenuObserver.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBaseObserver.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -157,6 +163,12 @@
     </ClCompile>
     <ClCompile Include="ItemManager.cpp">
       <Filter>Header Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuObserver.cpp">
+      <Filter>Header Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="InputBaseObserver.cpp">
+      <Filter>Header Files\Patterns</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -51,5 +51,7 @@ namespace comps
 		bool m_JumpTimeSet = false;
 		bool DoRandomJumps = false;
 		std::shared_ptr<dae::GameObject> m_pPlayer;
+
+		int CalculatePlayerDirection();
 	};
 }

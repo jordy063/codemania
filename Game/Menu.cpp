@@ -1,12 +1,11 @@
 #include "MiniginPCH.h"
 #include "Menu.h"
 #include <fstream>
+#include "Font.h"
+#include <SDL.h>
+#include "InputManager.h"
+#include "InputBaseObserver.h"
 
-Menu::Menu(float2 position)
-	:m_Position(position)
-{
-    readDataFromJSON();
-}
 
 void Menu::readDataFromJSON()
 {
@@ -66,6 +65,87 @@ void Menu::readDataFromJSON()
 
         }
     }
+}
+
+void Menu::Initialize()
+{
+    readDataFromJSON();
+    m_pFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 32);
+
+    for (std::pair<std::string, std::string> menuItem : m_MenuMap)
+    {
+        //const SDL_Color color = { 255,255,255 }; // only white text is supported now
+        const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), menuItem.second.c_str(), { 255,255,255 });
+        if (surf == nullptr)
+        {
+            throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+        }
+        auto texture = SDL_CreateTextureFromSurface(dae::Renderer::GetInstance().GetSDLRenderer(), surf);
+        if (texture == nullptr)
+        {
+            throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
+        }
+        SDL_FreeSurface(surf);
+        m_pMenuTextures[menuItem.first] = std::make_shared<dae::Texture2D>(texture);
+
+    }
+
+    m_pMenuObserver = std::make_shared<MenuObserver>(-1);
+    dae::InputManager::GetInstance().Register(m_pMenuObserver, -1);
+}
+
+void Menu::Update()
+{
+    dae::InputManager().GetInstance().ProcessInput();
+}
+
+void Menu::Render()
+{
+    auto renderer = dae::Renderer::GetInstance().GetSDLRenderer();
+    SDL_RenderClear(renderer);
+
+    int counter{};
+    for (std::pair<const std::string, std::shared_ptr<dae::Texture2D>> menuTextures : m_pMenuTextures)
+    {
+        if (counter == m_SelectIndex)
+        {
+            dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 132.0f, 32.0f * counter+100.0f);
+        }
+        else
+        {
+            dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 100.0f, 32.0f * counter + 100.0f);
+        }
+
+        counter++;
+    }
+    
+    SDL_RenderPresent(renderer);
+
+
+}
+
+void Menu::SetShowMenu(bool showMenu)
+{
+    m_ShowMenu = showMenu;
+}
+
+void Menu::MoveUp()
+{
+    m_SelectIndex++;
+    m_SelectIndex %= m_MenuMap.size();
+}
+
+void Menu::MoveDown()
+{
+    m_SelectIndex--;
+    m_SelectIndex %= m_MenuMap.size();
+}
+
+void Menu::Confirm()
+{
+    //get the item by selectindex
+    //uto action = 
+    SetShowMenu(false);
 }
 
 bool Menu::readLanguageParameters(const std::string& line,const std::string& language )

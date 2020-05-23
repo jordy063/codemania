@@ -19,11 +19,12 @@ void FPSCounter::CreateComponents()
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 14);
 
 
-	auto fpsTextComp =std::shared_ptr<comps::FpsComponent>(new comps::FpsComponent("fps: ",font,85,40));
+	auto fpsTextComp = std::shared_ptr<comps::FpsComponent>(new comps::FpsComponent("fps: ", font, 64, 32, { 255,255,255 }));
 
 
 	m_EntityObject->AddComponent(fpsTextComp,ComponentType::FPSCOMPONENT);
 	fpsTextComp->SetAlignment(comps::HAlign::RIGHT, comps::VAlign::TOP);
-	m_EntityObject->SetPosition(600, 0);
+	m_EntityObject->SetPosition(580, 0);
+
 
 }

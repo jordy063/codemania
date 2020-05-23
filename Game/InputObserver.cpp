@@ -4,7 +4,7 @@
 
 InputObserver::InputObserver(comps::InputComponent* inputComp,int controllerId)
 	:pInputComp{ inputComp }
-	, m_ControllerId(controllerId)
+	,InputBaseObserver(controllerId)
 {
 }
 
@@ -13,30 +13,29 @@ InputObserver::~InputObserver()
 	
 }
 
-
-void InputObserver::Update(comps::Direction direction,bool move)
+void InputObserver::OnDirectionalKey(comps::Direction direction, bool move)
 {
 	if (move)
 	{
 		pInputComp->changeDirection(direction);
 		if (direction == comps::Direction::LEFT || direction == comps::Direction::RIGHT)
-		m_CurrentDirection = direction;
+			m_CurrentDirection = direction;
 	}
 
 
 	else
 	{
-		
+
 		if (direction == m_CurrentDirection)
 		{
 			pInputComp->StopMoving();
 		}
 
 	}
-		
 }
 
-void InputObserver::ShootUpdate(int spriteId)
+void InputObserver::OnSelectKey(int spriteId)
 {
 	pInputComp->ShootBullet(m_CurrentDirection, spriteId);
 }
+

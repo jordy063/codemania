@@ -29,6 +29,7 @@
 #include "CollisionComponent.h"
 #include "LevelManager.h"
 #include "ItemManager.h"
+#include "Menu.h"
 
 
 void dae::Minigin::Initialize()
@@ -42,8 +43,8 @@ void dae::Minigin::Initialize()
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		640,
-		480,
+		600,
+		630,
 		SDL_WINDOW_OPENGL
 	);
 	if (window == nullptr) 
@@ -66,11 +67,10 @@ void dae::Minigin::LoadGame()
 	std::string sceneName{ "Bubble Bobble Scene" };
 	auto& scene{ SceneManager::GetInstance().CreateScene(sceneName) };
 
-	auto loader = std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,0 }, SceneManager::GetInstance().GetActiveScene()));
+	auto loader = std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,30 }, SceneManager::GetInstance().GetActiveScene()));
 
 	scene.AddTileMap(loader);
 
-	m_pMenu = std::shared_ptr<Menu>(new Menu({ 0,0 }));
 
 	MakePlayer(-1, 0, scene);
 	
@@ -87,9 +87,7 @@ void dae::Minigin::LoadGame()
 
 
 	scene.Initialize();
-
-
-	//npc->ClearAI();
+	Menu::GetInstance().Initialize();
 }
 
 void dae::Minigin::Update(float elapsedSecs)
@@ -118,7 +116,6 @@ void dae::Minigin::Run()
 	LoadGame();
 
 	{
-		
 		int frames{};
 		float secsPerUpdate{ 0.002f };
 		float secsPerRender{ 1.0f/30 };
@@ -132,36 +129,45 @@ void dae::Minigin::Run()
 		bool doContinue = true;
 		while (doContinue)
 		{
-			/*if (menu) {
-				Meneumanager.Render();
-				Meneumanager.Update();
-			}*/
-			/*else
-			{*/
-				auto currentTime = std::chrono::high_resolution_clock::now();
-				float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
-				lastTime = currentTime;
-				lag += elapsedSec;
-				lag_render += elapsedSec;
-				doContinue = input.ProcessInput();
+		
+			//we calculated the lagg
+			auto currentTime = std::chrono::high_resolution_clock::now();
+			float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
+			lastTime = currentTime;
+			lag += elapsedSec;
+			lag_render += elapsedSec;
+			doContinue = input.ProcessInput();
 
-
-				while (lag > 0)
+			//if it's bigger than 0 we update
+			while (lag > 0)
+			{
+				//if lag < secperUpdate : update lag, if lag too big, update more than once
+				float elapse = min(secsPerUpdate, lag);
+				if (Menu::GetInstance().GetShowMenu())
 				{
-					//if lag < secperUpdate : update lag, if lag too big, update more than once
-					float elapse = min(secsPerUpdate, lag);
+					Menu::GetInstance().Update();
+				}
+				else
+				{
 					sceneManager.Update(elapse);
 					Update(elapse);
-					lag -= elapse;
+					
 				}
+				lag -= elapse;
+			}
 
-				if (lag_render >= secsPerRender)
+			if (lag_render >= secsPerRender)
+			{
+				lag_render -= secsPerRender;
+				if (Menu::GetInstance().GetShowMenu())
 				{
-					lag_render -= secsPerRender;
-					renderer.Render();
-					frames++;
+					Menu::GetInstance().Render();
 				}
-			/*}*/
+				else
+				renderer.Render();
+				frames++;
+			}
+		
 			
 		}
 	}
@@ -179,11 +185,11 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene)
 	scene.Add(m_pPlayer);
 
 	float movementSpeed{ 100 };
-	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/CharacterSprite.png", 13, 8, spriteId, 0.2f, 32, 32));
+	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/CharacterSprite.png", 13, 8, spriteId, 0.2f, 64, 32));
 	auto pPlayerPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_pPlayer->GetTransform(), true, movementSpeed));
 	auto pPlayerinputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(pPlayerPhysicsComp, pPlayerspriteComp, controllerId));
 	
-	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16,pPlayerPhysicsComp));
+	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(32, 32,pPlayerPhysicsComp));
 	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(),
 		scene.GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
 	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(3));
@@ -198,7 +204,7 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene)
 	m_pPlayer->AddComponent(pPlayerinputComp, ComponentType::PLAYERCOMPONENT);
 
 	
-	m_pPlayer->GetTransform()->Translate(100, 50);
+	m_pPlayer->GetTransform()->Translate(100, 70);
 
 	LevelManager::GetInstance().RegisterTransformCompLeft(m_pPlayer->GetTransform(), pPlayerCollisionComp);
 

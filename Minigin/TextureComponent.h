@@ -37,9 +37,10 @@ namespace comps
 		float2 m_Offset;
 		float m_Width;
 		float m_Height;
-
+		bool m_AllowScrolling;
 
 	private:
+		
 		
 	};
 }

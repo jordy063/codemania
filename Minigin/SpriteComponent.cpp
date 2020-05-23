@@ -16,6 +16,7 @@ comps::SpriteComponent::SpriteComponent(std::string filename,int rows, int colls
 	, TextureComponent{ filename,width,height }
 	, m_Timer{}
 	, m_SpriteIndex{spriteIndex}
+
 {
 }
 
@@ -94,6 +95,6 @@ void comps::SpriteComponent::Render(const dae::Scene & scene, float2 pos)
 		auto texSize = m_pTexture->GetSize();
 		int xShift = int(m_Offset.x) + (texSize.first * (int)m_Alignment.first) / 2 + (int)LevelManager::GetInstance().GetTranslationX();
 		int yShift = int(m_Offset.y) + (texSize.second * (int)m_Alignment.second) / 2 + (int)LevelManager::GetInstance().GetTranslationY();
-		dae::Renderer::GetInstance().RenderTextureCutOut(*m_pTexture, pos.x - xShift, pos.y - yShift, srcRect);
+		dae::Renderer::GetInstance().RenderTextureCutOut(*m_pTexture, pos.x - xShift, pos.y - yShift, srcRect,m_Width,m_Height);
 	}
 }

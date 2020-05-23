@@ -4,6 +4,7 @@
 #include "CollisionComponent.h"
 #include "SceneManager.h"
 #include "TileMapLoader.h"
+#include "TransformComponent.h"
 
 
 void LevelManager::Initialize(const dae::Scene& scene)
@@ -52,7 +53,7 @@ void LevelManager::Update(float elapsedSecs)
 		}
 		else
 		{
-			m_PlayerTranslation.x += elapsedSecs * m_DistancePerSec.x / m_PlayerTranlateTime;
+			m_PlayerTranslation.x += elapsedSecs * m_DistancePerSec.x / m_PlayerTranlateTime.x;
 			m_pPlayerTransformLeft->Translate(m_CurrentPlayerPos.x + m_PlayerTranslation.x, m_PlayerTranslation.y + m_CurrentPlayerPos.y);
 		}
 		
@@ -66,7 +67,7 @@ void LevelManager::Update(float elapsedSecs)
 		}
 		else
 		{
-			m_PlayerTranslation.y += elapsedSecs * m_DistancePerSec.y / m_PlayerTranlateTime;
+			m_PlayerTranslation.y += elapsedSecs * m_DistancePerSec.y / m_PlayerTranlateTime.y;
 			m_pPlayerTransformLeft->Translate(m_CurrentPlayerPos.x + m_PlayerTranslation.x, m_PlayerTranslation.y + m_CurrentPlayerPos.y);
 		}
 		IsCollisionSet = false;
@@ -87,6 +88,12 @@ void LevelManager::Update(float elapsedSecs)
 
 		m_IsLocationYReached = false;
 		m_PlayerLocationSet = false;
+
+		auto test = m_pPlayerTransformLeft->GetPosition().y;
+		if (test > 600 + m_Translation.y)
+		{
+			m_pPlayerTransformLeft->Translate(m_pPlayerTransformLeft->GetPosition().x, m_Translation.y);
+		}
 	}
 
 

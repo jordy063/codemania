@@ -12,6 +12,7 @@ comps::TextureComponent::TextureComponent(const std::string& filename, float wid
 	:m_Offset{0,0}
 	,m_Width{width}
 	,m_Height{height}
+	, m_AllowScrolling{ true }
 	
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
@@ -33,6 +34,7 @@ comps::TextureComponent::~TextureComponent()
 void comps::TextureComponent::SetTexture(const std::string& filename)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
+	
 }
 
 void comps::TextureComponent::SetOffset(float2 offset)
@@ -65,9 +67,14 @@ void comps::TextureComponent::Render(const dae::Scene & scene, float2 pos)
 	{
 
 		auto texSize = m_pTexture->GetSize();
-
-		int xShift = int(m_Offset.x) + (texSize.first * (int)m_Alignment.first) / 2 + (int)LevelManager::GetInstance().GetTranslationX();
-		int yShift = int(m_Offset.y) + (texSize.second * (int)m_Alignment.second) / 2 + (int)LevelManager::GetInstance().GetTranslationY();
+		int xShift = int(m_Offset.x) + (texSize.first * (int)m_Alignment.first) / 2;
+		int yShift = int(m_Offset.y) + (texSize.second * (int)m_Alignment.second) / 2;
+		if (m_AllowScrolling)
+		{
+			xShift += (int)LevelManager::GetInstance().GetTranslationX();
+			yShift += (int)LevelManager::GetInstance().GetTranslationY();
+		}
+		
 		dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x - xShift, pos.y - yShift, m_Width, m_Height);
 	}
 }

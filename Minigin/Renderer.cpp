@@ -66,3 +66,20 @@ void dae::Renderer::RenderTextureCutOut(const Texture2D& texture, const float x,
 
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
 }
+
+void dae::Renderer::RenderTextureCutOut(const Texture2D& texture, const float x, const float y, rectangle_ srcRect,float width,float height) const
+{
+	SDL_Rect dst;
+	dst.x = static_cast<int>(x);
+	dst.y = static_cast<int>(y);
+	dst.w = static_cast<int>(width);
+	dst.h = static_cast<int>(height);
+
+	SDL_Rect src;
+	src.x = static_cast<int>(srcRect.posX);
+	src.y = static_cast<int>(srcRect.posY);
+	src.w = static_cast<int>(srcRect.width);
+	src.h = static_cast<int>(srcRect.height);
+
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
+}

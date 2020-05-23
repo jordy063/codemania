@@ -83,13 +83,14 @@ void BulletManager::AddBoundingBoxToList(std::shared_ptr<comps::CollisionCompone
 	}
 }
 
-void BulletManager::RemoveBullet(std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
+void BulletManager::RemoveBullet(std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
 {
 	//get the boundingboxcomp of every gameobject and check if those boundingboxes are the same
 	//here we should update the collision comp of every gameobject
 	m_pTriggeredBullets.remove(pBoundingBox);
+	
 	std::shared_ptr<dae::GameObject> pGameObjectToRemove{ nullptr };
-
+	pCollisionComp->SetExtraCollisions(m_pTriggeredBullets);
 	for (std::shared_ptr<dae::GameObject> pGameObject : m_pBullets)
 	{
 		

@@ -13,6 +13,8 @@ comps::CollisionComponent::CollisionComponent(std::list<std::shared_ptr<rectangl
 
 void comps::CollisionComponent::SetExtraCollisions(std::list<std::shared_ptr<comps::BoundingBoxComponent>> extraCollisionList)
 {
+	m_ExtraCollisions.clear();
+
 	auto currentBoundingBox = m_pBoundingBoxComp->GetBoundingBox(0, 0);
 	for (std::shared_ptr<comps::BoundingBoxComponent> boundingBox : extraCollisionList)
 	{

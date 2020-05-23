@@ -36,7 +36,7 @@ private:
     void ReadTextureData(const std::string& sentence, intPair chunkPos, int row, std::shared_ptr<dae::Scene> scene);
     void ReadCollisionData(const std::string& sentence, std::list<std::shared_ptr<rectangle_>>& collision);
     std::string fileStrings[4];
-    const static int TileSize{ 24 };
+    const static int TileSize{ 25 };
 
     int m_CurrentLevel;
 

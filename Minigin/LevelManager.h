@@ -24,15 +24,15 @@ private:
 	int m_CurrentLevel{0};
 	float2 m_Translation{ 0,0 };
 	float m_TransisionProgress{};
-	float m_LevelHeight{ 16*24 };
-	float2 m_TransitionSpeed{5,20 };
+	float m_LevelHeight{ 24*25 };
+	float2 m_TransitionSpeed{5,50 };
 	float m_HorintalProgress{};
 	float2 m_CurrentPlayerPos{};
 	float2 m_DistancePerSec{};
 	float2 m_PlayerTranslation{};
 
-	float2 m_PlayerDefaultPos{50,300};
-	float m_PlayerTranlateTime{ 5 };
+	float2 m_PlayerDefaultPos{50,500};
+	float2 m_PlayerTranlateTime{ 5,1 };
 
 	std::shared_ptr< TransformComponent> m_pPlayerTransformLeft;
 	std::shared_ptr< comps::CollisionComponent> m_pPlayerCollisionLeft;

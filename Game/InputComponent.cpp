@@ -58,7 +58,7 @@ void comps::InputComponent::Update(const dae::Scene& scene, float elapsedSecs, f
 void comps::InputComponent::changeDirection(Direction direction)
 {
 	float movementSpeed{ pPhysicsComp->GetMovementSpeed() };
-	float jumpSpeed{ 250 };
+	float jumpSpeed{ 320 };
 	
 	switch (direction)
 	{

@@ -34,7 +34,7 @@ bool dae::InputManager::ProcessInput()
 
 	//	}
 	//}
-	for (std::map<int, std::shared_ptr<InputObserver>>::iterator iter = pInputObserver.begin(); iter != pInputObserver.end(); ++iter)
+	for (std::map<int, std::vector<std::shared_ptr<InputBaseObserver>>>::iterator iter = pInputObserver.begin(); iter != pInputObserver.end(); ++iter)
 	{
 		int k = iter->first;
 		if (k != -1)
@@ -78,69 +78,75 @@ bool dae::InputManager::IsPressed(ControllerButton button) const
 	default: return false;
 	}
 }
-void dae::InputManager::Register(std::shared_ptr<InputObserver> inputObserver,int controllerId)
+void dae::InputManager::Register(std::shared_ptr<InputBaseObserver> inputObserver,int controllerId)
 {
-	pInputObserver[controllerId] = inputObserver;
+	// contains
+	pInputObserver[controllerId].push_back( inputObserver);
 }
 void dae::InputManager::NotifyInput(SDL_Event e,bool move)
 {
-	if (pInputObserver[-1] != nullptr)
+	if (!pInputObserver[-1].empty())
 	{
-		std::cout << e.key.keysym.sym << "," << move << '\n';
-		switch (e.key.keysym.sym)
-		{
-		case SDLK_z:
-			pInputObserver[-1]->Update(comps::Direction::UP, move);
-			break;
-		case SDLK_s:
-			pInputObserver[-1]->Update(comps::Direction::DOWN, move);
-			break;
-		case SDLK_d:
-			pInputObserver[-1]->Update(comps::Direction::RIGHT, move);
-			break;
-		case SDLK_q:
-			pInputObserver[-1]->Update(comps::Direction::LEFT, move);
-			break;
-		case SDLK_e:
-			if (move && !m_IsShooting)
+		for (auto inputObserver : pInputObserver[-1]) {
+			std::cout << e.key.keysym.sym << "," << move << '\n';
+			switch (e.key.keysym.sym)
 			{
-				pInputObserver[-1]->ShootUpdate(0);
-				m_IsShooting = true;
-			}
-			if (!move)
-			{
-				m_IsShooting = false;
-			}
+			case SDLK_z:
+				inputObserver->OnDirectionalKey(comps::Direction::UP, move);
+				break;
+			case SDLK_s:
+				inputObserver->OnDirectionalKey(comps::Direction::DOWN, move);
+				break;
+			case SDLK_d:
+				inputObserver->OnDirectionalKey(comps::Direction::RIGHT, move);
+				break;
+			case SDLK_q:
+				inputObserver->OnDirectionalKey(comps::Direction::LEFT, move);
+				break;
+			case SDLK_e:
+				inputObserver->OnSelectKey(0);
+				if (move && !m_IsShooting)
+				{
+					
+					m_IsShooting = true;
+				}
+				if (!move)
+				{
+					m_IsShooting = false;
+				}
 
+			}
 		}
 	}
 
-	if (pInputObserver[-2] != nullptr)
+	if (!pInputObserver[-2].empty())
 	{
+		for (auto inputObserver : pInputObserver[-2]) {
 
-		switch (e.key.keysym.sym)
-		{
-		case SDLK_UP:
-			pInputObserver[-2]->Update(comps::Direction::UP, move);
-			break;
-		case SDLK_DOWN:
-			pInputObserver[-2]->Update(comps::Direction::DOWN, move);
-			break;
-		case SDLK_RIGHT:
-			pInputObserver[-2]->Update(comps::Direction::RIGHT, move);
-			break;
-		case SDLK_LEFT:
-			pInputObserver[-2]->Update(comps::Direction::LEFT, move);
-			break;
-		case SDLK_RETURN:
-			if (move && !m_IsShooting)
+			switch (e.key.keysym.sym)
 			{
-				pInputObserver[-2]->ShootUpdate(1);
-				m_IsShooting = true;
-			}
-			if (!move)
-			{
-				m_IsShooting = false;
+			case SDLK_UP:
+				inputObserver->OnDirectionalKey(comps::Direction::UP, move);
+				break;
+			case SDLK_DOWN:
+				inputObserver->OnDirectionalKey(comps::Direction::DOWN, move);
+				break;
+			case SDLK_RIGHT:
+				inputObserver->OnDirectionalKey(comps::Direction::RIGHT, move);
+				break;
+			case SDLK_LEFT:
+				inputObserver->OnDirectionalKey(comps::Direction::LEFT, move);
+				break;
+			case SDLK_RETURN:
+				if (move && !m_IsShooting)
+				{
+					inputObserver->OnSelectKey(1);
+					m_IsShooting = true;
+				}
+				if (!move)
+				{
+					m_IsShooting = false;
+				}
 			}
 
 		}
@@ -191,30 +197,32 @@ void dae::InputManager::checkButtons(int controllerId)
 }
 void dae::InputManager::NotifyInputController(WORD e, bool move,int controllerId)
 {
-	if (pInputObserver[controllerId] != nullptr)
+	if (!pInputObserver[-2].empty())
 	{
-		switch (e)
-		{
-		case XINPUT_GAMEPAD_DPAD_UP:
-			pInputObserver[controllerId]->Update(comps::Direction::UP, move);
-
-			break;
-		case XINPUT_GAMEPAD_DPAD_DOWN:
-			pInputObserver[controllerId]->Update(comps::Direction::DOWN, move);
-			break;
-		case XINPUT_GAMEPAD_DPAD_RIGHT:
-			pInputObserver[controllerId]->Update(comps::Direction::RIGHT, move);
-			break;
-		case XINPUT_GAMEPAD_DPAD_LEFT:
-			pInputObserver[controllerId]->Update(comps::Direction::LEFT, move);
-			break;
-		case XINPUT_GAMEPAD_A:
-			if (move)
+		for (auto inputObserver : pInputObserver[-2]) {
+			switch (e)
 			{
-				pInputObserver[controllerId]->ShootUpdate(controllerId);
+			case XINPUT_GAMEPAD_DPAD_UP:
+				inputObserver->OnDirectionalKey(comps::Direction::UP, move);
+
+				break;
+			case XINPUT_GAMEPAD_DPAD_DOWN:
+				inputObserver->OnDirectionalKey(comps::Direction::DOWN, move);
+				break;
+			case XINPUT_GAMEPAD_DPAD_RIGHT:
+				inputObserver->OnDirectionalKey(comps::Direction::RIGHT, move);
+				break;
+			case XINPUT_GAMEPAD_DPAD_LEFT:
+				inputObserver->OnDirectionalKey(comps::Direction::LEFT, move);
+				break;
+			case XINPUT_GAMEPAD_A:
+				if (move)
+				{
+					inputObserver->OnSelectKey(controllerId);
+				}
+
+
 			}
-
-
 		}
 	}
 	//ServiceLocator::GetAudio();

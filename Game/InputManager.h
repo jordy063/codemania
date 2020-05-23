@@ -5,7 +5,7 @@
 #include <map>
 
 
-class InputObserver;
+class InputBaseObserver;
 namespace dae
 {
 	enum class ControllerButton
@@ -21,7 +21,7 @@ namespace dae
 	public:
 		bool ProcessInput();
 		bool IsPressed(ControllerButton button) const;
-		void Register(std::shared_ptr<InputObserver> inputObserver, int controllerId);
+		void Register(std::shared_ptr<InputBaseObserver> inputBaseObserver, int controllerId);
 		void NotifyInput(SDL_Event e, bool move);
 		void NotifyInputController(WORD e, bool move, int controllerId);
 		void checkButtons(int controllerId);
@@ -29,7 +29,7 @@ namespace dae
 	private:
 		XINPUT_STATE currentState{};
 		//InputObserver* pInputObserver;
-		std::map<int,std::shared_ptr<InputObserver>> pInputObserver;
+		std::map<int,std::vector<std::shared_ptr<InputBaseObserver>>> pInputObserver;
 		bool m_IsShooting = false;
 		std::map< std::pair<int, WORD>, bool> m_ButtonMap;
 	

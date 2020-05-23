@@ -82,12 +82,11 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 		}
 		m_JumpTimer += elapsedSecs;
 	}
-	int randomDirection{ rand() % 2 };
 
 
-	if (m_Timer > m_ChangeDirectionTime)
+	if (m_Timer > m_ChangeDirectionTime && m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBox->GetBoundingBox(0, 0).posY >= 0)
 	{
-		switch (randomDirection)
+		switch (CalculatePlayerDirection())
 		{
 		case 0:
 			m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
@@ -123,7 +122,18 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 	{
 		//do damage and respawn player
 		m_pPlayerHealthComp->DropHealth(1);
+
 	}
 
 	m_Timer += elapsedSecs;
+}
+
+int comps::ZenChanAIComponent::CalculatePlayerDirection()
+{
+	if (m_pPlayer->GetTransform()->GetPosition().x > m_pPhysicsComp->GetTransform()->GetPosition().x)
+	{
+		return 0;
+	}
+	else
+		return 1;
 }
