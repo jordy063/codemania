@@ -14,6 +14,12 @@ namespace comps
 	class TextureComponent;
 }
 
+enum MenuItem
+{
+	PLAY,
+	QUIT
+};
+
 class Menu final: public dae::Singleton<Menu>
 {
 	friend class comps::TextureComponent;
@@ -28,13 +34,14 @@ public:
 	void MoveUp();
 	void MoveDown();
 	void Confirm();
+	bool GetIsQuitCalled() const { return m_IsQuitCalled; }
 	
 	
 private:
-	float2 m_Position;
+	
 	std::string m_Filename;
-	std::map<std::string, std::string> m_MenuMap;
-	std::map<std::string, std::shared_ptr<dae::Texture2D>> m_pMenuTextures;
+	std::map<MenuItem, std::string> m_MenuMap;
+	std::map<MenuItem, std::shared_ptr<dae::Texture2D>> m_pMenuTextures;
 	int m_SelectIndex;
 	std::shared_ptr<dae::Font> m_pFont;
 	bool m_ShowMenu = true;
@@ -42,8 +49,7 @@ private:
 
 	bool readLanguageParameters(const std::string& line, const std::string& languagee);
 	void makeGameObject();
-
-
+	bool m_IsQuitCalled = false;
 	
 };
 

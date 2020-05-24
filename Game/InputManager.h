@@ -25,6 +25,8 @@ namespace dae
 		void NotifyInput(SDL_Event e, bool move);
 		void NotifyInputController(WORD e, bool move, int controllerId);
 		void checkButtons(int controllerId);
+		void DoKeyFunctionality(SDL_Event e, std::shared_ptr<InputBaseObserver> inputObserver, bool move, int id);
+		void DoControllerFunctionality(WORD e, std::shared_ptr<InputBaseObserver> inputObserver, bool move, int controllerId);
 
 	private:
 		XINPUT_STATE currentState{};

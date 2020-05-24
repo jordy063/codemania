@@ -28,10 +28,10 @@ void BulletManager::MakeBullet(const float2& position, comps::Direction directio
 	bulletObject->GetTransform()->Translate(position);
 
 	float defaultSpeed{ 20.0f };
-	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Bubble.png", 4, 8, id, 0.2f, 16, 16));
+	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Bubble.png", 4, 8, id, 0.2f, 40, 20));
 	auto physicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(bulletObject->GetTransform(), false, defaultSpeed));
 
-	auto BoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, physicsComp));
+	auto BoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(20, 20, physicsComp));
 
 	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(),
 		dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(), physicsComp, BoundingBox));

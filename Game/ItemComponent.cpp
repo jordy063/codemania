@@ -4,12 +4,16 @@
 #include "SpriteComponent.h"
 #include "BoundingBoxComponent.h"
 #include "ItemManager.h"
+#include "EnemyObserver.h"
 
 comps::ItemComponent::ItemComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::SpriteComponent> pSpriteComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,ItemType type)
 	:m_pBoundingBoxComp(pBoundingBoxComp)
 	,m_pPhysicsComp(pPhysicsComp)
 	,m_pSpriteComp(pSpriteComp)
 	,m_ItemType(type)
+	, m_TimeBeforeNotify(5)
+	, m_NotifyTimer(0)
+	, m_LifeTime(10)
 {
 	//here we ask the components we want
 	
@@ -46,11 +50,33 @@ void comps::ItemComponent::Update(const dae::Scene& scene, float elapsedSecs, fl
 
 	else if (IsLootAble)
 	{
+
 		if (ItemManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
 		{
+			if (m_IsDownCounterCalled == false)
+			{
+				EnemyObserver::GetInstance().DownCounter();
+				m_IsDownCounterCalled = true;
+			}
 			ItemManager::GetInstance().DoEffect(m_ItemType);
 			ItemManager::GetInstance().RemoveItem(m_pBoundingBoxComp);
+
+			
 		}
+	}
+	m_NotifyTimer += elapsedSecs;
+	if(m_IsDownCounterCalled == false)
+	{
+		if (m_NotifyTimer > m_TimeBeforeNotify)
+		{
+			EnemyObserver::GetInstance().DownCounter();
+			m_IsDownCounterCalled = true;
+		}
+	}
+
+	if (m_NotifyTimer > m_LifeTime)
+	{
+		ItemManager::GetInstance().RemoveItem(m_pBoundingBoxComp);
 	}
 	//if they bullet hits an enemy we make an item.
 	//an item has a physicscomponent with gravity but we give it a certain force.

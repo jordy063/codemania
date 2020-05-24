@@ -28,5 +28,9 @@ namespace comps
 		bool m_HasJumped = false;
 		ItemType m_ItemType;
 		bool IsLootAble = false;
+		float m_TimeBeforeNotify;
+		float m_NotifyTimer;
+		bool m_IsDownCounterCalled = false;
+		float m_LifeTime;
 	};
 }

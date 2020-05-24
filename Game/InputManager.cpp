@@ -232,3 +232,55 @@ void dae::InputManager::NotifyInputController(WORD e, bool move,int controllerId
 
 
 }
+void dae::InputManager::DoKeyFunctionality(SDL_Event e, std::shared_ptr<InputBaseObserver> inputObserver,bool move,int id)
+{
+	switch (e.key.keysym.sym)
+	{
+	case SDLK_UP:
+		inputObserver->OnDirectionalKey(comps::Direction::UP, move);
+		break;
+	case SDLK_DOWN:
+		inputObserver->OnDirectionalKey(comps::Direction::DOWN, move);
+		break;
+	case SDLK_RIGHT:
+		inputObserver->OnDirectionalKey(comps::Direction::RIGHT, move);
+		break;
+	case SDLK_LEFT:
+		inputObserver->OnDirectionalKey(comps::Direction::LEFT, move);
+		break;
+	case SDLK_RETURN:
+		if (move && !m_IsShooting)
+		{
+			inputObserver->OnSelectKey(id);
+			m_IsShooting = true;
+		}
+		if (!move)
+		{
+			m_IsShooting = false;
+		}
+	}
+}
+void dae::InputManager::DoControllerFunctionality(WORD e, std::shared_ptr<InputBaseObserver> inputObserver, bool move, int controllerId)
+{
+	switch (e)
+	{
+	case XINPUT_GAMEPAD_DPAD_UP:
+		inputObserver->OnDirectionalKey(comps::Direction::UP, move);
+
+		break;
+	case XINPUT_GAMEPAD_DPAD_DOWN:
+		inputObserver->OnDirectionalKey(comps::Direction::DOWN, move);
+		break;
+	case XINPUT_GAMEPAD_DPAD_RIGHT:
+		inputObserver->OnDirectionalKey(comps::Direction::RIGHT, move);
+		break;
+	case XINPUT_GAMEPAD_DPAD_LEFT:
+		inputObserver->OnDirectionalKey(comps::Direction::LEFT, move);
+		break;
+	case XINPUT_GAMEPAD_A:
+		if (move)
+		{
+			inputObserver->OnSelectKey(controllerId);
+		}
+	}
+}

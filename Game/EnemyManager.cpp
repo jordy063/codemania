@@ -106,10 +106,10 @@ void EnemyManager::MakeZenChan(float2 pos, std::shared_ptr<dae::Scene> scene)
 	scene->Add(enemyObject);
 	enemyObject->GetTransform()->Translate(pos.x, pos.y);
 
-	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8, 0, 0.2f, 16, 16));
+	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8, 0, 0.2f, 44, 22));
 	auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(), true, 30.0f));
 
-	auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, pPhysicsComp));
+	auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22, pPhysicsComp));
 
 	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
 		scene->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp,pBoundingBox));
@@ -133,9 +133,9 @@ void EnemyManager::MakeGhost(float2 pos, std::shared_ptr<dae::Scene> scene)
 	scene->Add(enemyObject);
 	enemyObject->GetTransform()->Translate(pos.x, pos.y);
 
-	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8, 1, 0.2f, 16, 16));
+	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8, 1, 0.2f, 44, 22));
 	auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(), false, 30.0f));
-	auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, pPhysicsComp));
+	auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22, pPhysicsComp));
 
 	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
 		scene->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp, pBoundingBox));

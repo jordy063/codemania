@@ -42,7 +42,7 @@ namespace comps
 		float m_LifeTime;
 		bool m_IsActive = true;
 		int m_EnemyId;
-
+	
 	};
 }
 

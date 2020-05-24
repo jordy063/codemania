@@ -125,6 +125,7 @@ void dae::Minigin::Run()
 		float lag_render{ 0.0f };
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
+		auto& menu = Menu::GetInstance();
 
 		bool doContinue = true;
 		while (doContinue)
@@ -137,15 +138,23 @@ void dae::Minigin::Run()
 			lag += elapsedSec;
 			lag_render += elapsedSec;
 			doContinue = input.ProcessInput();
+			
 
 			//if it's bigger than 0 we update
 			while (lag > 0)
 			{
 				//if lag < secperUpdate : update lag, if lag too big, update more than once
+				
 				float elapse = min(secsPerUpdate, lag);
-				if (Menu::GetInstance().GetShowMenu())
+				if (menu.GetShowMenu())
 				{
-					Menu::GetInstance().Update();
+
+					menu.Update();
+
+					if (menu.GetIsQuitCalled())
+					{
+						doContinue = false;
+					}
 				}
 				else
 				{
@@ -159,9 +168,9 @@ void dae::Minigin::Run()
 			if (lag_render >= secsPerRender)
 			{
 				lag_render -= secsPerRender;
-				if (Menu::GetInstance().GetShowMenu())
+				if (menu.GetShowMenu())
 				{
-					Menu::GetInstance().Render();
+					menu.Render();
 				}
 				else
 				renderer.Render();
@@ -185,11 +194,11 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene)
 	scene.Add(m_pPlayer);
 
 	float movementSpeed{ 100 };
-	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/CharacterSprite.png", 13, 8, spriteId, 0.2f, 64, 32));
+	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/CharacterSprite.png", 13, 8, spriteId, 0.2f, 44, 22));
 	auto pPlayerPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_pPlayer->GetTransform(), true, movementSpeed));
 	auto pPlayerinputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(pPlayerPhysicsComp, pPlayerspriteComp, controllerId));
 	
-	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(32, 32,pPlayerPhysicsComp));
+	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22,pPlayerPhysicsComp));
 	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(),
 		scene.GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
 	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(3));

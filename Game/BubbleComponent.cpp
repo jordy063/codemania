@@ -23,6 +23,7 @@ comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent>
 	,m_GoUpTime(2.0f)
 	, m_LifeTime(10)
 	, m_EnemyId(-1)
+
 {
 }
 
@@ -61,7 +62,6 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 			m_pPhysicsComp->SetMovement(comps::Direction::UP, m_BulletSpeed / 2);
 			//change the sprite + physicscomp and add the collision
 			m_HasHitEnemy = true;
-			EnemyObserver::GetInstance().DownCounter();
 
 			
 			m_EnemyId = enemyId;
@@ -95,8 +95,11 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 			ItemType type = static_cast<ItemType>(m_EnemyId);
 			ItemManager::GetInstance().makeItem(m_pPhysicsComp->GetTransform()->GetPosition(), type);
 			BulletManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
+			
 		}
 	}
+
+	
 	//check if bullet overlaps with enemy. if so we change our sprite,clear the enemy,make him go up and add them to the list(maybe with bool) if the bool is true we can fill up a list in the bulletmanager and then whenever an enemy is hit 
 	//also check if the bullet reached travel time. if so we add the bullet to the list and make him go up
 

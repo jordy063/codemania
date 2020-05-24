@@ -9,6 +9,16 @@
 void MakeBullet(std::shared_ptr<comps::PhysicsComponent> physicsComp, comps::Direction direction,int id)
 {
 	auto pos = physicsComp->GetTransform()->GetPosition();
+	float distanceFromPlayer{ 10 };
+
+	if (direction == comps::Direction::LEFT)
+	{
+		pos.x -= distanceFromPlayer;
+	}
+	else
+	{
+		pos.x += distanceFromPlayer;
+	}
 	BulletManager::GetInstance().MakeBullet(pos, direction, id);
 	
 }

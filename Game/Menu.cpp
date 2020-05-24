@@ -72,7 +72,7 @@ void Menu::Initialize()
     readDataFromJSON();
     m_pFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 32);
 
-    for (std::pair<std::string, std::string> menuItem : m_MenuMap)
+    for (std::pair<MenuItem, std::string> menuItem : m_MenuMap)
     {
         //const SDL_Color color = { 255,255,255 }; // only white text is supported now
         const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), menuItem.second.c_str(), { 255,255,255 });
@@ -105,17 +105,18 @@ void Menu::Render()
     SDL_RenderClear(renderer);
 
     int counter{};
-    for (std::pair<const std::string, std::shared_ptr<dae::Texture2D>> menuTextures : m_pMenuTextures)
+    for (std::pair<MenuItem, std::shared_ptr<dae::Texture2D>> menuTextures : m_pMenuTextures)
     {
         if (counter == m_SelectIndex)
         {
-            dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 132.0f, 32.0f * counter+100.0f);
+            dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 150, 32.0f * counter+100.0f);
+
         }
         else
         {
             dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 100.0f, 32.0f * counter + 100.0f);
         }
-
+        
         counter++;
     }
     
@@ -144,8 +145,20 @@ void Menu::MoveDown()
 void Menu::Confirm()
 {
     //get the item by selectindex
-    //uto action = 
-    SetShowMenu(false);
+    MenuItem action = static_cast<MenuItem>(m_SelectIndex);
+    switch (action)
+    {
+    case MenuItem::PLAY:
+        SetShowMenu(false);
+        break;
+    case MenuItem::QUIT:
+        m_IsQuitCalled = true;
+        break;
+    default:
+        break;
+    }
+
+    
 }
 
 bool Menu::readLanguageParameters(const std::string& line,const std::string& language )
@@ -173,7 +186,7 @@ bool Menu::readLanguageParameters(const std::string& line,const std::string& lan
         endIndex = line.find_first_of("\"", startIndex + 1);
         std::string start = line.substr(startIndex + 1, endIndex - startIndex - 1);
 
-        m_MenuMap[gameStart] = start;
+        m_MenuMap[MenuItem::PLAY] = start;
 
         //2ND PARAMETER
         startIndex = endIndex + 1;
@@ -190,7 +203,7 @@ bool Menu::readLanguageParameters(const std::string& line,const std::string& lan
         endIndex = line.find_first_of("\"", startIndex + 1);
         std::string quit = line.substr(startIndex + 1, endIndex - startIndex - 1);
 
-        m_MenuMap[gameQuit] = quit;
+        m_MenuMap[MenuItem::QUIT] = quit;
 
         return true;
 

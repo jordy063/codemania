@@ -21,10 +21,10 @@ void ItemManager::makeItem(float2 pos,ItemType type)
 	itemObject->GetTransform()->Translate(pos);
 	//needs a texture/physics/collision/itemComp
 	
-	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/ItemSpreadSheet.png", 3,4, 0, 0.2f, 32, 32));
+	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/ItemSpreadSheet.png", 3,4, 0, 0.2f, 22, 22));
 	auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(itemObject->GetTransform(), true));
 
-	auto pBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(16, 16, pPhysicsComp));
+	auto pBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22, pPhysicsComp));
 	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(),
 		dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp, pBoundingBoxComp));
 	auto pItemComponent = std::shared_ptr<comps::ItemComponent>(new comps::ItemComponent(pPhysicsComp,pSpriteComp,pBoundingBoxComp, type));
