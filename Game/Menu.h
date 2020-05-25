@@ -42,6 +42,7 @@ private:
 	std::string m_Filename;
 	std::map<MenuItem, std::string> m_MenuMap;
 	std::map<MenuItem, std::shared_ptr<dae::Texture2D>> m_pMenuTextures;
+	std::map<MenuItem, std::shared_ptr<dae::Texture2D>> m_pSelectedMenuTextures;
 	int m_SelectIndex;
 	std::shared_ptr<dae::Font> m_pFont;
 	bool m_ShowMenu = true;
@@ -50,6 +51,6 @@ private:
 	bool readLanguageParameters(const std::string& line, const std::string& languagee);
 	void makeGameObject();
 	bool m_IsQuitCalled = false;
-	
+	void FillInTexture(std::map<MenuItem, std::shared_ptr<dae::Texture2D>>& menuTextures, SDL_Color color);
 };
 

@@ -72,23 +72,44 @@ void Menu::Initialize()
     readDataFromJSON();
     m_pFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 32);
 
-    for (std::pair<MenuItem, std::string> menuItem : m_MenuMap)
-    {
-        //const SDL_Color color = { 255,255,255 }; // only white text is supported now
-        const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), menuItem.second.c_str(), { 255,255,255 });
-        if (surf == nullptr)
-        {
-            throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
-        }
-        auto texture = SDL_CreateTextureFromSurface(dae::Renderer::GetInstance().GetSDLRenderer(), surf);
-        if (texture == nullptr)
-        {
-            throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
-        }
-        SDL_FreeSurface(surf);
-        m_pMenuTextures[menuItem.first] = std::make_shared<dae::Texture2D>(texture);
+    //for (std::pair<MenuItem, std::string> menuItem : m_MenuMap)
+    //{
+    //    //const SDL_Color color = { 255,255,255 }; // only white text is supported now
+    //    const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), menuItem.second.c_str(), { 255,255,255 });
+    //    if (surf == nullptr)
+    //    {
+    //        throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+    //    }
+    //    auto texture = SDL_CreateTextureFromSurface(dae::Renderer::GetInstance().GetSDLRenderer(), surf);
+    //    if (texture == nullptr)
+    //    {
+    //        throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
+    //    }
+    //    SDL_FreeSurface(surf);
+    //    m_pMenuTextures[menuItem.first] = std::make_shared<dae::Texture2D>(texture);
 
-    }
+    //}
+    FillInTexture(m_pMenuTextures, { 255,255,255 });
+    FillInTexture(m_pSelectedMenuTextures, { 0,255,0 });
+    //for (std::pair<MenuItem, std::string> menuItem : m_MenuMap)
+    //{
+    //    //const SDL_Color color = { 255,255,255 }; // only white text is supported now
+    //    const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), menuItem.second.c_str(), { 255,0,0 });
+    //    if (surf == nullptr)
+    //    {
+    //        throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+    //    }
+    //    auto texture = SDL_CreateTextureFromSurface(dae::Renderer::GetInstance().GetSDLRenderer(), surf);
+    //    if (texture == nullptr)
+    //    {
+    //        throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
+    //    }
+    //    SDL_FreeSurface(surf);
+
+    //    m_pSelectedMenuTextures[menuItem.first] = std::make_shared<dae::Texture2D>(texture);
+
+    //}
+
 
     m_pMenuObserver = std::make_shared<MenuObserver>(-1);
     dae::InputManager::GetInstance().Register(m_pMenuObserver, -1);
@@ -107,16 +128,22 @@ void Menu::Render()
     int counter{};
     for (std::pair<MenuItem, std::shared_ptr<dae::Texture2D>> menuTextures : m_pMenuTextures)
     {
-        if (counter == m_SelectIndex)
+        if (counter != m_SelectIndex)
         {
             dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 150, 32.0f * counter+100.0f);
 
         }
-        else
-        {
-            dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 100.0f, 32.0f * counter + 100.0f);
-        }
         
+        counter++;
+    }
+    counter = 0;
+    for (std::pair<MenuItem, std::shared_ptr<dae::Texture2D>> menuTextures : m_pSelectedMenuTextures)
+    {
+        if (counter == m_SelectIndex)
+        {
+            dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 150, 32.0f * counter + 100.0f);
+        }
+
         counter++;
     }
     
@@ -216,4 +243,26 @@ void Menu::makeGameObject()
 {
     //here we can make a texture component for the title
     //we can also place the fonts with the data we've read
+}
+
+void Menu::FillInTexture(std::map<MenuItem, std::shared_ptr<dae::Texture2D>>& menuTextures,SDL_Color color)
+{
+    for (std::pair<MenuItem, std::string> menuItem : m_MenuMap)
+    {
+        //const SDL_Color color = { 255,255,255 }; // only white text is supported now
+        const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), menuItem.second.c_str(), color);
+        if (surf == nullptr)
+        {
+            throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+        }
+        auto texture = SDL_CreateTextureFromSurface(dae::Renderer::GetInstance().GetSDLRenderer(), surf);
+        if (texture == nullptr)
+        {
+            throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
+        }
+        SDL_FreeSurface(surf);
+
+        menuTextures[menuItem.first] = std::make_shared<dae::Texture2D>(texture);
+
+    }
 }

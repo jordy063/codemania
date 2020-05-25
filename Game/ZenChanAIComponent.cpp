@@ -44,12 +44,7 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 		m_IsAnimationStarted = true;
 	}
 
-	//If player is on a higher platform and not jumping set DoRandomJumps = true
-	//is random is true player will jump around untill he's on the right platform
-	
-	//need the transform of this gameobject
-	
-	//float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - player->GetGameObject()->GetTransform()->GetPosition().y };
+
 	float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBox->GetBoundingBox(0, 0).posY };
 	float playerJumpSpeed{ 60.0f };
 	if (difference > playerJumpSpeed&& m_pPlayerPhysicsComp->GetAirBorne() == false)
@@ -75,7 +70,7 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 		if (m_JumpTimer > m_JumpTime)
 		{
 			//jump
-			float jumpSpeed{ 250.0f };
+			float jumpSpeed{ 320.0f };
 			m_MoveUpCommand.Execute(m_pPhysicsComp, m_pSpriteComp, jumpSpeed);
 			m_JumpTimer = 0;
 			m_JumpTimeSet = false;
