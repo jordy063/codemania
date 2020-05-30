@@ -13,7 +13,7 @@ namespace comps
 	{
 
 	public:
-		TextureComponent(const std::string& filename,float width,float height);
+		TextureComponent(const std::string& filename,float width,float height, bool allowScrolling = true);
 		TextureComponent(float width, float height);
 		virtual ~TextureComponent();
 

@@ -30,6 +30,7 @@
 #include "LevelManager.h"
 #include "ItemManager.h"
 #include "Menu.h"
+#include "UI.h"
 
 
 void dae::Minigin::Initialize()
@@ -72,19 +73,22 @@ void dae::Minigin::LoadGame()
 	scene.AddTileMap(loader);
 
 
-	MakePlayer(-1, 0, scene);
+	MakePlayer(-1, 0, scene, m_pPlayer1, { 100,70 });
+	MakePlayer(-2, 1, scene, m_pPlayer2, { 200,70 });
 	
+	Menu::GetInstance().RegisterPlayer2(m_pPlayer2);
 
-	BulletManager::GetInstance().RegisterPlayer(m_pPlayer);
-	EnemyManager::GetInstance().RegisterPlayer(m_pPlayer);
-	ItemManager::GetInstance().RegisterPlayer(m_pPlayer);
+	BulletManager::GetInstance().RegisterPlayer(m_pPlayer1);
+	EnemyManager::GetInstance().RegisterPlayer(m_pPlayer1);
+	ItemManager::GetInstance().RegisterPlayer(m_pPlayer1);
 	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 1);
 	
 	SoundManager2::GetInstance().Init();
 	std::string filename{ "../Sounds/drumloop.wav" };
 	SoundManager2::GetInstance().playMusic(filename);
 
-
+	auto ui = std::shared_ptr<UI>(new UI());
+	ui->Initialize();
 
 	scene.Initialize();
 	Menu::GetInstance().Initialize();
@@ -184,18 +188,18 @@ void dae::Minigin::Run()
 	Cleanup();
 }
 
-void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene)
+void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene, std::shared_ptr<dae::GameObject>& pPlayer,float2 pos)
 {
 	UNREFERENCED_PARAMETER(controllerId);
 	UNREFERENCED_PARAMETER(spriteId);
 	UNREFERENCED_PARAMETER(scene);
 	
-	m_pPlayer = std::shared_ptr<dae::GameObject>(new dae::GameObject());
-	scene.Add(m_pPlayer);
+	pPlayer = std::shared_ptr<dae::GameObject>(new dae::GameObject());
+	scene.Add(pPlayer);
 
 	float movementSpeed{ 100 };
 	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/CharacterSprite.png", 13, 8, spriteId, 0.2f, 44, 22));
-	auto pPlayerPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(m_pPlayer->GetTransform(), true, movementSpeed));
+	auto pPlayerPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(pPlayer->GetTransform(), true, movementSpeed));
 	auto pPlayerinputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(pPlayerPhysicsComp, pPlayerspriteComp, controllerId));
 	
 	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22,pPlayerPhysicsComp));
@@ -204,18 +208,18 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene)
 	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(3));
 
 
-	m_pPlayer->AddComponent(pPlayerspriteComp, ComponentType::SPRITECOMP);
-	m_pPlayer->AddComponent(pPlayerHealthComp, ComponentType::HEALTHCOMPONENT);
-	m_pPlayer->AddComponent(pPlayerBoundingBoxComp, ComponentType::BOUNDINGBOXCOMP);
-	m_pPlayer->AddComponent(pPlayerCollisionComp, ComponentType::COLLISIONCOMPONENT);
-	m_pPlayer->AddComponent(pPlayerPhysicsComp, ComponentType::PHYSICSCOMP);
+	pPlayer->AddComponent(pPlayerspriteComp, ComponentType::SPRITECOMP);
+	pPlayer->AddComponent(pPlayerHealthComp, ComponentType::HEALTHCOMPONENT);
+	pPlayer->AddComponent(pPlayerBoundingBoxComp, ComponentType::BOUNDINGBOXCOMP);
+	pPlayer->AddComponent(pPlayerCollisionComp, ComponentType::COLLISIONCOMPONENT);
+	pPlayer->AddComponent(pPlayerPhysicsComp, ComponentType::PHYSICSCOMP);
 
-	m_pPlayer->AddComponent(pPlayerinputComp, ComponentType::PLAYERCOMPONENT);
+	pPlayer->AddComponent(pPlayerinputComp, ComponentType::PLAYERCOMPONENT);
 
 	
-	m_pPlayer->GetTransform()->Translate(100, 70);
+	pPlayer->GetTransform()->Translate(pos.x, pos.y);
 
-	LevelManager::GetInstance().RegisterTransformCompLeft(m_pPlayer->GetTransform(), pPlayerCollisionComp);
+	LevelManager::GetInstance().RegisterTransformCompLeft(pPlayer->GetTransform(), pPlayerCollisionComp);
 
 	////enemy test
 	//auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());

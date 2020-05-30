@@ -7,6 +7,14 @@ struct SDL_Window;
 class EnemyManager;
 class InputObserver;
 class Menu;
+
+enum GameMode
+{
+	SINGLEPLAYER,
+	MULTIPLAYER,
+	VERSUS
+};
+
 namespace dae
 {
 	class Minigin
@@ -21,11 +29,11 @@ namespace dae
 		void Run();
 
 	private:
-		std::shared_ptr<dae::GameObject> m_pPlayer;
-		std::shared_ptr<Player> m_pPlayer2;
+		std::shared_ptr<dae::GameObject> m_pPlayer1;
+		std::shared_ptr<dae::GameObject> m_pPlayer2;
 		std::shared_ptr<Enemy> m_pEnemy;
 		std::shared_ptr<InputObserver> pInputObserver;
-		void MakePlayer(int controllerId, int spriteId,Scene& scene);
-		
+		void MakePlayer(int controllerId, int spriteId,Scene& scene, std::shared_ptr<dae::GameObject>& pPlayer, float2 pos);
+		GameMode m_GameMode;
 	};
 }

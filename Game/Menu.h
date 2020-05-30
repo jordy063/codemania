@@ -16,7 +16,8 @@ namespace comps
 
 enum MenuItem
 {
-	PLAY,
+	P1PLAY,
+	P2PLAY,
 	QUIT
 };
 
@@ -35,10 +36,10 @@ public:
 	void MoveDown();
 	void Confirm();
 	bool GetIsQuitCalled() const { return m_IsQuitCalled; }
-	
+	void RegisterPlayer2(std::shared_ptr<dae::GameObject> pPlayer);
 	
 private:
-	
+	std::shared_ptr<dae::GameObject> m_pPlayer;
 	std::string m_Filename;
 	std::map<MenuItem, std::string> m_MenuMap;
 	std::map<MenuItem, std::shared_ptr<dae::Texture2D>> m_pMenuTextures;
@@ -52,5 +53,10 @@ private:
 	void makeGameObject();
 	bool m_IsQuitCalled = false;
 	void FillInTexture(std::map<MenuItem, std::shared_ptr<dae::Texture2D>>& menuTextures, SDL_Color color);
+	void RenderMenuItems();
+	void RenderTexture(std::shared_ptr<dae::Texture2D> pTexture, float2 offset, float2 pos, float2 dimensions);
+
+	//textures
+	std::shared_ptr<dae::Texture2D> m_pTitleTexture;
 };
 

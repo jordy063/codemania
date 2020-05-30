@@ -18,7 +18,7 @@ namespace comps
 	{
 	public:
 
-		TextComponent(const std::string& text, std::shared_ptr<dae::Font> font,float width, float height, SDL_Color color);
+		TextComponent( std::shared_ptr<dae::Font> font,float width, float height, SDL_Color color);
 		virtual ~TextComponent();
 
 

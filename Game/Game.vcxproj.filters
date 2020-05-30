@@ -96,6 +96,12 @@
     <ClInclude Include="InputBaseObserver.h">
       <Filter>Header Files\Patterns</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -169,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="InputBaseObserver.cpp">
       <Filter>Header Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Header Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

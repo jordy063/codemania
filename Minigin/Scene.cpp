@@ -13,13 +13,12 @@ unsigned int dae::Scene::idCounter = 0;
 
 bool dae::Scene::CreateFPSCounter()
 {
-	m_pFPSCounter = std::shared_ptr<FPSCounter>(new FPSCounter(SceneManager::GetInstance().GetActiveScene()));
+	m_pFPSCounter = std::shared_ptr<FPSCounter>(new FPSCounter());
 	
 
 	if (m_pFPSCounter != nullptr)
 	{
-		
-		Add(m_pFPSCounter);
+		m_pFPSCounter->Initialize();
 		
 		return true;
 	}

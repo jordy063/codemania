@@ -5,26 +5,27 @@
 #include "GameObject.h"
 #include "FpsComponent.h"
 #include "Scene.h"
+#include <shared_mutex>
 
 
-FPSCounter::FPSCounter(std::shared_ptr<dae::Scene> scene)
+FPSCounter::FPSCounter()
 {
-	CreateEntityObject();
-	scene->Add(m_EntityObject);
-	CreateComponents();
+
 }
 
-void FPSCounter::CreateComponents()
+void FPSCounter::Initialize()
 {
+	auto object = std::shared_ptr<dae::GameObject>(new dae::GameObject());
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 14);
 
+	dae::SceneManager::GetInstance().GetActiveScene()->Add(object);
 
-	auto fpsTextComp = std::shared_ptr<comps::FpsComponent>(new comps::FpsComponent("fps: ", font, 64, 32, { 255,255,255 }));
+	auto fpsTextComp = std::shared_ptr<comps::FpsComponent>(new comps::FpsComponent(font, 64, 32, { 255,255,255 }));
 
 
-	m_EntityObject->AddComponent(fpsTextComp,ComponentType::FPSCOMPONENT);
+	object->AddComponent(fpsTextComp,ComponentType::FPSCOMPONENT);
 	fpsTextComp->SetAlignment(comps::HAlign::RIGHT, comps::VAlign::TOP);
-	m_EntityObject->SetPosition(580, 0);
+	object->SetPosition(580, 0);
 
 
 }

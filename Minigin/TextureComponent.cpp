@@ -8,11 +8,11 @@
 
 
 
-comps::TextureComponent::TextureComponent(const std::string& filename, float width, float height)
+comps::TextureComponent::TextureComponent(const std::string& filename, float width, float height,bool allowScrolling)
 	:m_Offset{0,0}
 	,m_Width{width}
 	,m_Height{height}
-	, m_AllowScrolling{ true }
+	, m_AllowScrolling{ allowScrolling }
 	
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);

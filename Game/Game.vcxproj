@@ -40,6 +40,8 @@
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="ZenChan.h" />
     <ClInclude Include="ZenChanAIComponent.h" />
   </ItemGroup>
@@ -66,6 +68,8 @@
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="ScoreComponent.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="ZenChan.cpp" />
     <ClCompile Include="ZenChanAIComponent.cpp" />
   </ItemGroup>

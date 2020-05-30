@@ -6,11 +6,11 @@
 #include "Renderer.h"
 
 
-comps::TextComponent::TextComponent(const std::string& text, std::shared_ptr<dae::Font> font,float width, float height, SDL_Color color)
-	:m_Text(text)
-	, m_pFont(font)
+comps::TextComponent::TextComponent( std::shared_ptr<dae::Font> font,float width, float height, SDL_Color color)
+	:m_pFont(font)
 	,TextureComponent(width,height)
 	,m_Color(color)
+	,m_Text("")
 {
 }
 
