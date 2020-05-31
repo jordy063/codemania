@@ -26,6 +26,7 @@ namespace comps
 		void changeDirection(Direction direction);
 		void StopMoving();
 		void ShootBullet(Direction direction,int spriteId);
+		void MakeObserver(int controllerId);
 
 	private:
 		std::shared_ptr<PhysicsComponent> pPhysicsComp;

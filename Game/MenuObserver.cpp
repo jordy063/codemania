@@ -19,6 +19,12 @@ void MenuObserver::OnDirectionalKey(comps::Direction direction, bool move)
 		case comps::Direction::DOWN:
 			Menu::GetInstance().MoveDown();
 			break;
+		case comps::Direction::RIGHT:
+			Menu::GetInstance().CheckChangeControllers();
+			break;
+		case comps::Direction::LEFT:
+			Menu::GetInstance().CheckChangeControllers();
+			break;
 		default:
 			break;
 		}

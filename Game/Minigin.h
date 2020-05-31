@@ -1,19 +1,13 @@
 #pragma once
 #include "Player.h"
 #include "Ghost.h"
+#include "Menu.h"
 
 struct SDL_Window;
 
 class EnemyManager;
 class InputObserver;
 class Menu;
-
-enum GameMode
-{
-	SINGLEPLAYER,
-	MULTIPLAYER,
-	VERSUS
-};
 
 namespace dae
 {
@@ -34,6 +28,9 @@ namespace dae
 		std::shared_ptr<Enemy> m_pEnemy;
 		std::shared_ptr<InputObserver> pInputObserver;
 		void MakePlayer(int controllerId, int spriteId,Scene& scene, std::shared_ptr<dae::GameObject>& pPlayer, float2 pos);
+		void MakeGameAssets();
 		GameMode m_GameMode;
+		bool m_HasMadeAssets = false;
+		
 	};
 }

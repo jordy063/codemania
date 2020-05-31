@@ -13,11 +13,11 @@ comps::InputComponent::InputComponent(std::shared_ptr<comps::PhysicsComponent> p
 {
 	DirToRow[Direction::LEFT] = 0 ;
 	DirToRow[Direction::RIGHT] = 1;
-
-	pInputObserver = std::make_shared<InputObserver>(this, controllerId);
-	//pInputObserver = new InputObserver(this);
-	dae::InputManager::GetInstance().Register(pInputObserver,controllerId);
-	pSpriteComp->SetActiveRowStop();
+	UNREFERENCED_PARAMETER(controllerId);
+	//pInputObserver = std::make_shared<InputObserver>(this, controllerId);
+	////pInputObserver = new InputObserver(this);
+	//dae::InputManager::GetInstance().Register(pInputObserver,controllerId);
+	//pSpriteComp->SetActiveRowStop();
 
 }
 
@@ -144,6 +144,13 @@ void comps::InputComponent::ShootBullet(Direction direction,int spriteId)
 	}
 	break;
 	}
+}
+
+void comps::InputComponent::MakeObserver(int controllerId)
+{
+	pInputObserver = std::make_shared<InputObserver>(this, controllerId);
+	//pInputObserver = new InputObserver(this);
+	dae::InputManager::GetInstance().Register(pInputObserver, controllerId);
 }
 
 void comps::InputComponent::StopMoving()

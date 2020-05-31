@@ -86,6 +86,7 @@ void Menu::Initialize()
 void Menu::Update()
 {
     dae::InputManager().GetInstance().ProcessInput();
+
 }
 
 void Menu::Render()
@@ -111,14 +112,14 @@ void Menu::SetShowMenu(bool showMenu)
 
 void Menu::MoveUp()
 {
-    m_SelectIndex += m_MenuMap.size() - 1;
-    m_SelectIndex %= m_MenuMap.size();
+    m_SelectIndex += buttonAmount - 1;
+    m_SelectIndex %= buttonAmount;
 }
 
 void Menu::MoveDown()
 {
     m_SelectIndex++;
-    m_SelectIndex %= m_MenuMap.size();
+    m_SelectIndex %= buttonAmount;
 }
 
 void Menu::Confirm()
@@ -129,11 +130,14 @@ void Menu::Confirm()
     {
     case MenuItem::P1PLAY:
         m_pPlayer->Clear();
+        m_GameMode = GameMode::SINGLEPLAYER;
         SetShowMenu(false);
         break;
     case MenuItem::P2PLAY:
+        m_GameMode = GameMode::MULTIPLAYER;
         SetShowMenu(false);
         break;
+   
     case MenuItem::QUIT:
         m_IsQuitCalled = true;
         break;
@@ -149,6 +153,12 @@ void Menu::RegisterPlayer2(std::shared_ptr<dae::GameObject> pPlayer)
     m_pPlayer = pPlayer;
 }
 
+void Menu::CheckChangeControllers()
+{
+    if(m_SelectIndex == buttonAmount - 1)
+    m_UseControllers = !m_UseControllers;
+}
+
 bool Menu::readLanguageParameters(const std::string& line,const std::string& language )
 {
     size_t startIndex = line.find_first_of("\"", 0);
@@ -159,7 +169,7 @@ bool Menu::readLanguageParameters(const std::string& line,const std::string& lan
     std::string readLanguage = line.substr(startIndex + 1, endIndex - startIndex - 1);
     if (readLanguage == language)
     {
-        for (int i{}; i <= MenuItem::QUIT; ++i)
+        for (int i{}; i <= MenuItem::CONTROLLERSON; ++i)
         {
             startIndex = endIndex + 1;
 
@@ -217,7 +227,56 @@ void Menu::FillInTexture(std::map<MenuItem, std::shared_ptr<dae::Texture2D>>& me
 void Menu::RenderMenuItems()
 {
     int counter{};
-    for (std::pair<MenuItem, std::shared_ptr<dae::Texture2D>> menuTextures : m_pMenuTextures)
+   
+    for (int i{}; i < 3; ++i)
+    {
+        if (counter != m_SelectIndex)
+        {
+            dae::Renderer::GetInstance().RenderTexture(*m_pMenuTextures[static_cast<MenuItem>(i)], 250, 32.0f * counter + 300.0f);
+           
+        }
+        counter++;
+    }
+
+    counter = 0;
+ 
+
+    for (int i{}; i < 3; ++i)
+    {
+        if (counter == m_SelectIndex)
+        {
+            dae::Renderer::GetInstance().RenderTexture(*m_pSelectedMenuTextures[static_cast<MenuItem>(i)], 250, 32.0f * counter + 300.0f);
+        }
+        counter++;
+    }
+    counter = 3;
+   
+    if (m_UseControllers == true)
+    {
+        if (counter == m_SelectIndex)
+        {
+            dae::Renderer::GetInstance().RenderTexture(*m_pSelectedMenuTextures[static_cast<MenuItem>(MenuItem::CONTROLLERSON)], 200, 32.0f * counter + 300.0f);
+        }
+        else
+        {
+            dae::Renderer::GetInstance().RenderTexture(*m_pMenuTextures[static_cast<MenuItem>(MenuItem::CONTROLLERSON)], 200, 32.0f * counter + 300.0f);
+        }
+    }
+    else
+    {
+        if (counter == m_SelectIndex)
+        {
+            dae::Renderer::GetInstance().RenderTexture(*m_pSelectedMenuTextures[static_cast<MenuItem>(MenuItem::CONTROLLERSOFF)], 200, 32.0f * counter + 300.0f);
+        }
+        else
+        {
+            dae::Renderer::GetInstance().RenderTexture(*m_pMenuTextures[static_cast<MenuItem>(MenuItem::CONTROLLERSOFF)], 200, 32.0f * counter + 300.0f);
+        }
+    }
+    
+    
+
+    /* for (std::pair<MenuItem, std::shared_ptr<dae::Texture2D>> menuTextures : m_pMenuTextures)
     {
         if (counter != m_SelectIndex)
         {
@@ -225,18 +284,20 @@ void Menu::RenderMenuItems()
         }
 
         counter++;
-    }
+    }*/
 
-    counter = 0;
-    for (std::pair<MenuItem, std::shared_ptr<dae::Texture2D>> menuTextures : m_pSelectedMenuTextures)
-    {
-        if (counter == m_SelectIndex)
-        {
-            dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 250, 32.0f * counter + 300.0f);
-        }
+    /* for (std::pair<MenuItem, std::shared_ptr<dae::Texture2D>> menuTextures : m_pSelectedMenuTextures)
+  {
+      if (counter == m_SelectIndex)
+      {
 
-        counter++;
-    }
+          dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 250, 32.0f * counter + 300.0f);
+      }
+
+      counter++;
+  }*/
+
+    //here we render "yes" or "no"
 }
 
 void Menu::RenderTexture(std::shared_ptr<dae::Texture2D> pTexture,float2 offset,float2 pos,float2 dimensions)

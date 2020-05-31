@@ -72,15 +72,15 @@ void dae::Minigin::LoadGame()
 
 	scene.AddTileMap(loader);
 
-
 	MakePlayer(-1, 0, scene, m_pPlayer1, { 100,70 });
 	MakePlayer(-2, 1, scene, m_pPlayer2, { 200,70 });
-	
+
 	Menu::GetInstance().RegisterPlayer2(m_pPlayer2);
 
 	BulletManager::GetInstance().RegisterPlayer(m_pPlayer1);
 	EnemyManager::GetInstance().RegisterPlayer(m_pPlayer1);
 	ItemManager::GetInstance().RegisterPlayer(m_pPlayer1);
+	
 	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 1);
 	
 	SoundManager2::GetInstance().Init();
@@ -162,6 +162,12 @@ void dae::Minigin::Run()
 				}
 				else
 				{
+					if (m_HasMadeAssets == false)
+					{
+						m_HasMadeAssets = true;
+						MakeGameAssets();
+					}
+
 					sceneManager.Update(elapse);
 					Update(elapse);
 					
@@ -181,7 +187,6 @@ void dae::Minigin::Run()
 				frames++;
 			}
 		
-			
 		}
 	}
 
@@ -214,7 +219,7 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene, std::
 	pPlayer->AddComponent(pPlayerCollisionComp, ComponentType::COLLISIONCOMPONENT);
 	pPlayer->AddComponent(pPlayerPhysicsComp, ComponentType::PHYSICSCOMP);
 
-	pPlayer->AddComponent(pPlayerinputComp, ComponentType::PLAYERCOMPONENT);
+	pPlayer->AddComponent(pPlayerinputComp, ComponentType::INPUTCOMPONENT);
 
 	
 	pPlayer->GetTransform()->Translate(pos.x, pos.y);
@@ -262,4 +267,61 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene, std::
 	//test2->SetActiveRow(3);
 	//
 	//UNREFERENCED_PARAMETER(test);*/
+}
+
+void dae::Minigin::MakeGameAssets()
+{
+	//get mode
+
+	//depending on the mode we might do different things.
+
+	auto inputComp1{ m_pPlayer1->GetComponent(ComponentType::INPUTCOMPONENT) };
+	auto actualInputComp1 = std::dynamic_pointer_cast<comps::InputComponent>(inputComp1);
+
+	//make the oberserver for the player
+	
+
+	auto inputComp2{ m_pPlayer2->GetComponent(ComponentType::INPUTCOMPONENT) };
+	auto actualInputComp2 = std::dynamic_pointer_cast<comps::InputComponent>(inputComp2);
+	bool useControllers{ Menu::GetInstance().GetUseControllers() };
+
+	switch (Menu::GetInstance().GetGameMode())
+	{
+	case GameMode::SINGLEPLAYER:
+		if (useControllers)
+		{
+			actualInputComp1->MakeObserver(0);
+		}
+		else
+		{
+			actualInputComp1->MakeObserver(-1);
+		}
+		break;
+	case GameMode::MULTIPLAYER:
+		if (useControllers)
+		{
+			actualInputComp1->MakeObserver(0);
+			actualInputComp2->MakeObserver(1);
+		}
+		else
+		{
+			actualInputComp1->MakeObserver(-1);
+			actualInputComp2->MakeObserver(-2);
+		}
+		break;
+	case GameMode::VERSUS:
+		if (useControllers)
+		{
+			actualInputComp1->MakeObserver(0);
+			actualInputComp2->MakeObserver(1);
+		}
+		else
+		{
+			actualInputComp1->MakeObserver(-1);
+			actualInputComp2->MakeObserver(-2);
+		}
+
+		//change the nessecary things
+		break;
+	}
 }
