@@ -23,11 +23,11 @@ namespace dae
 		void Run();
 
 	private:
-		std::shared_ptr<dae::GameObject> m_pPlayer1;
+		std::vector<std::shared_ptr<dae::GameObject>> m_pPlayers;
 		std::shared_ptr<dae::GameObject> m_pPlayer2;
 		std::shared_ptr<Enemy> m_pEnemy;
 		std::shared_ptr<InputObserver> pInputObserver;
-		void MakePlayer(int controllerId, int spriteId,Scene& scene, std::shared_ptr<dae::GameObject>& pPlayer, float2 pos);
+		void MakePlayer(int controllerId, int spriteId,Scene& scene, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos, bool isPlayerOne);
 		void MakeGameAssets();
 		GameMode m_GameMode;
 		bool m_HasMadeAssets = false;

@@ -5,7 +5,7 @@
 #include "PhysicsComponent.h"
 
 
-comps::ZenChanAIComponent::ZenChanAIComponent(std::shared_ptr<dae::GameObject> pPlayerObject, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
+comps::ZenChanAIComponent::ZenChanAIComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayerObjects, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
 	std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
 	:m_pPhysicsComp(pPhysicsComp)
 	,m_pBoundingBoxComp(pBoundingBox)
@@ -15,7 +15,7 @@ comps::ZenChanAIComponent::ZenChanAIComponent(std::shared_ptr<dae::GameObject> p
 	, m_ChangeDirectionTime(2)
 	, m_JumpTimer(0)
 	, m_JumpTime(1.0f)
-	,m_pPlayer(pPlayerObject)
+	,m_pPlayers(pPlayerObjects)
 {
 	m_Speed = { 30.0f,15.0f };
 }
@@ -24,14 +24,17 @@ comps::ZenChanAIComponent::ZenChanAIComponent(std::shared_ptr<dae::GameObject> p
 void comps::ZenChanAIComponent::Initialize(const dae::Scene& scene)
 {
 	UNREFERENCED_PARAMETER(scene);
-	auto boundingBoxComp = m_pPlayer->GetComponent(ComponentType::BOUNDINGBOXCOMP);
-	m_pPlayerBoundingBox = std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp);
+	for (std::shared_ptr<dae::GameObject> pPlayerObject : m_pPlayers)
+	{
+		auto boundingBoxComp = pPlayerObject->GetComponent(ComponentType::BOUNDINGBOXCOMP);
+		m_pPlayerBoundingBoxes.push_back(std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp));
 
-	auto healthComp = m_pPlayer->GetComponent(ComponentType::HEALTHCOMPONENT);
-	m_pPlayerHealthComp = std::dynamic_pointer_cast<comps::HealthComponent>(healthComp);
+		auto healthComp = pPlayerObject->GetComponent(ComponentType::HEALTHCOMPONENT);
+		m_pPlayerHealthComps.push_back( std::dynamic_pointer_cast<comps::HealthComponent>(healthComp));
 
-	auto physicsComp = m_pPlayer->GetComponent(ComponentType::PHYSICSCOMP);
-	m_pPlayerPhysicsComp = std::dynamic_pointer_cast<comps::PhysicsComponent>(physicsComp);
+		auto physicsComp = pPlayerObject->GetComponent(ComponentType::PHYSICSCOMP);
+		m_pPlayerPhysicsCompss.push_back( std::dynamic_pointer_cast<comps::PhysicsComponent>(physicsComp));
+	}
 }
 
 void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSecs, float2 pos)
@@ -44,16 +47,18 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 		m_IsAnimationStarted = true;
 	}
 
-
-	float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBox->GetBoundingBox(0, 0).posY };
-	float playerJumpSpeed{ 60.0f };
-	if (difference > playerJumpSpeed&& m_pPlayerPhysicsComp->GetAirBorne() == false)
+	for (int i{}; i < 2; ++i)
 	{
-		DoRandomJumps = true;
-	}
-	else
-	{
-		DoRandomJumps = false;
+		float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[i]->GetBoundingBox(0, 0).posY };
+		float playerJumpSpeed{ 60.0f };
+		if (difference > playerJumpSpeed&& m_pPlayerPhysicsCompss[i]->GetAirBorne() == false)
+		{
+			DoRandomJumps = true;
+		}
+		else
+		{
+			DoRandomJumps = false;
+		}
 	}
 	if (DoRandomJumps)
 	{
@@ -79,9 +84,20 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 	}
 
 
-	if (m_Timer > m_ChangeDirectionTime && m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBox->GetBoundingBox(0, 0).posY >= 0)
+	if (m_Timer > m_ChangeDirectionTime )
 	{
-		switch (CalculatePlayerDirection())
+		int direction{};
+		if (m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[0]->GetBoundingBox(0, 0).posY >= 0)
+		{
+			//calculate direction for player 1
+			direction = CalculatePlayerDirection(m_pPlayers[0]);
+		}
+		else if(m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[1]->GetBoundingBox(0, 0).posY >= 0)
+		{
+			//calculate direction for player 2
+			direction = CalculatePlayerDirection(m_pPlayers[1]);
+		}
+		switch (direction)
 		{
 		case 0:
 			m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
@@ -113,22 +129,30 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 	//	//do damage and respawn player
 	//	player->TakeDamage();
 	//}
-	if (m_pPlayerBoundingBox->IsOverlapping(m_pBoundingBoxComp))
+	for (int i{}; i < 2; ++i)
 	{
-		//do damage and respawn player
-		m_pPlayerHealthComp->DropHealth(1);
+		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))
+		{
+			//do damage and respawn player
+			m_pPlayerHealthComps[i]->DropHealth(1);
 
+		}
 	}
-
 	m_Timer += elapsedSecs;
 }
 
-int comps::ZenChanAIComponent::CalculatePlayerDirection()
+int comps::ZenChanAIComponent::CalculatePlayerDirection(std::shared_ptr<dae::GameObject> pPlayer)
 {
-	if (m_pPlayer->GetTransform()->GetPosition().x > m_pPhysicsComp->GetTransform()->GetPosition().x)
+	
+	if (pPlayer->GetTransform()->GetPosition().x > m_pPhysicsComp->GetTransform()->GetPosition().x)
 	{
 		return 0;
 	}
 	else
+	
 		return 1;
+		
+	
+	
+	
 }

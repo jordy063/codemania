@@ -29,7 +29,7 @@ namespace comps
 		std::shared_ptr<comps::CollisionComponent> m_pCollisionComp;
 		std::shared_ptr<comps::SpriteComponent> m_pSpriteComp;
 
-		float m_BulletSpeed;
+
 		int m_SpriteId;
 		comps::Direction m_Direction;
 		bool speedSet = false;

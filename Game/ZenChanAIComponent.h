@@ -16,7 +16,7 @@ namespace comps
 	class ZenChanAIComponent final : public comps::BaseComponent
 	{
 	public:
-		ZenChanAIComponent(std::shared_ptr<dae::GameObject> pPlayerObject
+		ZenChanAIComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayerObjects
 			,std::shared_ptr<comps::SpriteComponent> pSpriteComp, std::shared_ptr<comps::PhysicsComponent> pPhysicsComp,
 			std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 
@@ -25,12 +25,12 @@ namespace comps
 		virtual void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
 
 	private:
-		std::shared_ptr<comps::BoundingBoxComponent> m_pPlayerBoundingBox;
-		std::shared_ptr<comps::HealthComponent> m_pPlayerHealthComp;
+		std::vector<std::shared_ptr<comps::BoundingBoxComponent>> m_pPlayerBoundingBoxes;
+		std::vector<std::shared_ptr<comps::HealthComponent>> m_pPlayerHealthComps;
 		std::shared_ptr<comps::PhysicsComponent> m_pPhysicsComp;
 		std::shared_ptr<comps::SpriteComponent> m_pSpriteComp;
 		std::shared_ptr<comps::BoundingBoxComponent> m_pBoundingBoxComp;
-		std::shared_ptr<comps::PhysicsComponent> m_pPlayerPhysicsComp;
+		std::vector<std::shared_ptr<comps::PhysicsComponent>> m_pPlayerPhysicsCompss;
 		bool m_IsAnimationStarted;
 		float2 m_Speed;
 
@@ -50,8 +50,8 @@ namespace comps
 		float m_JumpTime;
 		bool m_JumpTimeSet = false;
 		bool DoRandomJumps = false;
-		std::shared_ptr<dae::GameObject> m_pPlayer;
+		std::vector<std::shared_ptr<dae::GameObject>> m_pPlayers;
 
-		int CalculatePlayerDirection();
+		int CalculatePlayerDirection(std::shared_ptr<dae::GameObject> pPlayer);
 	};
 }

@@ -40,7 +40,9 @@
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerComponent.h" />
-    <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="ScoreBoard.h" />
+    <ClInclude Include="ScorePopUpComponent.h" />
+    <ClInclude Include="ScorePopUpManager.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="ZenChan.h" />
     <ClInclude Include="ZenChanAIComponent.h" />
@@ -68,7 +70,9 @@
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
-    <ClCompile Include="ScoreComponent.cpp" />
+    <ClCompile Include="ScoreBoard.cpp" />
+    <ClCompile Include="ScorePopUpComponent.cpp" />
+    <ClCompile Include="ScorePopUpManager.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="ZenChan.cpp" />
     <ClCompile Include="ZenChanAIComponent.cpp" />

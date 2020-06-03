@@ -50,11 +50,16 @@ void BulletManager::MakeBullet(const float2& position, comps::Direction directio
 	spriteComp->SetBeginEndFrames(id * 8, 7 + id * 8);*/
 }
 
-void BulletManager::RegisterPlayer(std::shared_ptr<dae::GameObject> pPlayerObject)
+void BulletManager::RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& pPlayers)
 {
-	
-	auto boundingBoxComp = pPlayerObject->GetComponent(ComponentType::BOUNDINGBOXCOMP);
-	m_pPlayerBoundingBox = std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp);
+	for (std::shared_ptr<dae::GameObject> pPlayerObject : pPlayers)
+	{
+		auto boundingBoxComp = pPlayerObject->GetComponent(ComponentType::BOUNDINGBOXCOMP);
+		m_pPlayerBoundingBoxes.push_back(std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp));
+
+		auto physicsComp = pPlayerObject->GetComponent(ComponentType::PHYSICSCOMP);
+		m_pPlayerPhysicsComps.push_back(std::dynamic_pointer_cast<comps::PhysicsComponent>(physicsComp));
+	}
 }
 
 void BulletManager::Update()
@@ -128,7 +133,31 @@ void BulletManager::RemoveBullet(std::shared_ptr<comps::CollisionComponent> pCol
 bool BulletManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox)
 {
 	//checks if player and current bullet overlap
-	
-	return m_pPlayerBoundingBox->IsOverlapping(pBulletBoundingBox);
+	for (int i{}; i<2;++i)
+	{
+		bool isHit{ m_pPlayerBoundingBoxes[i]->IsOverlapping(pBulletBoundingBox) };
+		if (isHit)
+		{
+			//find the bullet you're standing on
+			if (pBulletBoundingBox->GetBoundingBox(0, false).posY < m_pPlayerBoundingBoxes[i]->GetBoundingBox(0, false).posY)
+			{
+				//destroy the current bubble
+
+
+			}
+			else
+			{
+				//move the player on the bubble
+				m_pPlayerPhysicsComps[i]->SetSpeedY(-m_BulletSpeed.y);
+			}
+
+			//check if the position is lower, then he's left or right of the bubble.
+			//else if it's the same here's on top and should move with it
+			return true;
+		}
+	}
+	return false;
+	//
+	//return m_pPlayerBoundingBox->IsOverlapping(pBulletBoundingBox);
 	
 }

@@ -72,14 +72,14 @@ void dae::Minigin::LoadGame()
 
 	scene.AddTileMap(loader);
 
-	MakePlayer(-1, 0, scene, m_pPlayer1, { 100,70 });
-	MakePlayer(-2, 1, scene, m_pPlayer2, { 200,70 });
+	MakePlayer(-1, 0, scene, m_pPlayers, { 100,70 },true);
+	MakePlayer(-2, 1, scene, m_pPlayers, { 200,70 },false);
 
-	Menu::GetInstance().RegisterPlayer2(m_pPlayer2);
+	Menu::GetInstance().RegisterPlayer2(m_pPlayers[1]);
 
-	BulletManager::GetInstance().RegisterPlayer(m_pPlayer1);
-	EnemyManager::GetInstance().RegisterPlayer(m_pPlayer1);
-	ItemManager::GetInstance().RegisterPlayer(m_pPlayer1);
+	BulletManager::GetInstance().RegisterPlayers(m_pPlayers);
+	EnemyManager::GetInstance().RegisterPlayers(m_pPlayers);
+	ItemManager::GetInstance().RegisterPlayer(m_pPlayers);
 	
 	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 1);
 	
@@ -193,13 +193,13 @@ void dae::Minigin::Run()
 	Cleanup();
 }
 
-void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene, std::shared_ptr<dae::GameObject>& pPlayer,float2 pos)
+void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene,std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector,float2 pos,bool isPlayerOne)
 {
 	UNREFERENCED_PARAMETER(controllerId);
 	UNREFERENCED_PARAMETER(spriteId);
 	UNREFERENCED_PARAMETER(scene);
 	
-	pPlayer = std::shared_ptr<dae::GameObject>(new dae::GameObject());
+	auto pPlayer = std::shared_ptr<dae::GameObject>(new dae::GameObject());
 	scene.Add(pPlayer);
 
 	float movementSpeed{ 100 };
@@ -224,7 +224,12 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene, std::
 	
 	pPlayer->GetTransform()->Translate(pos.x, pos.y);
 
+	if(isPlayerOne)
 	LevelManager::GetInstance().RegisterTransformCompLeft(pPlayer->GetTransform(), pPlayerCollisionComp);
+	else
+		LevelManager::GetInstance().RegisterTransformCompRight(pPlayer->GetTransform(), pPlayerCollisionComp);
+
+	pPlayerVector.push_back(pPlayer);
 
 	////enemy test
 	//auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
@@ -275,13 +280,13 @@ void dae::Minigin::MakeGameAssets()
 
 	//depending on the mode we might do different things.
 
-	auto inputComp1{ m_pPlayer1->GetComponent(ComponentType::INPUTCOMPONENT) };
+	auto inputComp1{ m_pPlayers[0]->GetComponent(ComponentType::INPUTCOMPONENT) };
 	auto actualInputComp1 = std::dynamic_pointer_cast<comps::InputComponent>(inputComp1);
 
 	//make the oberserver for the player
 	
 
-	auto inputComp2{ m_pPlayer2->GetComponent(ComponentType::INPUTCOMPONENT) };
+	auto inputComp2{ m_pPlayers[1]->GetComponent(ComponentType::INPUTCOMPONENT) };
 	auto actualInputComp2 = std::dynamic_pointer_cast<comps::InputComponent>(inputComp2);
 	bool useControllers{ Menu::GetInstance().GetUseControllers() };
 

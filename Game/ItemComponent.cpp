@@ -5,8 +5,10 @@
 #include "BoundingBoxComponent.h"
 #include "ItemManager.h"
 #include "EnemyObserver.h"
+#include "ScorePopUpManager.h"
 
-comps::ItemComponent::ItemComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::SpriteComponent> pSpriteComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,ItemType type)
+comps::ItemComponent::ItemComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
+	std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,ItemType type,int spriteId)
 	:m_pBoundingBoxComp(pBoundingBoxComp)
 	,m_pPhysicsComp(pPhysicsComp)
 	,m_pSpriteComp(pSpriteComp)
@@ -14,6 +16,7 @@ comps::ItemComponent::ItemComponent(std::shared_ptr<comps::PhysicsComponent> pPh
 	, m_TimeBeforeNotify(5)
 	, m_NotifyTimer(0)
 	, m_LifeTime(10)
+	, m_SpriteId(spriteId)
 {
 	//here we ask the components we want
 	
@@ -59,6 +62,7 @@ void comps::ItemComponent::Update(const dae::Scene& scene, float elapsedSecs, fl
 				m_IsDownCounterCalled = true;
 			}
 			ItemManager::GetInstance().DoEffect(m_ItemType);
+			ScorePopUpManager::GetInstance().MakeScorePopUp(m_ItemType, m_SpriteId,m_pPhysicsComp->GetTransform()->GetPosition());
 			ItemManager::GetInstance().RemoveItem(m_pBoundingBoxComp);
 
 			

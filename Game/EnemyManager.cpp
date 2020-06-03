@@ -78,9 +78,10 @@ int EnemyManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulle
 	return -1;
 }
 
-void EnemyManager::RegisterPlayer(std::shared_ptr<dae::GameObject> playerObject)
+void EnemyManager::RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& pPlayers)
 {
-	m_pPlayerObject = playerObject;
+	
+	m_pPlayerObjects = pPlayers;
 }
 
 void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
@@ -113,7 +114,7 @@ void EnemyManager::MakeZenChan(float2 pos, std::shared_ptr<dae::Scene> scene)
 
 	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
 		scene->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp,pBoundingBox));
-	auto pZenChanAiComp = std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(m_pPlayerObject, pSpriteComp, pPhysicsComp, pBoundingBox));
+	auto pZenChanAiComp = std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox));
 
 	//add AIcomponent and do the same as in playerclass
 
@@ -139,7 +140,7 @@ void EnemyManager::MakeGhost(float2 pos, std::shared_ptr<dae::Scene> scene)
 
 	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
 		scene->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp, pBoundingBox));
-	auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayerObject, pSpriteComp, pPhysicsComp, pBoundingBox));
+	auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox));
 
 	//add AIcomponent and do the same as in playerclass
 

@@ -20,10 +20,11 @@
   Minigin.cpp
   Player.cpp
   PlayerComponent.cpp
-  ScoreComponent.cpp
+  ScoreBoard.cpp
+  ScorePopUpComponent.cpp
+  ScorePopUpManager.cpp
   UI.cpp
   ZenChan.cpp
-  ZenChanAIComponent.cpp
      Creating library D:\Jordy\DAE2-Redo\programming 4\ExamProject\Win32\Debug\Game.lib and object D:\Jordy\DAE2-Redo\programming 4\ExamProject\Win32\Debug\Game.exp
   Game.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\ExamProject\Win32\Debug\Game.exe
   D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2\lib\x86\SDL2.dll

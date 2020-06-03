@@ -4,11 +4,13 @@ d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\minigin.idb
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\audio.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\basecomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\boundingboxcomponent.obj
+d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\collisioncomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\entity.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\font.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\fpscomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\fpscounter.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\gameobject.obj
+d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\levelmanager.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\log.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\logger.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\miniginpch.obj

@@ -10,7 +10,7 @@
 #include "ItemComponent.h"
 #include "SceneManager.h"
 
-void ItemManager::makeItem(float2 pos,ItemType type)
+void ItemManager::makeItem(float2 pos,ItemType type,int spriteId)
 {
 	UNREFERENCED_PARAMETER(pos);
 	//add all necesary components to a gameobject
@@ -27,7 +27,7 @@ void ItemManager::makeItem(float2 pos,ItemType type)
 	auto pBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22, pPhysicsComp));
 	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(),
 		dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp, pBoundingBoxComp));
-	auto pItemComponent = std::shared_ptr<comps::ItemComponent>(new comps::ItemComponent(pPhysicsComp,pSpriteComp,pBoundingBoxComp, type));
+	auto pItemComponent = std::shared_ptr<comps::ItemComponent>(new comps::ItemComponent(pPhysicsComp,pSpriteComp,pBoundingBoxComp, type, spriteId));
 
 
 	itemObject->AddComponent(pSpriteComp,ComponentType::SPRITECOMP);
@@ -45,19 +45,27 @@ void ItemManager::makeItem(float2 pos,ItemType type)
 
 }
 
-void ItemManager::RegisterPlayer(std::shared_ptr<dae::GameObject> playerObject)
+void ItemManager::RegisterPlayer(const std::vector<std::shared_ptr<dae::GameObject>>& playerObjects)
 {
+	for (std::shared_ptr<dae::GameObject> pPlayer : playerObjects)
+	{
+		auto boundingBoxComp = pPlayer->GetComponent(ComponentType::BOUNDINGBOXCOMP);
+		auto pPlayerBoundingBox = std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp);
+		m_pPlayerBoundingBoxes.push_back(pPlayerBoundingBox);
+	}
 
-	auto boundingBoxComp = playerObject->GetComponent(ComponentType::BOUNDINGBOXCOMP);
-	m_pPlayerBoundingBox = std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp);
+	
 }
 
 bool ItemManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pItemBoundingBox)
 {
-	if (m_pPlayerBoundingBox->IsOverlapping(pItemBoundingBox))
+	for (std::shared_ptr<comps::BoundingBoxComponent> pPlayerBoundingBox : m_pPlayerBoundingBoxes)
 	{
-		return true;
-		
+		if (pPlayerBoundingBox->IsOverlapping(pItemBoundingBox))
+		{
+			return true;
+
+		}
 	}
 	return false;
 }

@@ -99,8 +99,14 @@
     <ClInclude Include="UI.h">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
+    <ClInclude Include="ScoreBoard.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScorePopUpComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ScorePopUpManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -179,8 +185,14 @@
     <ClCompile Include="UI.cpp">
       <Filter>Header Files\helpers</Filter>
     </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
+    <ClCompile Include="ScoreBoard.cpp">
+      <Filter>Header Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScorePopUpComponent.cpp">
       <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ScorePopUpManager.cpp">
+      <Filter>Header Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

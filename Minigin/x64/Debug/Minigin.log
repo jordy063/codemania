@@ -1,11 +1,13 @@
 ﻿  Audio.cpp
   BaseComponent.cpp
   BoundingBoxComponent.cpp
+  CollisionComponent.cpp
   Entity.cpp
   Font.cpp
   FpsComponent.cpp
   FPSCounter.cpp
   GameObject.cpp
+  LevelManager.cpp
   Log.cpp
   Logger.cpp
   MiniginPCH.cpp

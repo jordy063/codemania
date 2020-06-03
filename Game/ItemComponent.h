@@ -13,7 +13,8 @@ namespace comps
 	class ItemComponent final : public comps::BaseComponent
 	{
 	public:
-		ItemComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::SpriteComponent> pTextureComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp, ItemType type);
+		ItemComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::SpriteComponent> pTextureComp,
+			std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp, ItemType type, int spriteId);
 		~ItemComponent() = default;;
 
 	protected:
@@ -32,5 +33,6 @@ namespace comps
 		float m_NotifyTimer;
 		bool m_IsDownCounterCalled = false;
 		float m_LifeTime;
+		int m_SpriteId;
 	};
 }

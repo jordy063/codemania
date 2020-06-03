@@ -16,7 +16,6 @@ comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent>
 	, m_pBoundingBoxComp(pBoundingBoxComp)
 	, m_pSpriteComp(pSpriteBoxComp)
 	, m_pCollisionComp(pCollisionComp)
-	, m_BulletSpeed(30.f)
 	, m_Direction(direction)
 	, m_SpriteId(id)
 	,m_GoUpTimer(0)
@@ -37,7 +36,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 {
 	if (speedSet == false)
 	{
-		m_pPhysicsComp->SetMovement(m_Direction, m_BulletSpeed);
+		m_pPhysicsComp->SetMovement(m_Direction, BulletManager::GetInstance().GetBubbleSpeed().x);
 		m_pSpriteComp->SetBeginEndFrames(m_SpriteId * 8, 7 + m_SpriteId * 8);
 		speedSet = true;
 	}
@@ -59,7 +58,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 			m_pSpriteComp->SetBeginEndFrames(16 + index * 8, 24 + 8 * index);
 			m_pPhysicsComp->SetSpeedX(0);
 			m_pPhysicsComp->SetGravity(false);
-			m_pPhysicsComp->SetMovement(comps::Direction::UP, m_BulletSpeed / 2);
+			m_pPhysicsComp->SetMovement(comps::Direction::UP, BulletManager::GetInstance().GetBubbleSpeed().y);
 			//change the sprite + physicscomp and add the collision
 			m_HasHitEnemy = true;
 
@@ -73,7 +72,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	{
 		m_pPhysicsComp->SetSpeedX(0);
 		m_pPhysicsComp->SetGravity(false);
-		m_pPhysicsComp->SetMovement(comps::Direction::UP, m_BulletSpeed / 2);
+		m_pPhysicsComp->SetMovement(comps::Direction::UP, BulletManager::GetInstance().GetBubbleSpeed().y);
 		BulletManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp, m_pBoundingBoxComp);
 		m_IsTimerReached = true;
 	}
@@ -81,10 +80,15 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	//if nothing is hit
 	if (m_HasHitEnemy == false)
 	{
+		if (BulletManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
+		{
+
+		}
 		if (m_GoUpTimer > m_LifeTime)
 		{
 			BulletManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
 		}
+
 	}
 	else
 	{
@@ -93,7 +97,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 			//spawn item
 			//spriteid will be the type of the enemy
 			ItemType type = static_cast<ItemType>(m_EnemyId);
-			ItemManager::GetInstance().makeItem(m_pPhysicsComp->GetTransform()->GetPosition(), type);
+			ItemManager::GetInstance().makeItem(m_pPhysicsComp->GetTransform()->GetPosition(), type,m_SpriteId);
 			BulletManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
 			
 		}

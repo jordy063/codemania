@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "TileMapLoader.h"
 #include "CollisionComponent.h"
+#include "BulletManager.h"
 
 PlayerComponent::PlayerComponent(int controllerId, int spriteId)
     :m_ControllerId(controllerId)
@@ -44,6 +45,7 @@ void PlayerComponent::Update(const dae::Scene& scene, float elapsedSecs, float2 
     UNREFERENCED_PARAMETER(scene);
     UNREFERENCED_PARAMETER(elapsedSecs);
     UNREFERENCED_PARAMETER(pos);
+
 }
 
 void PlayerComponent::TakeDamage()
