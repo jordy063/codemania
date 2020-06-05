@@ -15,7 +15,7 @@ void ScorePopUpManager::MakeScorePopUp(ItemType itemType,int spriteId,float2 pos
 	auto pScoreObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
 	pScoreObject->GetTransform()->Translate(position);
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(pScoreObject);
-	std::shared_ptr <comps::SpriteComponent> spriteComp = std::shared_ptr <comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/scores.png", 1, 4,spriteId,0.2f,16,16 ));;
+	std::shared_ptr <comps::SpriteComponent> spriteComp = std::shared_ptr <comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/scores.png", 1, 6,spriteId,0.2f,16,16 ));;
 	
 	spriteComp->SetBeginEndFrames(itemType * 2 + spriteId, itemType * 2 + spriteId);
 

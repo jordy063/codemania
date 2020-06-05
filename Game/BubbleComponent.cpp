@@ -5,7 +5,7 @@
 #include "BoundingBoxComponent.h"
 #include "CollisionComponent.h"
 #include "EnemyManager.h"
-#include "BulletManager.h"
+#include "BubbleManager.h"
 #include "EnemyObserver.h"
 #include "ItemManager.h"
 
@@ -36,7 +36,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 {
 	if (speedSet == false)
 	{
-		m_pPhysicsComp->SetMovement(m_Direction, BulletManager::GetInstance().GetBubbleSpeed().x);
+		m_pPhysicsComp->SetMovement(m_Direction, BubbleManager::GetInstance().GetBubbleSpeed().x);
 		m_pSpriteComp->SetBeginEndFrames(m_SpriteId * 8, 7 + m_SpriteId * 8);
 		speedSet = true;
 	}
@@ -58,7 +58,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 			m_pSpriteComp->SetBeginEndFrames(16 + index * 8, 24 + 8 * index);
 			m_pPhysicsComp->SetSpeedX(0);
 			m_pPhysicsComp->SetGravity(false);
-			m_pPhysicsComp->SetMovement(comps::Direction::UP, BulletManager::GetInstance().GetBubbleSpeed().y);
+			m_pPhysicsComp->SetMovement(comps::Direction::UP, BubbleManager::GetInstance().GetBubbleSpeed().y);
 			//change the sprite + physicscomp and add the collision
 			m_HasHitEnemy = true;
 
@@ -72,33 +72,33 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	{
 		m_pPhysicsComp->SetSpeedX(0);
 		m_pPhysicsComp->SetGravity(false);
-		m_pPhysicsComp->SetMovement(comps::Direction::UP, BulletManager::GetInstance().GetBubbleSpeed().y);
-		BulletManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp, m_pBoundingBoxComp);
+		m_pPhysicsComp->SetMovement(comps::Direction::UP, BubbleManager::GetInstance().GetBubbleSpeed().y);
+		BubbleManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp, m_pBoundingBoxComp);
 		m_IsTimerReached = true;
 	}
 
 	//if nothing is hit
 	if (m_HasHitEnemy == false)
 	{
-		if (BulletManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
+		if (BubbleManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
 		{
 
 		}
 		if (m_GoUpTimer > m_LifeTime)
 		{
-			BulletManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
+			BubbleManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
 		}
 
 	}
 	else
 	{
-		if (BulletManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
+		if (BubbleManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
 		{
 			//spawn item
 			//spriteid will be the type of the enemy
 			ItemType type = static_cast<ItemType>(m_EnemyId);
 			ItemManager::GetInstance().makeItem(m_pPhysicsComp->GetTransform()->GetPosition(), type,m_SpriteId);
-			BulletManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
+			BubbleManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
 			
 		}
 	}

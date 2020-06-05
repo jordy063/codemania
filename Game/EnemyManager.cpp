@@ -10,6 +10,7 @@
 #include "ZenChanAIComponent.h"
 #include "CollisionComponent.h"
 #include "EnemyObserver.h"
+#include "MaitaAIComponent.h"
 
 
 void EnemyManager::MakeEnemies(std::shared_ptr<dae::Scene> scene,int level)
@@ -40,13 +41,6 @@ void EnemyManager::Update(float elapsedSecs, std::shared_ptr<Player> player)
 {
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(player);
-	//for all enemies update and check if an enemy hits the avatar
-
-	/*for (std::shared_ptr <Enemy> enemy : m_pEnemies)
-	{
-		enemy->Update(elapsedSecs, player);
-		
-	}*/
 
 }
 
@@ -54,7 +48,6 @@ int EnemyManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulle
 {
 	UNREFERENCED_PARAMETER(pBulletBoundingBox);
 	//GetBoundingBoxOfBullet and check with all enemies
-	//pBullet->
 
 	for (std::pair<std::shared_ptr<dae::GameObject>,int> enemy : m_pEnemies)
 	{
@@ -89,67 +82,87 @@ void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
 
 
 	//enemy test
-	MakeGhost({ 100, 100 }, scene);
+	MakeEnemy({ 100,100 }, scene, EnemyType::GHOST);
+	
 
 	//enemy test2
+	MakeEnemy({ 150,100 }, scene, EnemyType::ZENCHAN);
+	
 
-	MakeZenChan({ 150, 100 }, scene);
+	MakeEnemy({ 250,100 }, scene, EnemyType::MAITA);
 	
 
 }
 
-void EnemyManager::MakeZenChan(float2 pos, std::shared_ptr<dae::Scene> scene)
-{
 
-	EnemyObserver::GetInstance().UpCounter();
-
-	auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
-	scene->Add(enemyObject);
-	enemyObject->GetTransform()->Translate(pos.x, pos.y);
-
-	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8, 0, 0.2f, 44, 22));
-	auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(), true, 30.0f));
-
-	auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22, pPhysicsComp));
-
-	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
-		scene->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp,pBoundingBox));
-	auto pZenChanAiComp = std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox));
-
-	//add AIcomponent and do the same as in playerclass
-
-	enemyObject->AddComponent(pSpriteComp, ComponentType::SPRITECOMP);
-	enemyObject->AddComponent(pBoundingBox, ComponentType::BOUNDINGBOXCOMP);
-	enemyObject->AddComponent(pCollisionComp, ComponentType::COLLISIONCOMPONENT);
-	enemyObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
-	enemyObject->AddComponent(pZenChanAiComp, ComponentType::ZENCHANCOMPONENT);
-	
-
-	m_pEnemies.push_back({ enemyObject,ItemType::FRIES });
-}
-void EnemyManager::MakeGhost(float2 pos, std::shared_ptr<dae::Scene> scene)
+void EnemyManager::MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene,EnemyType type)
 {
 	EnemyObserver::GetInstance().UpCounter();
 	auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
 	scene->Add(enemyObject);
 	enemyObject->GetTransform()->Translate(pos.x, pos.y);
 
-	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8, 1, 0.2f, 44, 22));
-	auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(), false, 30.0f));
+	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/EnemySheet.png", 6, 8, type, 0.2f, 44, 22));
+
+	std::shared_ptr<comps::PhysicsComponent> pPhysicsComp;
+	if (type == EnemyType::GHOST)
+	{
+		pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(), false, 30.0f));
+	}
+	else
+	{
+		pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(), true, 30.0f));
+	}
+
+	
 	auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22, pPhysicsComp));
 
 	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene->GetTileMap()->GetCollisionWalls(),
 		scene->GetTileMap()->GetCollisionPlatforms(), pPhysicsComp, pBoundingBox));
-	auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox));
-
-	//add AIcomponent and do the same as in playerclass
 
 	enemyObject->AddComponent(pSpriteComp, ComponentType::SPRITECOMP);
 	enemyObject->AddComponent(pBoundingBox, ComponentType::BOUNDINGBOXCOMP);
 	enemyObject->AddComponent(pCollisionComp, ComponentType::COLLISIONCOMPONENT);
 	enemyObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
-	enemyObject->AddComponent(ghostAiComp, ComponentType::GHOSTAICOMPONENT);
+	if (type == EnemyType::ZENCHAN)
+	{
+		auto pZenChanAiComp{ std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox)) };
+		enemyObject->AddComponent(pZenChanAiComp, ComponentType::ZENCHANCOMPONENT);
+	}
+	else if (type == EnemyType::GHOST)
+	{
+		auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox));
+		enemyObject->AddComponent(ghostAiComp, ComponentType::GHOSTAICOMPONENT);
+	}
+	if (type == EnemyType::MAITA)
+	{
+		auto pMaitaAiComp{ std::shared_ptr<comps::MaitaAIComponent>(new comps::MaitaAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox)) };
+		enemyObject->AddComponent(pMaitaAiComp, ComponentType::MAITAAICOMPNENT);
+	}
+	auto itemType = static_cast<ItemType>(type);
+	m_pEnemies.push_back({ enemyObject,itemType });
 
-	m_pEnemies.push_back({ enemyObject,ItemType::MELON });
+	/*switch (type)
+	{
+	case ZENCHAN:
+		auto pZenChanAiComp{ std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox) };
+		enemyObject->AddComponent(pZenChanAiComp, ComponentType::ZENCHANCOMPONENT);
+		break;
+	case GHOST:
+		auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox));
+		enemyObject->AddComponent(ghostAiComp, ComponentType::GHOSTAICOMPONENT);
+		break;
+	case MAITA:
+		break;
+	default:
+		break;
+	}*/
+	
+
+	//add AIcomponent and do the same as in playerclass
+
+	
+	
+
+	
 }
-

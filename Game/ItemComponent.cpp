@@ -45,7 +45,7 @@ void comps::ItemComponent::Update(const dae::Scene& scene, float elapsedSecs, fl
 	else if(m_pPhysicsComp->GetAirBorne() == false && IsLootAble == false)
 	{
 		m_pPhysicsComp->SetSpeedX(0);
-		m_pSpriteComp->SetBeginEndFrames(10 + m_ItemType, 10 + m_ItemType);
+		m_pSpriteComp->SetBeginEndFrames(12 + m_ItemType, 12 + m_ItemType);
 		IsLootAble = true;
 
 		//lower it a little bit

@@ -31,7 +31,6 @@ private:
 	std::vector<std::shared_ptr<dae::GameObject>> m_pPlayerObjects;
 
 	void MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene);
-	void MakeZenChan(float2 pos, std::shared_ptr<dae::Scene> scene);
-	void MakeGhost(float2 pos, std::shared_ptr<dae::Scene> scene);
+	void MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene, EnemyType type);
 };
 

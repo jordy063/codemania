@@ -8,7 +8,7 @@
 #include "Scene.h"
 #include "TileMapLoader.h"
 #include "CollisionComponent.h"
-#include "BulletManager.h"
+#include "BubbleManager.h"
 
 PlayerComponent::PlayerComponent(int controllerId, int spriteId)
     :m_ControllerId(controllerId)

@@ -284,3 +284,8 @@ void dae::InputManager::DoControllerFunctionality(WORD e, std::shared_ptr<InputB
 		}
 	}
 }
+
+void dae::InputManager::SetGameState(GameState gameState)
+{
+	m_GameState = gameState;
+}

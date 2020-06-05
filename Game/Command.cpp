@@ -3,7 +3,7 @@
 #include "Bullet.h"
 #include "SceneManager.h"
 #include "GameObject.h"
-#include "BulletManager.h"
+#include "BubbleManager.h"
 #include "SoundManager2.h"
 
 void MakeBullet(std::shared_ptr<comps::PhysicsComponent> physicsComp, comps::Direction direction,int id)
@@ -19,7 +19,7 @@ void MakeBullet(std::shared_ptr<comps::PhysicsComponent> physicsComp, comps::Dir
 	{
 		pos.x += distanceFromPlayer;
 	}
-	BulletManager::GetInstance().MakeBullet(pos, direction, id);
+	BubbleManager::GetInstance().MakeBullet(pos, direction, id);
 	
 }
 void changeDirection(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp,comps::Direction direction,float speed)

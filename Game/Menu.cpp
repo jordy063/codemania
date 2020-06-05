@@ -126,16 +126,17 @@ void Menu::Confirm()
 {
     //get the item by selectindex
     MenuItem action = static_cast<MenuItem>(m_SelectIndex);
+    
     switch (action)
     {
     case MenuItem::P1PLAY:
         m_pPlayer->Clear();
         m_GameMode = GameMode::SINGLEPLAYER;
-        SetShowMenu(false);
+        dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
         break;
     case MenuItem::P2PLAY:
         m_GameMode = GameMode::MULTIPLAYER;
-        SetShowMenu(false);
+        dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
         break;
    
     case MenuItem::QUIT:

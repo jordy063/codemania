@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoulderComponent.h" />
+    <ClInclude Include="BoulderManager.h" />
     <ClInclude Include="BubbleComponent.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="BubbleManager.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
@@ -35,6 +37,7 @@
     <ClInclude Include="InputObserver.h" />
     <ClInclude Include="ItemComponent.h" />
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="MaitaAIComponent.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuObserver.h" />
     <ClInclude Include="Minigin.h" />
@@ -48,9 +51,11 @@
     <ClInclude Include="ZenChanAIComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoulderComponent.cpp" />
+    <ClCompile Include="BoulderManager.cpp" />
     <ClCompile Include="BubbleComponent.cpp" />
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="BulletManager.cpp" />
+    <ClCompile Include="BubbleManager.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -65,6 +70,7 @@
     <ClCompile Include="ItemComponent.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MaitaAIComponent.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuObserver.cpp" />
     <ClCompile Include="Minigin.cpp" />

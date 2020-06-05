@@ -21,7 +21,7 @@ void ItemManager::makeItem(float2 pos,ItemType type,int spriteId)
 	itemObject->GetTransform()->Translate(pos);
 	//needs a texture/physics/collision/itemComp
 	
-	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/ItemSpreadSheet.png", 3,4, 0, 0.2f, 22, 22));
+	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/ItemSheet.png", 4,4, 0, 0.2f, 22, 22));
 	auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(itemObject->GetTransform(), true));
 
 	auto pBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22, pPhysicsComp));

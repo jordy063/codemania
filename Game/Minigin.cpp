@@ -19,7 +19,7 @@
 //#include "SoundManager.h"
 #include "SoundManager2.h"
 #include "EnemyManager.h"
-#include "BulletManager.h"
+#include "BubbleManager.h"
 #include "BoundingBoxComponent.h"
 #include "GhostAIComponent.h"
 #include "HealthComponent.h"
@@ -77,7 +77,7 @@ void dae::Minigin::LoadGame()
 
 	Menu::GetInstance().RegisterPlayer2(m_pPlayers[1]);
 
-	BulletManager::GetInstance().RegisterPlayers(m_pPlayers);
+	BubbleManager::GetInstance().RegisterPlayers(m_pPlayers);
 	EnemyManager::GetInstance().RegisterPlayers(m_pPlayers);
 	ItemManager::GetInstance().RegisterPlayer(m_pPlayers);
 	
@@ -143,25 +143,25 @@ void dae::Minigin::Run()
 			lag_render += elapsedSec;
 			doContinue = input.ProcessInput();
 			
-
+			auto gameState = InputManager::GetInstance().GetGameState();
 			//if it's bigger than 0 we update
 			while (lag > 0)
 			{
 				//if lag < secperUpdate : update lag, if lag too big, update more than once
 				
+				
 				float elapse = min(secsPerUpdate, lag);
-				if (menu.GetShowMenu())
+				switch (gameState)
 				{
-
+				case dae::MainMenu:
 					menu.Update();
 
 					if (menu.GetIsQuitCalled())
 					{
 						doContinue = false;
 					}
-				}
-				else
-				{
+					break;
+				case dae::Playing:
 					if (m_HasMadeAssets == false)
 					{
 						m_HasMadeAssets = true;
@@ -170,7 +170,13 @@ void dae::Minigin::Run()
 
 					sceneManager.Update(elapse);
 					Update(elapse);
-					
+					break;
+				case dae::GameOverMenu:
+					break;
+				case dae::EndMenu:
+					break;
+				default:
+					break;
 				}
 				lag -= elapse;
 			}
@@ -178,12 +184,22 @@ void dae::Minigin::Run()
 			if (lag_render >= secsPerRender)
 			{
 				lag_render -= secsPerRender;
-				if (menu.GetShowMenu())
+				switch (gameState)
 				{
+				case dae::MainMenu:
 					menu.Render();
+					break;
+				case dae::Playing:
+					renderer.Render();
+					break;
+				case dae::GameOverMenu:
+					break;
+				case dae::EndMenu:
+					break;
+				default:
+					break;
 				}
-				else
-				renderer.Render();
+				
 				frames++;
 			}
 		

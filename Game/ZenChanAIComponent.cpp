@@ -109,9 +109,9 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 		m_Timer = 0;
 	}
 
-	float2 testVelocity = m_pPhysicsComp->GetVelocity();
+	float2 velocity = m_pPhysicsComp->GetVelocity();
 
-	if (testVelocity.x == 0)
+	if (velocity.x == 0)
 	{
 		if (m_CurrentDirection == comps::Direction::RIGHT)
 		{

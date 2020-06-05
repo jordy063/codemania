@@ -39,7 +39,6 @@ public:
 	virtual void Initialize();
 	virtual void Update();
 	virtual void Render();
-	bool GetShowMenu() const { return m_ShowMenu; }
 	void SetShowMenu(bool showMenu);
 	void MoveUp();
 	void MoveDown();
