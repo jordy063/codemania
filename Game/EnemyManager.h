@@ -23,7 +23,7 @@ class EnemyManager final : public dae::Singleton<EnemyManager>
 public:
 	void MakeEnemies(std::shared_ptr<dae::Scene> scene, int level);
 	void Update(float elapsedSecs,std::shared_ptr<Player>);
-	int CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBullet, int& index);
+	int CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBullet, int& index, std::shared_ptr<dae::GameObject>& other);
 	void RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& pPlayers);
 
 private:

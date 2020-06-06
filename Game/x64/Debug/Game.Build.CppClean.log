@@ -2,6 +2,7 @@ d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\game.pch
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\vc142.pdb
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\vc142.idb
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\bouldercomponent.obj
+d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\bouldermanager.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\bubblecomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\bullet.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\bubblemanager.obj
@@ -19,6 +20,7 @@ d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\inputobserver.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\itemcomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\itemmanager.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\main.obj
+d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\maitaaicomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\menu.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\menuobserver.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\minigin.obj
@@ -32,8 +34,8 @@ d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\zenchan.obj
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\zenchanaicomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\x64\debug\game.lib
 d:\jordy\dae2-redo\programming 4\examproject\x64\debug\game.exp
-d:\jordy\dae2-redo\programming 4\examproject\x64\debug\game.ilk
 d:\jordy\dae2-redo\programming 4\examproject\x64\debug\game.exe
+d:\jordy\dae2-redo\programming 4\examproject\x64\debug\game.ilk
 d:\jordy\dae2-redo\programming 4\examproject\x64\debug\game.pdb
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\game.tlog\cl.command.1.tlog
 d:\jordy\dae2-redo\programming 4\examproject\game\x64\debug\game.tlog\cl.read.1.tlog

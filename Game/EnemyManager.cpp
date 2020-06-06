@@ -44,7 +44,7 @@ void EnemyManager::Update(float elapsedSecs, std::shared_ptr<Player> player)
 
 }
 
-int EnemyManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox,int& index)
+int EnemyManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox,int& index, std::shared_ptr<dae::GameObject>& other)
 {
 	UNREFERENCED_PARAMETER(pBulletBoundingBox);
 	//GetBoundingBoxOfBullet and check with all enemies
@@ -64,7 +64,8 @@ int EnemyManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulle
 
 			//the enemy is hit so we can turn it into a bubble and clear our bullet
 			m_pEnemies.remove(enemy);
-			enemy.first->Clear();
+			enemy.first->Disable();
+			other = enemy.first;
 			return enemy.second;
 		}
 	}
@@ -138,6 +139,7 @@ void EnemyManager::MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene,Enemy
 	{
 		auto pMaitaAiComp{ std::shared_ptr<comps::MaitaAIComponent>(new comps::MaitaAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox)) };
 		enemyObject->AddComponent(pMaitaAiComp, ComponentType::MAITAAICOMPNENT);
+
 	}
 	auto itemType = static_cast<ItemType>(type);
 	m_pEnemies.push_back({ enemyObject,itemType });

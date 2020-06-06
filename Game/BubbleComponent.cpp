@@ -51,7 +51,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	//if enemy is hit
 	if (m_HasHitEnemy == false)
 	{
-		int enemyId = EnemyManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, index);
+		int enemyId = EnemyManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, index, m_Enemy);
 		if (enemyId != -1)
 		{
 			//this should be according to the type of enemy
@@ -77,13 +77,26 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 		m_IsTimerReached = true;
 	}
 
+
 	//if nothing is hit
 	if (m_HasHitEnemy == false)
 	{
-		if (BubbleManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
+		for (int playerId{}; playerId < 2; ++playerId)
 		{
-
+			switch (BubbleManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, playerId))
+			{
+			case HitType::UPHIT:
+				BubbleManager::GetInstance().MovePlayerWithBullet(playerId);
+				break;
+			case HitType::SIDEHIT:
+				if (m_IsTimerReached)
+					m_LifeTime = 0;
+				break;
+			default:
+				break;
+			}
 		}
+		
 		if (m_GoUpTimer > m_LifeTime)
 		{
 			BubbleManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
@@ -92,7 +105,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	}
 	else
 	{
-		if (BubbleManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
+		if (BubbleManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, m_SpriteId))
 		{
 			//spawn item
 			//spriteid will be the type of the enemy

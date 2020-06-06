@@ -34,6 +34,8 @@ namespace dae
 		void AddComponent(std::shared_ptr<comps::BaseComponent> comp, ComponentType type);
 		void ChangeScene(Scene* newScene);
 		void Clear();
+		void Disable();
+		void Enable();
 
 
 		void Initialize();
@@ -66,6 +68,7 @@ namespace dae
 		Scene* m_pScene;
 		std::shared_ptr<TileMapLoader> m_pTileMap;
 		std::vector<ComponentType> m_Types;
+		bool m_IsEnabled;
 		
 	};
 }

@@ -11,6 +11,8 @@ namespace comps
 	class CollisionComponent;
 	class HealthComponent;
 }
+
+
 namespace comps
 {
 	class BubbleComponent final : public comps::BaseComponent
@@ -42,7 +44,7 @@ namespace comps
 		float m_LifeTime;
 		bool m_IsActive = true;
 		int m_EnemyId;
-	
+		std::shared_ptr<dae::GameObject> m_Enemy;
 	};
 }
 

@@ -5,6 +5,13 @@
 #include "PhysicsComponent.h"
 #include <list>
 
+enum HitType
+{
+	NOHIT,
+	UPHIT,
+	SIDEHIT
+};
+
 namespace comps
 {
 	class BoundingBoxComponent;
@@ -20,8 +27,9 @@ public:
 	void Update();
 	void AddBoundingBoxToList(std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 	void RemoveBullet(std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
-	bool CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox);
+	HitType CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox, int playerId);
 	float2 GetBubbleSpeed() const { return m_BulletSpeed; }
+	void MovePlayerWithBullet(int playerId);
 
 private:
 	std::list<std::shared_ptr<comps::BoundingBoxComponent>> m_pTriggeredBullets;

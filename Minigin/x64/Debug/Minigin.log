@@ -1,30 +1,15 @@
-﻿  Audio.cpp
-  BaseComponent.cpp
+﻿  BaseComponent.cpp
   BoundingBoxComponent.cpp
   CollisionComponent.cpp
   Entity.cpp
-  Font.cpp
-  FpsComponent.cpp
   FPSCounter.cpp
+  FpsComponent.cpp
   GameObject.cpp
   LevelManager.cpp
-  Log.cpp
-  Logger.cpp
-  MiniginPCH.cpp
-  PhysicsComponent.cpp
-  Renderer.cpp
-  ResourceManager.cpp
   Scene.cpp
-  SceneManager.cpp
-  SoundManager2.cpp
-  SpriteComponent.cpp
   TextComponent.cpp
-  Texture2D.cpp
   TextureComponent.cpp
   TileMapLoader.cpp
-  Transform.cpp
-  TransformComponent.cpp
-  XboxController.cpp
   Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Debug\Minigin.lib
   D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2\lib\x64\SDL2.dll
   1 File(s) copied

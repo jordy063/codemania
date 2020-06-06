@@ -3,6 +3,7 @@
 #include "BoundingBoxComponent.h"
 #include "HealthComponent.h"
 #include "PhysicsComponent.h"
+#include "Menu.h"
 
 
 comps::ZenChanAIComponent::ZenChanAIComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayerObjects, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
@@ -46,19 +47,15 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 		m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
 		m_IsAnimationStarted = true;
 	}
-
+	DoRandomJumps = false;
 	for (int i{}; i < 2; ++i)
 	{
 		float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[i]->GetBoundingBox(0, 0).posY };
-		float playerJumpSpeed{ 60.0f };
-		if (difference > playerJumpSpeed&& m_pPlayerPhysicsCompss[i]->GetAirBorne() == false)
+		if (difference > 0 && m_pPlayerPhysicsCompss[i]->GetAirBorne() == false)
 		{
 			DoRandomJumps = true;
 		}
-		else
-		{
-			DoRandomJumps = false;
-		}
+		
 	}
 	if (DoRandomJumps)
 	{
@@ -86,27 +83,35 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 
 	if (m_Timer > m_ChangeDirectionTime )
 	{
-		int direction{};
+		int direction1{};
+		int direction2{};
+		direction1 = static_cast<int>(m_CurrentDirection);
+		direction2 = static_cast<int>(m_CurrentDirection);
 		if (m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[0]->GetBoundingBox(0, 0).posY >= 0)
 		{
 			//calculate direction for player 1
-			direction = CalculatePlayerDirection(m_pPlayers[0]);
+			direction1 = CalculatePlayerDirection(m_pPlayers[0]);
 		}
-		else if(m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[1]->GetBoundingBox(0, 0).posY >= 0)
+		
+		if(m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[1]->GetBoundingBox(0, 0).posY >= 0)
 		{
 			//calculate direction for player 2
-			direction = CalculatePlayerDirection(m_pPlayers[1]);
+			direction2 = CalculatePlayerDirection(m_pPlayers[1]);
 		}
-		switch (direction)
+		if (direction1 == direction2 ||Menu::GetInstance().GetGameMode()==GameMode::SINGLEPLAYER)
 		{
-		case 0:
-			m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
-			break;
-		case 1:
-			m_MoveLeftCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
-			break;
+			switch (direction1)
+			{
+			case 0:
+				m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
+				break;
+			case 1:
+				m_MoveLeftCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
+				break;
+			}
+			m_Timer = 0;
 		}
-		m_Timer = 0;
+		
 	}
 
 	float2 velocity = m_pPhysicsComp->GetVelocity();

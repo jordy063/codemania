@@ -130,34 +130,37 @@ void BubbleManager::RemoveBullet(std::shared_ptr<comps::CollisionComponent> pCol
 
 }
 
-bool BubbleManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox)
+HitType BubbleManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox,int playerId)
 {
 	//checks if player and current bullet overlap
-	for (int i{}; i<2;++i)
+	
+	bool isHit{ m_pPlayerBoundingBoxes[playerId]->IsOverlapping(pBulletBoundingBox) };
+	if (isHit)
 	{
-		bool isHit{ m_pPlayerBoundingBoxes[i]->IsOverlapping(pBulletBoundingBox) };
-		if (isHit)
+		//find the bullet you're standing on
+		if (pBulletBoundingBox->GetBoundingBox(0, false).posY - pBulletBoundingBox->GetBoundingBox(0, false).height + 1 < m_pPlayerBoundingBoxes[playerId]->GetBoundingBox(0, false).posY)
 		{
-			//find the bullet you're standing on
-			if (pBulletBoundingBox->GetBoundingBox(0, false).posY < m_pPlayerBoundingBoxes[i]->GetBoundingBox(0, false).posY)
-			{
-				//destroy the current bubble
+			//destroy the current bubble
+			return HitType::SIDEHIT;
 
-
-			}
-			else
-			{
-				//move the player on the bubble
-				m_pPlayerPhysicsComps[i]->SetSpeedY(-m_BulletSpeed.y);
-			}
-
-			//check if the position is lower, then he's left or right of the bubble.
-			//else if it's the same here's on top and should move with it
-			return true;
 		}
+		else
+		{
+			//move the player on the bubble
+			return HitType::UPHIT;
+		}
+
+		//check if the position is lower, then he's left or right of the bubble.
+		//else if it's the same here's on top and should move with it
 	}
-	return false;
+	
+	return HitType::NOHIT;
 	//
 	//return m_pPlayerBoundingBox->IsOverlapping(pBulletBoundingBox);
 	
+}
+
+void BubbleManager::MovePlayerWithBullet(int playerId)
+{
+	m_pPlayerPhysicsComps[playerId]->SetSpeedY(-m_BulletSpeed.y);
 }

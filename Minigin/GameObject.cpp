@@ -4,6 +4,7 @@
 #include "Renderer.h"
 
 dae::GameObject::GameObject()
+	:m_IsEnabled(true)
 {
 	m_pScene = nullptr;
 	m_pTransform = std::shared_ptr<TransformComponent>(new TransformComponent());
@@ -45,6 +46,16 @@ void dae::GameObject::Clear()
 	//m_pComponents.push_back(m_pTransform);
 }
 
+void dae::GameObject::Disable()
+{
+	m_IsEnabled = false;
+}
+
+void dae::GameObject::Enable()
+{
+	m_IsEnabled = true;
+}
+
 void dae::GameObject::Initialize()
 {
 	AddComponent(m_pTransform,ComponentType::TRANSFORMCOMP);
@@ -66,11 +77,13 @@ void dae::GameObject::RegisterTileMap(std::shared_ptr<TileMapLoader> tileMapLoad
 
 void dae::GameObject::Update(float elapsedSecs)
 {
-	for (ComponentType type : m_Types)
+	if (m_IsEnabled)
 	{
-		m_pComponents[type]->Update(*m_pScene, elapsedSecs, m_pTransform->GetPosition());
+		for (ComponentType type : m_Types)
+		{
+			m_pComponents[type]->Update(*m_pScene, elapsedSecs, m_pTransform->GetPosition());
+		}
 	}
-
 	/*for (std::shared_ptr<comps::BaseComponent> comp : m_pComponents)
 	{
 		comp->Update(*m_pScene, elapsedSecs, m_pTransform->GetPosition());
@@ -79,9 +92,12 @@ void dae::GameObject::Update(float elapsedSecs)
 
 void dae::GameObject::Render() 
 {
-	for (ComponentType type : m_Types)
+	if (m_IsEnabled)
 	{
-		m_pComponents[type]->Render(*m_pScene, m_pTransform->GetPosition());
+		for (ComponentType type : m_Types)
+		{
+			m_pComponents[type]->Render(*m_pScene, m_pTransform->GetPosition());
+		}
 	}
 	/*for (std::shared_ptr<comps::BaseComponent> comp : m_pComponents)
 	{
