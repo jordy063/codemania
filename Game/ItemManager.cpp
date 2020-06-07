@@ -36,7 +36,7 @@ void ItemManager::makeItem(float2 pos,ItemType type,int spriteId)
 	itemObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
 	itemObject->AddComponent(pItemComponent, ComponentType::ITEMCOMPONENT);
 
-	m_pItems.push_back(itemObject);
+	m_pItems.insert(itemObject);
 
 	//question
 	//when it hits a platform it goes ignore that platform the first time but set xSpeed = 0;
@@ -105,6 +105,6 @@ void ItemManager::RemoveItem(std::shared_ptr<comps::BoundingBoxComponent> pItemB
 	if (pGameObjectToRemove != nullptr)
 	{
 		
-		m_pItems.remove(pGameObjectToRemove);
+		m_pItems.erase(pGameObjectToRemove);
 	}
 }

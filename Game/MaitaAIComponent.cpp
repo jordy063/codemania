@@ -4,7 +4,8 @@
 #include "HealthComponent.h"
 #include "PhysicsComponent.h"
 #include "BoulderManager.h"
-
+#include "Menu.h"
+#include "LevelManager.h"
 comps::MaitaAIComponent::MaitaAIComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayerObjects, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
 	std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
 	:m_pPhysicsComp(pPhysicsComp)
@@ -17,7 +18,10 @@ comps::MaitaAIComponent::MaitaAIComponent(std::vector<std::shared_ptr<dae::GameO
 	, m_JumpTime(1.0f)
 	, m_pPlayers(pPlayerObjects)
 	,m_BoulderTimer()
-	,m_BoulderTime(2.0f)
+	,m_BoulderTime(4.0f)
+	,m_PreviousSpeed(0)
+	,m_IsAnimationStarted(false)
+	,m_CurrentDirection(comps::Direction::RIGHT)
 {
 	m_Speed = { 30.0f,15.0f };
 }
@@ -48,18 +52,16 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 		m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
 		m_IsAnimationStarted = true;
 	}
-
+	DoRandomJumps = false;
 	for (int i{}; i < 2; ++i)
 	{
-		float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[i]->GetBoundingBox(0, 0).posY };
-		float playerJumpSpeed{ 60.0f };
-		if (difference > playerJumpSpeed&& m_pPlayerPhysicsCompss[i]->GetAirBorne() == false)
+		if (m_pPlayerBoundingBoxes[i] != nullptr)
 		{
-			DoRandomJumps = true;
-		}
-		else
-		{
-			DoRandomJumps = false;
+			float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[i]->GetBoundingBox(0, 0).posY - 1 };
+			if (difference > 0 && m_pPlayerPhysicsCompss[i]->GetAirBorne() == false)
+			{
+				DoRandomJumps = true;
+			}
 		}
 	}
 	if (DoRandomJumps)
@@ -83,33 +85,48 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 			m_JumpTimeSet = false;
 		}
 		m_JumpTimer += elapsedSecs;
-
 	}
 
 
-	if (m_Timer > m_ChangeDirectionTime)
+	if (m_Timer > m_ChangeDirectionTime && DoRandomJumps == true)
 	{
-		int direction{};
-		if (m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[0]->GetBoundingBox(0, 0).posY >= 0)
+		int direction1{};
+		int direction2{};
+		direction1 = static_cast<int>(m_CurrentDirection);
+		direction2 = static_cast<int>(m_CurrentDirection);
+
+		if (m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[0]->GetBoundingBox(0, 0).posY >= -0.01f)
 		{
 			//calculate direction for player 1
-			direction = CalculatePlayerDirection(m_pPlayers[0]);
+			direction1 = CalculatePlayerDirection(m_pPlayers[0]);
 		}
-		else if (m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[1]->GetBoundingBox(0, 0).posY >= 0)
+		if (m_pPlayerBoundingBoxes[1] != nullptr)
 		{
-			//calculate direction for player 2
-			direction = CalculatePlayerDirection(m_pPlayers[1]);
+			if (m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[1]->GetBoundingBox(0, 0).posY >= -0.01f)
+			{
+				//calculate direction for player 2
+				direction2 = CalculatePlayerDirection(m_pPlayers[1]);
+			}
 		}
-		switch (direction)
+		else
+			direction2 = direction1;
+
+		if (direction1 == direction2 || Menu::GetInstance().GetGameMode() == GameMode::SINGLEPLAYER)
 		{
-		case 0:
-			m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
-			break;
-		case 1:
-			m_MoveLeftCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
-			break;
+			switch (direction1)
+			{
+			case 0:
+				m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
+				m_CurrentDirection = comps::Direction::RIGHT;
+				break;
+			case 1:
+				m_MoveLeftCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
+				m_CurrentDirection = comps::Direction::LEFT;
+				break;
+			}
+			m_Timer = 0;
 		}
-		m_Timer = 0;
+
 	}
 
 	float2 velocity = m_pPhysicsComp->GetVelocity();
@@ -134,8 +151,10 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	//}
 	for (int i{}; i < 2; ++i)
 	{
+		if (m_pPlayerBoundingBoxes[i] != nullptr)
 		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))
 		{
+			if (m_pPlayerHealthComps[i] != nullptr)
 			//do damage and respawn player
 			m_pPlayerHealthComps[i]->DropHealth(1);
 
@@ -147,8 +166,9 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	if (m_BoulderTimer > m_BoulderTime)
 	{
 		m_BoulderTimer = 0;
-		BoulderManager::GetInstance().MakeBoulder(m_pPhysicsComp->GetTransform());
+		BoulderManager::GetInstance().MakeBoulder(m_pPhysicsComp->GetTransform(),m_CurrentDirection);
 	}
+	LevelManager::GetInstance().UpdateIfBelowLevel(m_pPhysicsComp->GetTransform());
 }
 
 int comps::MaitaAIComponent::CalculatePlayerDirection(std::shared_ptr<dae::GameObject> pPlayer)

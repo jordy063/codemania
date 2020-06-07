@@ -1,7 +1,6 @@
 #include "MiniginPCH.h"
 #include "BoulderManager.h"
 #include "GameObject.h"
-#include "PhysicsComponent.h"
 #include "BoundingBoxComponent.h"
 #include "SpriteComponent.h"
 #include "BoulderComponent.h"
@@ -11,9 +10,10 @@
 #include "CollisionComponent.h"
 #include "SceneManager.h"
 #include "TileMapLoader.h"
+#include "GameObject.h"
 
 
-void BoulderManager::MakeBoulder(std::shared_ptr<TransformComponent> transform)
+void BoulderManager::MakeBoulder(std::shared_ptr<TransformComponent> transform,comps::Direction direction)
 {
 	auto pBoulderObject{ std::shared_ptr<dae::GameObject>(new dae::GameObject()) };
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(pBoulderObject);
@@ -35,9 +35,37 @@ void BoulderManager::MakeBoulder(std::shared_ptr<TransformComponent> transform)
 
 	pBoulderObject->GetTransform()->Translate(transform->GetPosition());
 
+	if (direction == comps::Direction::RIGHT)
+	{
+		pPhysicsComp->SetSpeedX(m_BoulderSpeed);
+	}
+	else if(direction == comps::Direction::LEFT)
+	{
+		pPhysicsComp->SetSpeedX(-m_BoulderSpeed);
+	}
+
+	m_pBoulders.insert(pBoulderObject);
 }
 
 void BoulderManager::CheckIfHit()
 {
 	//here we check if the player hits any boulders
+}
+
+void BoulderManager::RemoveBoulder(std::shared_ptr <TransformComponent> pTransform)
+{
+	std::shared_ptr <dae::GameObject> pGameObjectToRemove{ nullptr };
+	for (std::shared_ptr <dae::GameObject> pBoulderObject : m_pBoulders)
+	{
+		if (pBoulderObject->GetTransform()->GetPosition().x == pTransform->GetPosition().x &&
+			pBoulderObject->GetTransform()->GetPosition().y == pTransform->GetPosition().y)
+		{
+			pBoulderObject->Clear();
+			pGameObjectToRemove = pBoulderObject;
+		}
+	}
+	if (pGameObjectToRemove == nullptr)
+	{
+		m_pBoulders.erase(pGameObjectToRemove);
+	}
 }

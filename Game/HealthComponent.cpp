@@ -9,7 +9,7 @@ comps::HealthComponent::HealthComponent(int health)
 
 void comps::HealthComponent::DropHealth(int amount)
 {
-	if (m_Health < 0)
+	if (m_Health > 0)
 	{
 		m_Health -= amount;
 	}

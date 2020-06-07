@@ -20,12 +20,16 @@ public:
 	float GetTranslationY() const { return m_Translation.y; }
 	void RegisterTransformCompLeft(std::shared_ptr< TransformComponent> pTransformCompLeft,std::shared_ptr<comps::CollisionComponent> pPlayerCollisionCompLeft);
 	void RegisterTransformCompRight(std::shared_ptr<TransformComponent> pTransformCompRight, std::shared_ptr<comps::CollisionComponent> pPlayerCollisionCompRight);
+	int GetCurrentLevel() const { return m_CurrentLevel; }
+	bool GetShouldUpdate() const { return m_ShouldUpdate; }
+	void UpdateIfBelowLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime = false, float2 startPos = {});
+	void UpdateIfAboveLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime = false, float2 startPos = {});
 private:
 	int m_CurrentLevel{0};
 	float2 m_Translation{ 0,0 };
 	float m_TransisionProgress{};
 	float m_LevelHeight{ 24*25 };
-	float2 m_TransitionSpeed{5,50 };
+	float2 m_TransitionSpeed{5,100 };
 	float m_HorintalProgress{};
 	float2 m_CurrentPlayerPos{};
 	float2 m_DistancePerSec{};
@@ -41,7 +45,7 @@ private:
 	bool m_PlayerLocationSet = false;
 	bool m_IsLocationYReached = false;
 	bool IsCollisionSet = true;
-
+	bool m_ShouldUpdate = false;
 	float2 CalculateAngle();
 };
 

@@ -8,6 +8,7 @@ struct SDL_Window;
 class EnemyManager;
 class InputObserver;
 class Menu;
+class UI;
 
 namespace dae
 {
@@ -27,6 +28,8 @@ namespace dae
 		std::shared_ptr<dae::GameObject> m_pPlayer2;
 		std::shared_ptr<Enemy> m_pEnemy;
 		std::shared_ptr<InputObserver> pInputObserver;
+		std::shared_ptr<UI> m_pUI;
+
 		void MakePlayer(int controllerId, int spriteId,Scene& scene, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos, bool isPlayerOne);
 		void MakeGameAssets();
 		GameMode m_GameMode;

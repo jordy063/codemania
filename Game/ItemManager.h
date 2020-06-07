@@ -3,6 +3,7 @@
 #include "structs.h"
 #include <vector>
 #include "Scene.h"
+#include <set>
 #include <list>
 class ItemManager final : public dae::Singleton< ItemManager>
 {
@@ -15,7 +16,7 @@ public:
 
 private:
 	//not sure if I need a private vector yet
-	std::list< std::shared_ptr<dae::GameObject>> m_pItems;
+	std::set< std::shared_ptr<dae::GameObject>> m_pItems;
 	std::list<std::shared_ptr<comps::BoundingBoxComponent>> m_pPlayerBoundingBoxes;
 
 	

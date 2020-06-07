@@ -62,7 +62,7 @@ private:
 	int buttonAmount = 4;
 	std::shared_ptr<MenuObserver> m_pMenuObserver;
 	bool m_UseControllers = false;
-	GameMode m_GameMode;
+	GameMode m_GameMode = GameMode::SINGLEPLAYER;
 	//textures
 	std::shared_ptr<dae::Texture2D> m_pTitleTexture;
 

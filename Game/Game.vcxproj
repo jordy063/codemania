@@ -46,6 +46,8 @@
     <ClInclude Include="ScoreBoard.h" />
     <ClInclude Include="ScorePopUpComponent.h" />
     <ClInclude Include="ScorePopUpManager.h" />
+    <ClInclude Include="ShowHealthComponent.h" />
+    <ClInclude Include="ShowScoreComponent.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="ZenChan.h" />
     <ClInclude Include="ZenChanAIComponent.h" />
@@ -79,6 +81,8 @@
     <ClCompile Include="ScoreBoard.cpp" />
     <ClCompile Include="ScorePopUpComponent.cpp" />
     <ClCompile Include="ScorePopUpManager.cpp" />
+    <ClCompile Include="ShowHealthComponent.cpp" />
+    <ClCompile Include="ShowScoreComponent.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="ZenChan.cpp" />
     <ClCompile Include="ZenChanAIComponent.cpp" />

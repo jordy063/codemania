@@ -2,6 +2,7 @@
 #include "BoulderComponent.h"
 #include "PhysicsComponent.h"
 #include "SpriteComponent.h"
+#include "BoulderManager.h"
 
 comps::BoulderComponent::BoulderComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp)
 	:m_pPhysicsComp(pPhysicsComp)
@@ -23,5 +24,6 @@ void comps::BoulderComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	if (m_pPhysicsComp->GetVelocity().x == 0)
 	{
 		//delete the boulder
+		BoulderManager::GetInstance().RemoveBoulder(m_pPhysicsComp->GetTransform());
 	}
 }

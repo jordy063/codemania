@@ -42,8 +42,11 @@ namespace comps
 		bool m_HasHitEnemy = false;
 
 		float m_LifeTime;
-		bool m_IsActive = true;
+	
+		float m_EnemyTrapTimer;
+		float m_EnemyTrapTime;
 		int m_EnemyId;
+		EnemyType m_EnemyType;
 		std::shared_ptr<dae::GameObject> m_Enemy;
 	};
 }

@@ -19,12 +19,14 @@ void EnemyManager::MakeEnemies(std::shared_ptr<dae::Scene> scene,int level)
 	//we check how how enemies we currently have and see if we need more of that type
 	switch (level)
 	{
+	case 0:
+		MakeEnemiesLevel0(scene);
+		break;
 	case 1:
 		MakeEnemiesLevel1(scene);
 		break;
 	case 2:
-		break;
-	case 3:
+		MakeEnemiesLevel2(scene);
 		break;
 
 	default:
@@ -78,7 +80,13 @@ void EnemyManager::RegisterPlayers(const std::vector<std::shared_ptr<dae::GameOb
 	m_pPlayerObjects = pPlayers;
 }
 
-void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
+void EnemyManager::AddEnemyToList(std::pair<std::shared_ptr<dae::GameObject> ,EnemyType> pEnemy)
+{
+
+	m_pEnemies.push_back(pEnemy);
+}
+
+void EnemyManager::MakeEnemiesLevel0(std::shared_ptr<dae::Scene> scene)
 {
 
 
@@ -91,7 +99,40 @@ void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
 	
 
 	MakeEnemy({ 250,100 }, scene, EnemyType::MAITA);
-	
+
+}
+void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
+{
+	scene->GetTileMap()->UpdateLevel(1);
+
+	//enemy test
+	MakeEnemy({ 300,700 }, scene, EnemyType::GHOST);
+
+	MakeEnemy({ 500,900 }, scene, EnemyType::GHOST);
+	MakeEnemy({ 100,900 }, scene, EnemyType::GHOST);
+
+
+
+	//enemy test2
+	MakeEnemy({ 200,700 }, scene, EnemyType::ZENCHAN);
+
+
+	MakeEnemy({ 250,700 }, scene, EnemyType::MAITA);
+
+}
+void EnemyManager::MakeEnemiesLevel2(std::shared_ptr<dae::Scene> scene)
+{
+	scene->GetTileMap()->UpdateLevel(2);
+
+	//enemy test
+	MakeEnemy({ 100,100 }, scene, EnemyType::GHOST);
+
+
+	//enemy test2
+	MakeEnemy({ 150,100 }, scene, EnemyType::ZENCHAN);
+
+
+	MakeEnemy({ 250,100 }, scene, EnemyType::MAITA);
 
 }
 
@@ -100,7 +141,7 @@ void EnemyManager::MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene,Enemy
 {
 	EnemyObserver::GetInstance().UpCounter();
 	auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
-	scene->Add(enemyObject);
+	
 	enemyObject->GetTransform()->Translate(pos.x, pos.y);
 
 	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/EnemySheet.png", 6, 8, type, 0.2f, 44, 22));
@@ -159,8 +200,8 @@ void EnemyManager::MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene,Enemy
 	default:
 		break;
 	}*/
-	
-
+	scene->Add(enemyObject);
+	enemyObject->Initialize();
 	//add AIcomponent and do the same as in playerclass
 
 	

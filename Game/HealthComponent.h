@@ -7,6 +7,7 @@ namespace comps
 	public:
 		HealthComponent(int health);
 		~HealthComponent() = default;;
+		int GetHealth() const { return m_Health; };
 		void DropHealth(int amount);
 		void ResetHealth();
 	protected:

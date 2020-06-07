@@ -27,25 +27,9 @@ void LevelManager::Update(float elapsedSecs)
 			m_DistancePerSec = CalculateAngle();
 			m_PlayerLocationSet = true;
 		}
-		//if (m_pPlayerTransformLeft->GetPosition().x > 50 )
-		//{
-		//	//translation = negative
-		//	m_HorintalProgress -= elapsedSecs * m_TransitionSpeed.x;
-		//	
-		//}
-		//else if (m_pPlayerTransformLeft->GetPosition().x > 50)
-		//{
-		//	//translation = negative
-		//	m_HorintalProgress -= elapsedSecs * m_TransitionSpeed.x;
-		//}
-		//m_Translation.x = m_HorintalProgress;
-		////x is fine but player should go in the direct of (50,300) with a certain speed.
-		////that speed = speed*m_LevelHeight/(m_Levelheight+ m_Levelheight-characterpos) -> the difference
-		//m_pPlayerTransformLeft->Translate(m_Translation.x + 50, m_Translation.y + 300);
-
-
 		
 
+		//we move player allong x-axis
 		if (std::abs(m_PlayerTranslation.x - m_DistancePerSec.x) < 0.1f)
 		{
 			//destination reached
@@ -56,7 +40,8 @@ void LevelManager::Update(float elapsedSecs)
 			m_PlayerTranslation.x += elapsedSecs * m_DistancePerSec.x / m_PlayerTranlateTime.x;
 			m_pPlayerTransformLeft->Translate(m_CurrentPlayerPos.x + m_PlayerTranslation.x, m_PlayerTranslation.y + m_CurrentPlayerPos.y);
 		}
-		
+
+		//we move player allong y-axis
 		if (m_pPlayerTransformLeft->GetPosition().y > m_Translation.y + m_PlayerDefaultPos.y || m_IsLocationYReached)
 		{
 			
@@ -76,6 +61,7 @@ void LevelManager::Update(float elapsedSecs)
 	else
 	{
 		//if a bool is false, set it to true. if we update lv that bool is false
+		m_ShouldUpdate = false;
 		if (IsCollisionSet == false)
 		{
 			//upgrade collision
@@ -83,17 +69,17 @@ void LevelManager::Update(float elapsedSecs)
 			tileMap->UpdateLevel(m_CurrentLevel);
 			
 			m_pPlayerCollisionLeft->SetCollision(tileMap->GetCollisionWalls(), tileMap->GetCollisionPlatforms());
+			
 			IsCollisionSet = true;
+			
 		}
 
 		m_IsLocationYReached = false;
 		m_PlayerLocationSet = false;
 
-		auto test = m_pPlayerTransformLeft->GetPosition().y;
-		if (test > 600 + m_Translation.y)
-		{
-			m_pPlayerTransformLeft->Translate(m_pPlayerTransformLeft->GetPosition().x, m_Translation.y);
-		}
+		
+		UpdateIfBelowLevel( m_pPlayerTransformLeft);
+		UpdateIfAboveLevel( m_pPlayerTransformLeft);
 	}
 
 
@@ -102,6 +88,8 @@ void LevelManager::Update(float elapsedSecs)
 void LevelManager::UpgradeLevel()
 {
 	m_CurrentLevel++;
+	m_ShouldUpdate = true;
+	IsCollisionSet = false;
 }
 
 void LevelManager::RegisterTransformCompLeft(std::shared_ptr<TransformComponent> pPlayerTransformCompLeft, std::shared_ptr<comps::CollisionComponent> pPlayerCollisionCompLeft)
@@ -116,6 +104,30 @@ void LevelManager::RegisterTransformCompRight(std::shared_ptr<TransformComponent
 	m_pPlayerCollisionRight = pPlayerCollisionCompRight;
 }
 
+void LevelManager::UpdateIfBelowLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime,float2 startPos)
+{
+	if(m_TransisionProgress >= m_CurrentLevel)
+	if (pTranform->GetPosition().y > 600 + m_Translation.y)
+	{
+		if(firstTime)
+			pTranform->Translate(startPos.x, startPos.x);
+		else
+		pTranform->Translate(pTranform->GetPosition().x, m_Translation.y + 15);
+	}
+}
+
+void LevelManager::UpdateIfAboveLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime, float2 startPos)
+{
+	if (m_TransisionProgress >= m_CurrentLevel)
+	if (pTranform->GetPosition().y < m_Translation.y)
+	{
+		if (firstTime)
+			pTranform->Translate(startPos.x, startPos.x);
+		else
+		pTranform->Translate(pTranform->GetPosition().x, m_Translation.y + 600);
+	}
+}
+
 float2 LevelManager::CalculateAngle()
 {
 	
@@ -123,7 +135,7 @@ float2 LevelManager::CalculateAngle()
 	
 
 	auto distanceX =  m_PlayerDefaultPos.x - m_CurrentPlayerPos.x;
-	auto distanceY = m_PlayerDefaultPos.y - m_CurrentPlayerPos.y;
+	auto distanceY = m_PlayerDefaultPos.y + (m_CurrentLevel - 1) * m_LevelHeight - m_CurrentPlayerPos.y;
 
 	auto distancePerSec = float2{ distanceX,distanceY };
 

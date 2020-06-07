@@ -68,7 +68,7 @@ void dae::Minigin::LoadGame()
 	std::string sceneName{ "Bubble Bobble Scene" };
 	auto& scene{ SceneManager::GetInstance().CreateScene(sceneName) };
 
-	auto loader = std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,30 }, SceneManager::GetInstance().GetActiveScene()));
+	auto loader{ std::shared_ptr<TileMapLoader>(new TileMapLoader(10, { 0,30 }, SceneManager::GetInstance().GetActiveScene())) };
 
 	scene.AddTileMap(loader);
 
@@ -81,17 +81,19 @@ void dae::Minigin::LoadGame()
 	EnemyManager::GetInstance().RegisterPlayers(m_pPlayers);
 	ItemManager::GetInstance().RegisterPlayer(m_pPlayers);
 	
-	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 1);
+	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 0);
 	
 	SoundManager2::GetInstance().Init();
 	std::string filename{ "../Sounds/drumloop.wav" };
 	SoundManager2::GetInstance().playMusic(filename);
 
-	auto ui = std::shared_ptr<UI>(new UI());
-	ui->Initialize();
+	m_pUI = std::shared_ptr<UI>(new UI(m_pPlayers));
+	m_pUI->Initialize();
 
 	scene.Initialize();
 	Menu::GetInstance().Initialize();
+
+
 }
 
 void dae::Minigin::Update(float elapsedSecs)
@@ -226,7 +228,7 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene,std::v
 	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22,pPlayerPhysicsComp));
 	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(),
 		scene.GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
-	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(3));
+	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(4));
 
 
 	pPlayer->AddComponent(pPlayerspriteComp, ComponentType::SPRITECOMP);
@@ -329,6 +331,7 @@ void dae::Minigin::MakeGameAssets()
 			actualInputComp1->MakeObserver(-1);
 			actualInputComp2->MakeObserver(-2);
 		}
+		m_pUI->AddPlayer2();
 		break;
 	case GameMode::VERSUS:
 		if (useControllers)
@@ -341,8 +344,10 @@ void dae::Minigin::MakeGameAssets()
 			actualInputComp1->MakeObserver(-1);
 			actualInputComp2->MakeObserver(-2);
 		}
-
+		m_pUI->AddPlayer2();
 		//change the nessecary things
 		break;
 	}
+
+	
 }

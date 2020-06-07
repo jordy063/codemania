@@ -6,7 +6,7 @@
 #include "Logger.h"
 #include "FpsComponent.h"
 #include "TileMapLoader.h"
-
+#include <algorithm>
 
 
 unsigned int dae::Scene::idCounter = 0;
@@ -26,17 +26,20 @@ bool dae::Scene::CreateFPSCounter()
 	return false;
 }
 
-dae::Scene::Scene(const std::string name) : mName(name) {}
+dae::Scene::Scene(const std::string name) : mName(name) 
+{
+}
 
 dae::Scene::~Scene()
 {
-	for (unsigned int i{}; i < mObjects.size(); ++i)
-	{
-		if (mObjects.at(i) != nullptr )
-		{
-			//delete mObjects.at(i);
-		}
-	}
+
+	//for (unsigned int i{}; i < mObjects.size(); ++i)
+	//{
+	//	if (mObjects.at(i) != nullptr )
+	//	{
+	//		//delete mObjects.at(i);
+	//	}
+	//}
 }
 
 void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)

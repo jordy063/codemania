@@ -22,7 +22,8 @@ comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent>
 	,m_GoUpTime(2.0f)
 	, m_LifeTime(10)
 	, m_EnemyId(-1)
-
+	, m_EnemyTrapTime(5)
+	, m_EnemyTrapTimer()
 {
 }
 
@@ -52,6 +53,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	if (m_HasHitEnemy == false)
 	{
 		int enemyId = EnemyManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, index, m_Enemy);
+		m_EnemyType = static_cast<EnemyType>(enemyId);
 		if (enemyId != -1)
 		{
 			//this should be according to the type of enemy
@@ -111,8 +113,19 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 			//spriteid will be the type of the enemy
 			ItemType type = static_cast<ItemType>(m_EnemyId);
 			ItemManager::GetInstance().makeItem(m_pPhysicsComp->GetTransform()->GetPosition(), type,m_SpriteId);
+			m_Enemy->Clear();
 			BubbleManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
 			
+		}
+		m_EnemyTrapTimer += elapsedSecs;
+		if (m_EnemyTrapTimer > m_EnemyTrapTime)
+		{
+			m_EnemyTrapTimer = 0;
+			m_HasHitEnemy = false;
+			m_Enemy->Enable();
+			m_Enemy->GetTransform()->Translate(m_pPhysicsComp->GetTransform()->GetPosition());
+			EnemyManager::GetInstance().AddEnemyToList({ m_Enemy,m_EnemyType });
+			BubbleManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
 		}
 	}
 

@@ -117,6 +117,12 @@
     <ClInclude Include="MaitaAIComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ShowScoreComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowHealthComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -210,6 +216,12 @@
       <Filter>Header Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="MaitaAIComponent.cpp">
+      <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowScoreComponent.cpp">
+      <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowHealthComponent.cpp">
       <Filter>Header Files\Components</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include "structs.h"
-#include <list>
+#include <set>
 
 namespace comps
 {
@@ -18,6 +18,6 @@ public:
 	void MakeScorePopUp(ItemType itemType, int spriteId, float2 position);
 	void RemoveScorePopUp(std::shared_ptr <TransformComponent> pTransform);
 private:
-	std::list<std::shared_ptr<dae::GameObject>> m_pScoreObjects;
+	std::set<std::shared_ptr<dae::GameObject>> m_pScoreObjects;
 };
 

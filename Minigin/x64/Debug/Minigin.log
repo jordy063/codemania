@@ -1,15 +1,4 @@
-﻿  BaseComponent.cpp
-  BoundingBoxComponent.cpp
-  CollisionComponent.cpp
-  Entity.cpp
-  FPSCounter.cpp
-  FpsComponent.cpp
-  GameObject.cpp
-  LevelManager.cpp
-  Scene.cpp
-  TextComponent.cpp
-  TextureComponent.cpp
-  TileMapLoader.cpp
+﻿  LevelManager.cpp
   Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Debug\Minigin.lib
   D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2\lib\x64\SDL2.dll
   1 File(s) copied

@@ -51,7 +51,9 @@ namespace comps
 		bool m_JumpTimeSet = false;
 		bool DoRandomJumps = false;
 		std::vector<std::shared_ptr<dae::GameObject>> m_pPlayers;
-
+		float2 m_StartPos;
+		float m_StartTimer;
+		float m_StartTime;
 		int CalculatePlayerDirection(std::shared_ptr<dae::GameObject> pPlayer);
 	};
 }

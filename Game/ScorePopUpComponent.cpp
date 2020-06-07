@@ -24,7 +24,21 @@ void comps::ScorePopUpComponent::Update(const dae::Scene& scene, float elapsedSe
 	UNREFERENCED_PARAMETER(pos);
 	if (m_OriginalPosition.y - m_pPhysicsComp->GetTransform()->GetPosition().y > m_TravelDistance)
 	{
-		ScoreBoard::GetInstance().AddScore(100 + m_ItemType * 100);
+		switch (m_ItemType)
+		{
+		case FRIES:
+			ScoreBoard::GetInstance().AddScore(100);
+			break;
+		case MELON:
+			ScoreBoard::GetInstance().AddScore(200);
+			break;
+		case BANANA:
+			ScoreBoard::GetInstance().AddScore(500);
+			break;
+		default:
+			break;
+		}
+		
 		ScorePopUpManager::GetInstance().RemoveScorePopUp(m_pPhysicsComp->GetTransform());
 	}
 

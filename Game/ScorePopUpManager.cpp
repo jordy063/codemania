@@ -28,7 +28,7 @@ void ScorePopUpManager::MakeScorePopUp(ItemType itemType,int spriteId,float2 pos
 	pScoreObject->AddComponent(physicsComp, ComponentType::PHYSICSCOMP);
 	pScoreObject->AddComponent(scorePopUpComp, ComponentType::SCOREPOPUPCOMPONENT);
 
-	m_pScoreObjects.push_back(pScoreObject);
+	m_pScoreObjects.insert(pScoreObject);
 }
 
 void ScorePopUpManager::RemoveScorePopUp(std::shared_ptr <TransformComponent> pTransform)
@@ -45,7 +45,7 @@ void ScorePopUpManager::RemoveScorePopUp(std::shared_ptr <TransformComponent> pT
 	}
 	if (pGameObjectToRemove == nullptr)
 	{
-		m_pScoreObjects.remove(pGameObjectToRemove);
+		m_pScoreObjects.erase(pGameObjectToRemove);
 	}
 
 }

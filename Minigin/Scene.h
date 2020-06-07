@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "Entity.h"
 #include "FPSCounter.h"
+#include <list>
 namespace comps 
 {
 	class TextComponent;
@@ -42,7 +43,7 @@ namespace dae
 		explicit Scene(const std::string name);
 
 		std::string mName{};
-		std::vector < std::shared_ptr<SceneObject>> mObjects{};
+		std::list < std::shared_ptr<SceneObject>> mObjects{};
 		std::shared_ptr<FPSCounter> m_pFPSCounter;
 		std::shared_ptr<TileMapLoader> m_pTileMap;
 		

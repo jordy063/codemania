@@ -4,6 +4,7 @@
 #include "SpriteComponent.h"
 #include "BoundingBoxComponent.h"
 #include "HealthComponent.h"
+#include "LevelManager.h"
 
 //here we'll have to pass the gameobject of the player and get the components. that way we can pass a list of players 
 comps::GhostAIComponent::GhostAIComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayerObjects
@@ -75,13 +76,20 @@ void comps::GhostAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	}
 
 	//put function in boundingbox isOverlapping
-	for (int i{}; i < 2; ++i)
+	for (int i{}; i < m_pPlayerHealthComps.size(); ++i)
 	{
+		if(m_pPlayerBoundingBoxes[i] != nullptr)
 		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))
 		{
 			//do damage and respawn player
+			if(m_pPlayerHealthComps[i] != nullptr)
 			m_pPlayerHealthComps[i]->DropHealth(1);
 		}
 	}
 	m_PreviousSpeed = testVelocity.y;
+
+
+	//check if leaving the current level
+	LevelManager::GetInstance().UpdateIfAboveLevel(m_pPhysicsComp->GetTransform());
+	LevelManager::GetInstance().UpdateIfBelowLevel(m_pPhysicsComp->GetTransform());
 }
