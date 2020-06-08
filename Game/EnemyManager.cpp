@@ -91,12 +91,19 @@ void EnemyManager::MakeEnemiesLevel0(std::shared_ptr<dae::Scene> scene)
 
 
 	//enemy test
-	MakeEnemy({ 100,100 }, scene, EnemyType::GHOST);
-	
+	//MakeEnemy({ 100,100 }, scene, EnemyType::GHOST);
+	//
+
+	////enemy test2
+	//MakeEnemy({ 150,100 }, scene, EnemyType::ZENCHAN);
+	//enemy test
+	MakeEnemy({ 300,100 }, scene, EnemyType::GHOST);
+
 
 	//enemy test2
 	MakeEnemy({ 150,100 }, scene, EnemyType::ZENCHAN);
-	
+
+
 
 	MakeEnemy({ 250,100 }, scene, EnemyType::MAITA);
 
@@ -105,16 +112,16 @@ void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
 {
 	scene->GetTileMap()->UpdateLevel(1);
 
-	//enemy test
-	MakeEnemy({ 300,700 }, scene, EnemyType::GHOST);
+	////enemy test
+	//MakeEnemy({ 300,700 }, scene, EnemyType::GHOST);
 
-	MakeEnemy({ 500,900 }, scene, EnemyType::GHOST);
-	MakeEnemy({ 100,900 }, scene, EnemyType::GHOST);
+	//MakeEnemy({ 500,900 }, scene, EnemyType::GHOST);
+	//MakeEnemy({ 100,900 }, scene, EnemyType::GHOST);
 
 
 
-	//enemy test2
-	MakeEnemy({ 200,700 }, scene, EnemyType::ZENCHAN);
+	////enemy test2
+	//MakeEnemy({ 200,700 }, scene, EnemyType::ZENCHAN);
 
 
 	MakeEnemy({ 250,700 }, scene, EnemyType::MAITA);
@@ -125,14 +132,14 @@ void EnemyManager::MakeEnemiesLevel2(std::shared_ptr<dae::Scene> scene)
 	scene->GetTileMap()->UpdateLevel(2);
 
 	//enemy test
-	MakeEnemy({ 100,100 }, scene, EnemyType::GHOST);
+	MakeEnemy({ 100,1400 }, scene, EnemyType::GHOST);
 
 
 	//enemy test2
-	MakeEnemy({ 150,100 }, scene, EnemyType::ZENCHAN);
+	MakeEnemy({ 150,1400 }, scene, EnemyType::ZENCHAN);
 
 
-	MakeEnemy({ 250,100 }, scene, EnemyType::MAITA);
+	MakeEnemy({ 250,1400 }, scene, EnemyType::MAITA);
 
 }
 

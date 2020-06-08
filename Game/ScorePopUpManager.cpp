@@ -11,6 +11,9 @@ void ScorePopUpManager::MakeScorePopUp(ItemType itemType,int spriteId,float2 pos
 {
 	//make a gameobject with a certain component
 	//we need to set a specific for a spritecomp. not a texturecomp
+	UNREFERENCED_PARAMETER(itemType);
+	UNREFERENCED_PARAMETER(spriteId);
+	UNREFERENCED_PARAMETER(position);
 	
 	auto pScoreObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
 	pScoreObject->GetTransform()->Translate(position);

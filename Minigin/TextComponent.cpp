@@ -41,6 +41,13 @@ void comps::TextComponent::Update(const dae::Scene & scene, float elapsedSecs, f
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
+	
+}
+
+void comps::TextComponent::Render(const dae::Scene& scene, float2 pos)
+{
+	UNREFERENCED_PARAMETER(scene);
+	UNREFERENCED_PARAMETER(pos);
 	if (m_NeedsUpdate)
 	{
 		//const SDL_Color color = { 255,255,255 }; // only white text is supported now
@@ -57,5 +64,6 @@ void comps::TextComponent::Update(const dae::Scene & scene, float elapsedSecs, f
 		SDL_FreeSurface(surf);
 		m_pTexture = std::make_shared<dae::Texture2D>(texture);
 	}
+	TextureComponent::Render(scene, pos);
 }
 

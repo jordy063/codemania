@@ -37,23 +37,25 @@ void LevelManager::Update(float elapsedSecs)
 		}
 		else
 		{
+			
+			m_pPlayerTransforms[0]->Translate(m_CurrentPlayerPos.x + m_PlayerTranslation.x, m_PlayerTranslation.y + m_CurrentPlayerPos.y);
 			m_PlayerTranslation.x += elapsedSecs * m_DistancePerSec.x / m_PlayerTranlateTime.x;
-			m_pPlayerTransformLeft->Translate(m_CurrentPlayerPos.x + m_PlayerTranslation.x, m_PlayerTranslation.y + m_CurrentPlayerPos.y);
 		}
 
 		//we move player allong y-axis
-		if (m_pPlayerTransformLeft->GetPosition().y > m_Translation.y + m_PlayerDefaultPos.y || m_IsLocationYReached)
+		if (m_pPlayerTransforms[0]->GetPosition().y > m_Translation.y + m_PlayerDefaultPos.y || m_IsLocationYReached)
 		{
 			
 			//destination reached
-			m_pPlayerTransformLeft->Translate(m_CurrentPlayerPos.x + m_PlayerTranslation.x, m_Translation.y + m_PlayerDefaultPos.y);
+			m_pPlayerTransforms[0]->Translate(m_CurrentPlayerPos.x + m_PlayerTranslation.x, m_Translation.y + m_PlayerDefaultPos.y);
 			m_IsLocationYReached = true;
 
 		}
 		else
 		{
+			
+			m_pPlayerTransforms[0]->Translate(m_CurrentPlayerPos.x + m_PlayerTranslation.x, m_PlayerTranslation.y + m_CurrentPlayerPos.y);
 			m_PlayerTranslation.y += elapsedSecs * m_DistancePerSec.y / m_PlayerTranlateTime.y;
-			m_pPlayerTransformLeft->Translate(m_CurrentPlayerPos.x + m_PlayerTranslation.x, m_PlayerTranslation.y + m_CurrentPlayerPos.y);
 		}
 		IsCollisionSet = false;
 		
@@ -68,7 +70,7 @@ void LevelManager::Update(float elapsedSecs)
 			auto tileMap = dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap();
 			tileMap->UpdateLevel(m_CurrentLevel);
 			
-			m_pPlayerCollisionLeft->SetCollision(tileMap->GetCollisionWalls(), tileMap->GetCollisionPlatforms());
+			m_pPlayerCollisions[0]->SetCollision(tileMap->GetCollisionWalls(), tileMap->GetCollisionPlatforms());
 			
 			IsCollisionSet = true;
 			
@@ -78,8 +80,8 @@ void LevelManager::Update(float elapsedSecs)
 		m_PlayerLocationSet = false;
 
 		
-		UpdateIfBelowLevel( m_pPlayerTransformLeft);
-		UpdateIfAboveLevel( m_pPlayerTransformLeft);
+		UpdateIfBelowLevel(m_pPlayerTransforms[0]);
+		UpdateIfAboveLevel(m_pPlayerTransforms[0]);
 	}
 
 
@@ -90,19 +92,23 @@ void LevelManager::UpgradeLevel()
 	m_CurrentLevel++;
 	m_ShouldUpdate = true;
 	IsCollisionSet = false;
+	m_PlayerTranslation = {};
 }
+
 
 void LevelManager::RegisterTransformCompLeft(std::shared_ptr<TransformComponent> pPlayerTransformCompLeft, std::shared_ptr<comps::CollisionComponent> pPlayerCollisionCompLeft)
 {
-	m_pPlayerTransformLeft = pPlayerTransformCompLeft;
-	m_pPlayerCollisionLeft = pPlayerCollisionCompLeft;
+	m_pPlayerTransforms[0] = pPlayerTransformCompLeft;
+
+	m_pPlayerCollisions[0] = pPlayerCollisionCompLeft;
 }
 
 void LevelManager::RegisterTransformCompRight(std::shared_ptr<TransformComponent> pPlayerTransformCompRight, std::shared_ptr<comps::CollisionComponent> pPlayerCollisionCompRight)
 {
-	m_pPlayerTransformRight = pPlayerTransformCompRight;
-	m_pPlayerCollisionRight = pPlayerCollisionCompRight;
+	m_pPlayerTransforms[1] = pPlayerTransformCompRight;
+	m_pPlayerCollisions[1] = pPlayerCollisionCompRight;
 }
+
 
 void LevelManager::UpdateIfBelowLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime,float2 startPos)
 {
@@ -131,7 +137,7 @@ void LevelManager::UpdateIfAboveLevel(std::shared_ptr<TransformComponent> pTranf
 float2 LevelManager::CalculateAngle()
 {
 	
-	m_CurrentPlayerPos = m_pPlayerTransformLeft->GetPosition();
+	m_CurrentPlayerPos = m_pPlayerTransforms[0]->GetPosition();
 	
 
 	auto distanceX =  m_PlayerDefaultPos.x - m_CurrentPlayerPos.x;
@@ -146,3 +152,10 @@ float2 LevelManager::CalculateAngle()
 
 	return distancePerSec;
 }
+void LevelManager::ResetPlayerPos(int index)
+{
+	UNREFERENCED_PARAMETER(index);
+	m_pPlayerTransforms[0]->Translate(m_PlayerDefaultPos);
+	
+}
+

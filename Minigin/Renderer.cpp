@@ -13,7 +13,7 @@ void dae::Renderer::Init(SDL_Window * window)
 	}
 }
 
-void dae::Renderer::Render()
+void dae::Renderer::Render()  const
 {
 	SDL_RenderClear(mRenderer);
 

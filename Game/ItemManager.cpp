@@ -45,7 +45,7 @@ void ItemManager::makeItem(float2 pos,ItemType type,int spriteId)
 
 }
 
-void ItemManager::RegisterPlayer(const std::vector<std::shared_ptr<dae::GameObject>>& playerObjects)
+void ItemManager::RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& playerObjects)
 {
 	for (std::shared_ptr<dae::GameObject> pPlayer : playerObjects)
 	{

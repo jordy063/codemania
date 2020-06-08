@@ -15,7 +15,8 @@ comps::TextureComponent::TextureComponent(const std::string& filename, float wid
 	, m_AllowScrolling{ allowScrolling }
 	
 {
-	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
+	dae::ResourceManager::GetInstance().LoadTexture(filename);
+	m_pTexture = dae::ResourceManager::GetInstance().GetTexture(filename);
 }
 
 comps::TextureComponent::TextureComponent(float width,float height)
@@ -33,7 +34,8 @@ comps::TextureComponent::~TextureComponent()
 
 void comps::TextureComponent::SetTexture(const std::string& filename)
 {
-	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
+	dae::ResourceManager::GetInstance().LoadTexture(filename);
+	m_pTexture = dae::ResourceManager::GetInstance().GetTexture(filename);
 	
 }
 

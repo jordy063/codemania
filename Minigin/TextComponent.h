@@ -33,7 +33,7 @@ namespace comps
 	protected:
 		void Initialize(const dae::Scene& scene) override;
 		void Update(const dae::Scene& scene, float elapsedSecs, float2 pos) override;
-
+		virtual void Render(const dae::Scene& scene, float2 pos) override;
 
 	private:
 		std::string m_Text;

@@ -18,6 +18,7 @@ enum MenuItem
 {
 	P1PLAY,
 	P2PLAY,
+	P2VERSUS,
 	QUIT,
 	CONTROLLERSOFF,
 	CONTROLLERSON
@@ -59,7 +60,7 @@ private:
 	int m_SelectIndex;
 	std::shared_ptr<dae::Font> m_pFont;
 	bool m_ShowMenu = true;
-	int buttonAmount = 4;
+	int buttonAmount = 5;
 	std::shared_ptr<MenuObserver> m_pMenuObserver;
 	bool m_UseControllers = false;
 	GameMode m_GameMode = GameMode::SINGLEPLAYER;

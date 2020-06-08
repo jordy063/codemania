@@ -24,6 +24,7 @@ public:
 	bool GetShouldUpdate() const { return m_ShouldUpdate; }
 	void UpdateIfBelowLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime = false, float2 startPos = {});
 	void UpdateIfAboveLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime = false, float2 startPos = {});
+	void ResetPlayerPos(int index);
 private:
 	int m_CurrentLevel{0};
 	float2 m_Translation{ 0,0 };
@@ -38,10 +39,9 @@ private:
 	float2 m_PlayerDefaultPos{50,500};
 	float2 m_PlayerTranlateTime{ 5,1 };
 
-	std::shared_ptr< TransformComponent> m_pPlayerTransformLeft;
-	std::shared_ptr< comps::CollisionComponent> m_pPlayerCollisionLeft;
-	std::shared_ptr< TransformComponent> m_pPlayerTransformRight;
-	std::shared_ptr< comps::CollisionComponent> m_pPlayerCollisionRight;
+	std::shared_ptr< TransformComponent> m_pPlayerTransforms[2];
+	std::shared_ptr< comps::CollisionComponent> m_pPlayerCollisions[2];
+
 	bool m_PlayerLocationSet = false;
 	bool m_IsLocationYReached = false;
 	bool IsCollisionSet = true;

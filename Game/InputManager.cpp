@@ -42,9 +42,12 @@ bool dae::InputManager::ProcessInput()
 			checkButtons(k);
 		}
 	}
-	
+	std::cout << "input called" << '\n';
 	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
+	
+	while (!m_EventQueue.empty()) {
+		e = m_EventQueue.front();
+		std::cout << "playing" << '\n';
 		if (e.type == SDL_QUIT) {
 			return false;
 		}
@@ -57,6 +60,7 @@ bool dae::InputManager::ProcessInput()
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 
 		}
+		m_EventQueue.pop();
 	}
 	
 
@@ -288,4 +292,13 @@ void dae::InputManager::DoControllerFunctionality(WORD e, std::shared_ptr<InputB
 void dae::InputManager::SetGameState(GameState gameState)
 {
 	m_GameState = gameState;
+}
+
+void dae::InputManager::FillEventQueue()
+{
+	SDL_Event e{};
+	while (SDL_PollEvent(&e))
+	{
+		m_EventQueue.push(e);
+	}
 }

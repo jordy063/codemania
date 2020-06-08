@@ -157,6 +157,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 			if (m_pPlayerHealthComps[i] != nullptr)
 			//do damage and respawn player
 			m_pPlayerHealthComps[i]->DropHealth(1);
+			LevelManager::GetInstance().ResetPlayerPos(0);
 
 		}
 	}

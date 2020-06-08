@@ -3,6 +3,7 @@
 #include "Singleton.h"
 #include <SDL.h>
 #include <map>
+#include <queue>
 
 
 class InputBaseObserver;
@@ -26,6 +27,7 @@ namespace dae
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
+		InputManager() { std::cout << "new inputmanager"; }
 		bool ProcessInput();
 		bool IsPressed(ControllerButton button) const;
 		void Register(std::shared_ptr<InputBaseObserver> inputBaseObserver, int controllerId);
@@ -36,6 +38,7 @@ namespace dae
 		void DoControllerFunctionality(WORD e, std::shared_ptr<InputBaseObserver> inputObserver, bool move, int controllerId);
 		void SetGameState(GameState gameState);
 		GameState GetGameState() const { return m_GameState; }
+		void FillEventQueue();
 		
 	private:
 		XINPUT_STATE currentState{};
@@ -44,6 +47,7 @@ namespace dae
 		std::map<int,std::vector<std::shared_ptr<InputBaseObserver>>> pInputObserver;
 		bool m_IsShooting = false;
 		std::map< std::pair<int, WORD>, bool> m_ButtonMap;
+		std::queue<SDL_Event> m_EventQueue;
 	
 	};
 }

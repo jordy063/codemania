@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 namespace dae
 {
 	template <typename T>
@@ -8,6 +9,7 @@ namespace dae
 		static T& GetInstance()
 		{
 			static T instance{};
+			
 			return instance;
 		}
 

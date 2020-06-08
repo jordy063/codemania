@@ -1,6 +1,6 @@
 nl
 {
-"nl": {"menu_startP1" : "P1start", "menu_startP2" : "P2start", "menu_quit": "stoppen", "ControllersOff": "Controllers uit", "ControllersOn": "Controllers aan"},
-"en": {"menu_startP1" : "P1start", "menu_startP2" : "P2start", "menu_quit": "quit", "ControllersOff": "Controllers off", "ControllersOn": "Controllers on"},}
+"nl": {"menu_startP1" : "P1start", "menu_startP2" : "P2start","menu_startVS" : "P2versus", "menu_quit": "stoppen", "ControllersOff": "Controllers uit", "ControllersOn": "Controllers aan"},
+"en": {"menu_startP1" : "P1start", "menu_startP2" : "P2start","menu_startVS" : "P2versus", "menu_quit": "quit", "ControllersOff": "Controllers off", "ControllersOn": "Controllers on"},}
 }
 

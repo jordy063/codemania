@@ -96,6 +96,7 @@ void dae::GameObject::Render()
 	{
 		for (ComponentType type : m_Types)
 		{
+			if(m_pComponents[type] != nullptr)
 			m_pComponents[type]->Render(*m_pScene, m_pTransform->GetPosition());
 		}
 	}

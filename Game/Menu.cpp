@@ -72,7 +72,8 @@ void Menu::Initialize()
 {
     readDataFromJSON();
     m_pFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 32);
-    m_pTitleTexture = dae::ResourceManager::GetInstance().LoadTexture("../Graphics/title.png");
+    dae::ResourceManager::GetInstance().LoadTexture("../Graphics/title.png");
+    m_pTitleTexture = dae::ResourceManager::GetInstance().GetTexture("../Graphics/title.png");
  
     FillInTexture(m_pMenuTextures, { 255,255,255 });
     FillInTexture(m_pSelectedMenuTextures, { 0,255,0 });
@@ -124,26 +125,33 @@ void Menu::MoveDown()
 
 void Menu::Confirm()
 {
-    //get the item by selectindex
-    MenuItem action = static_cast<MenuItem>(m_SelectIndex);
-    
-    switch (action)
+    if (dae::InputManager().GetInstance().GetGameState() == dae::GameState::MainMenu)
     {
-    case MenuItem::P1PLAY:
-        m_pPlayer->Clear();
-        m_GameMode = GameMode::SINGLEPLAYER;
-        dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
-        break;
-    case MenuItem::P2PLAY:
-        m_GameMode = GameMode::MULTIPLAYER;
-        dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
-        break;
-   
-    case MenuItem::QUIT:
-        m_IsQuitCalled = true;
-        break;
-    default:
-        break;
+        //get the item by selectindex
+        MenuItem action = static_cast<MenuItem>(m_SelectIndex);
+
+        switch (action)
+        {
+        case MenuItem::P1PLAY:
+            m_pPlayer->Clear();
+            m_GameMode = GameMode::SINGLEPLAYER;
+            dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
+            break;
+        case MenuItem::P2PLAY:
+            m_GameMode = GameMode::MULTIPLAYER;
+            dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
+            break;
+            /* case MenuItem::P2VERSUS:
+                 m_GameMode = GameMode::VERSUS;
+                 dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
+                 break;*/
+
+        case MenuItem::QUIT:
+            m_IsQuitCalled = true;
+            break;
+        default:
+            break;
+        }
     }
 
     
@@ -229,7 +237,7 @@ void Menu::RenderMenuItems()
 {
     int counter{};
    
-    for (int i{}; i < 3; ++i)
+    for (int i{}; i < buttonAmount - 1; ++i)
     {
         if (counter != m_SelectIndex)
         {
@@ -242,7 +250,7 @@ void Menu::RenderMenuItems()
     counter = 0;
  
 
-    for (int i{}; i < 3; ++i)
+    for (int i{}; i < buttonAmount - 1; ++i)
     {
         if (counter == m_SelectIndex)
         {
@@ -250,7 +258,7 @@ void Menu::RenderMenuItems()
         }
         counter++;
     }
-    counter = 3;
+    counter = buttonAmount - 1;
    
     if (m_UseControllers == true)
     {
@@ -275,30 +283,7 @@ void Menu::RenderMenuItems()
         }
     }
     
-    
-
-    /* for (std::pair<MenuItem, std::shared_ptr<dae::Texture2D>> menuTextures : m_pMenuTextures)
-    {
-        if (counter != m_SelectIndex)
-        {
-            dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 250, 32.0f * counter + 300.0f);
-        }
-
-        counter++;
-    }*/
-
-    /* for (std::pair<MenuItem, std::shared_ptr<dae::Texture2D>> menuTextures : m_pSelectedMenuTextures)
-  {
-      if (counter == m_SelectIndex)
-      {
-
-          dae::Renderer::GetInstance().RenderTexture(*menuTextures.second, 250, 32.0f * counter + 300.0f);
-      }
-
-      counter++;
-  }*/
-
-    //here we render "yes" or "no"
+   
 }
 
 void Menu::RenderTexture(std::shared_ptr<dae::Texture2D> pTexture,float2 offset,float2 pos,float2 dimensions)
@@ -306,15 +291,6 @@ void Menu::RenderTexture(std::shared_ptr<dae::Texture2D> pTexture,float2 offset,
     UNREFERENCED_PARAMETER(offset);
     if (pTexture != nullptr)
     {
-
-       // auto texSize = pTexture->GetSize();
-        //int xShift = int(offset.x) + texSize.first;
-       // int yShift = int(offset.y) + texSize.second;
-       
-        //xShift += (int)LevelManager::GetInstance().GetTranslationX();
-        //yShift += (int)LevelManager::GetInstance().GetTranslationY();
-        
         dae::Renderer::GetInstance().RenderTexture(*pTexture, pos.x, pos.y, dimensions.x, dimensions.y);
-        //dae::Renderer::GetInstance().RenderTexture(*pTexture, pos.x - xShift,pos.y - yShift, dimensions.x, dimensions.y);
     }
 }

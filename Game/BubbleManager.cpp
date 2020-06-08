@@ -104,7 +104,7 @@ void BubbleManager::RemoveBullet(std::shared_ptr<comps::CollisionComponent> pCol
 
 		if (boundingbox == pBoundingBox)
 		{
-			pGameObject->Clear();
+			pGameObject->Disable();
 			pGameObjectToRemove = pGameObject;
 			
 		}

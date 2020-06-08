@@ -31,6 +31,8 @@
 #include "ItemManager.h"
 #include "Menu.h"
 #include "UI.h"
+#include "BoulderManager.h"
+#include <thread>
 
 
 void dae::Minigin::Initialize()
@@ -79,7 +81,8 @@ void dae::Minigin::LoadGame()
 
 	BubbleManager::GetInstance().RegisterPlayers(m_pPlayers);
 	EnemyManager::GetInstance().RegisterPlayers(m_pPlayers);
-	ItemManager::GetInstance().RegisterPlayer(m_pPlayers);
+	ItemManager::GetInstance().RegisterPlayers(m_pPlayers);
+	BoulderManager::GetInstance().RegisterPlayers(m_pPlayers);
 	
 	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 0);
 	
@@ -90,10 +93,16 @@ void dae::Minigin::LoadGame()
 	m_pUI = std::shared_ptr<UI>(new UI(m_pPlayers));
 	m_pUI->Initialize();
 
+	LevelManager::GetInstance().Initialize(scene);
+
 	scene.Initialize();
 	Menu::GetInstance().Initialize();
 
-
+	dae::ResourceManager::GetInstance().LoadTexture("../Graphics/scores.png");
+	dae::ResourceManager::GetInstance().LoadTexture("../Graphics/items.png");
+	dae::ResourceManager::GetInstance().LoadTexture("../Graphics/Bubble.png");
+	dae::ResourceManager::GetInstance().LoadTexture("../Graphics/boulders.png");
+	dae::ResourceManager::GetInstance().LoadTexture("../Graphics/ItemSheet.png");
 }
 
 void dae::Minigin::Update(float elapsedSecs)
@@ -120,94 +129,11 @@ void dae::Minigin::Run()
 	ResourceManager::GetInstance().Init("../Data/");
 
 	LoadGame();
+	std::thread update(&dae::Minigin::RunMainUpdate,this);
 
-	{
-		int frames{};
-		float secsPerUpdate{ 0.002f };
-		float secsPerRender{ 1.0f/30 };
-		auto lastTime = std::chrono::high_resolution_clock::now();
-		auto& renderer = Renderer::GetInstance();
-		float lag{ 0.0f };
-		float lag_render{ 0.0f };
-		auto& sceneManager = SceneManager::GetInstance();
-		auto& input = InputManager::GetInstance();
-		auto& menu = Menu::GetInstance();
-
-		bool doContinue = true;
-		while (doContinue)
-		{
-		
-			//we calculated the lagg
-			auto currentTime = std::chrono::high_resolution_clock::now();
-			float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
-			lastTime = currentTime;
-			lag += elapsedSec;
-			lag_render += elapsedSec;
-			doContinue = input.ProcessInput();
-			
-			auto gameState = InputManager::GetInstance().GetGameState();
-			//if it's bigger than 0 we update
-			while (lag > 0)
-			{
-				//if lag < secperUpdate : update lag, if lag too big, update more than once
-				
-				
-				float elapse = min(secsPerUpdate, lag);
-				switch (gameState)
-				{
-				case dae::MainMenu:
-					menu.Update();
-
-					if (menu.GetIsQuitCalled())
-					{
-						doContinue = false;
-					}
-					break;
-				case dae::Playing:
-					if (m_HasMadeAssets == false)
-					{
-						m_HasMadeAssets = true;
-						MakeGameAssets();
-					}
-
-					sceneManager.Update(elapse);
-					Update(elapse);
-					break;
-				case dae::GameOverMenu:
-					break;
-				case dae::EndMenu:
-					break;
-				default:
-					break;
-				}
-				lag -= elapse;
-			}
-
-			if (lag_render >= secsPerRender)
-			{
-				lag_render -= secsPerRender;
-				switch (gameState)
-				{
-				case dae::MainMenu:
-					menu.Render();
-					break;
-				case dae::Playing:
-					renderer.Render();
-					break;
-				case dae::GameOverMenu:
-					break;
-				case dae::EndMenu:
-					break;
-				default:
-					break;
-				}
-				
-				frames++;
-			}
-		
-		}
-	}
-
+	RunMainRender();
+	
+	update.join();
 	Cleanup();
 }
 
@@ -302,7 +228,7 @@ void dae::Minigin::MakeGameAssets()
 	auto actualInputComp1 = std::dynamic_pointer_cast<comps::InputComponent>(inputComp1);
 
 	//make the oberserver for the player
-	
+
 
 	auto inputComp2{ m_pPlayers[1]->GetComponent(ComponentType::INPUTCOMPONENT) };
 	auto actualInputComp2 = std::dynamic_pointer_cast<comps::InputComponent>(inputComp2);
@@ -350,4 +276,126 @@ void dae::Minigin::MakeGameAssets()
 	}
 
 	
+
+	
+}
+
+void dae::Minigin::RunMainUpdate()
+{
+	//float secsPerUpdate{ 0.002f };
+	auto lastTime = std::chrono::high_resolution_clock::now();
+	float lag{ 0.0f };
+	auto& sceneManager = SceneManager::GetInstance();
+	auto& input = InputManager::GetInstance();
+	auto& menu = Menu::GetInstance();
+
+
+
+	while (m_DoContinue)
+	{
+		
+		//we calculated the lagg
+		auto currentTime = std::chrono::high_resolution_clock::now();
+		float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
+		lastTime = currentTime;
+		lag += elapsedSec;
+	
+		m_DoContinue = input.ProcessInput();
+
+		auto gameState = InputManager::GetInstance().GetGameState();
+		UNREFERENCED_PARAMETER(sceneManager);
+
+		//if it's bigger than 0 we update
+
+		
+			//if lag < secperUpdate : update lag, if lag too big, update more than once
+		
+
+		float elapse = lag;
+
+		
+		switch (gameState)
+		{
+		case dae::MainMenu:
+			menu.Update();
+
+			if (menu.GetIsQuitCalled())
+			{
+				m_DoContinue = false;
+			}
+			break;
+		case dae::Playing:
+			if (m_HasMadeAssets)
+			{
+				sceneManager.Update(elapse);
+				Update(elapse);
+			}
+			break;
+		case dae::GameOverMenu:
+			break;
+		case dae::EndMenu:
+			break;
+		default:
+			break;
+		}
+		lag -= elapse;
+		
+		std::cout << "endedUpdated" << '\n';
+	}
+	std::cout << "endedLoopUpdate" << '\n';
+}
+
+void dae::Minigin::RunMainRender()
+{
+
+	int frames{};
+	//float secsPerRender{ 1.0f / 300 };
+	auto lastTime = std::chrono::high_resolution_clock::now();
+	auto& renderer = Renderer::GetInstance();
+	float lag_render{ 0.0f };
+	auto& menu = Menu::GetInstance();
+
+	
+	while (m_DoContinue)
+	{
+
+		//we calculated the lagg
+		auto currentTime = std::chrono::high_resolution_clock::now();
+		float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
+		lastTime = currentTime;
+		lag_render += elapsedSec;
+		
+		InputManager::GetInstance().FillEventQueue();
+
+		auto gameState = InputManager::GetInstance().GetGameState();
+		//if it's bigger than 0 we update
+
+
+		
+		switch (gameState)
+		{
+		case dae::MainMenu:
+			menu.Render();
+			break;
+		case dae::Playing:
+			if (m_HasMadeAssets == false)
+			{
+				m_HasMadeAssets = true;
+				MakeGameAssets();
+			}
+			renderer.Render();
+			break;
+		case dae::GameOverMenu:
+			break;
+		case dae::EndMenu:
+			break;
+		default:
+			break;
+		}
+
+		frames++;
+		
+		std::cout << "endedRender" << '\n';
+	}
+	std::cout << "endedLoopRender" << '\n';
 }

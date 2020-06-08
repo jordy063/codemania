@@ -54,7 +54,7 @@ void UI::Initialize()
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(health1Object);
 
 	auto health1TextComp = std::shared_ptr<comps::ShowHealthComponent>(new comps::ShowHealthComponent(m_pFont, 64, 28, { 0,255,0 },m_pPlayerHealthComps[0]));
-	health1TextComp->SetText("health: 3");
+	health1TextComp->SetText("health: 4");
 
 	health1Object->AddComponent(health1TextComp, ComponentType::SHOWHEALTHCOMPONENT);
 	health1Object->SetPosition(150, 5);
@@ -74,7 +74,7 @@ void UI::AddPlayer2()
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(health2Object);
 
 	auto health2TextComp = std::shared_ptr<comps::ShowHealthComponent>(new comps::ShowHealthComponent(m_pFont, 64, 28, { 0,255,0 }, m_pPlayerHealthComps[1]));
-	health2TextComp->SetText("health: 3");
+	health2TextComp->SetText("health: 4");
 
 	health2Object->AddComponent(health2TextComp, ComponentType::SHOWHEALTHCOMPONENT);
 	health2Object->SetPosition(400, 5);

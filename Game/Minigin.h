@@ -29,11 +29,14 @@ namespace dae
 		std::shared_ptr<Enemy> m_pEnemy;
 		std::shared_ptr<InputObserver> pInputObserver;
 		std::shared_ptr<UI> m_pUI;
+		bool m_DoContinue = true;
 
 		void MakePlayer(int controllerId, int spriteId,Scene& scene, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos, bool isPlayerOne);
 		void MakeGameAssets();
 		GameMode m_GameMode;
 		bool m_HasMadeAssets = false;
+		void RunMainUpdate();
+		void RunMainRender();
 		
 	};
 }

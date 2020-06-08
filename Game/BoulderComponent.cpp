@@ -3,9 +3,15 @@
 #include "PhysicsComponent.h"
 #include "SpriteComponent.h"
 #include "BoulderManager.h"
+#include "BoundingBoxComponent.h"
+#include "HealthComponent.h"
+#include "LevelManager.h"
 
-comps::BoulderComponent::BoulderComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp)
+comps::BoulderComponent::BoulderComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox,
+	std::vector<std::shared_ptr<comps::HealthComponent>> pPlayerHealthComps)
 	:m_pPhysicsComp(pPhysicsComp)
+	, m_pBoundingBox(pBoundingBox)
+	,m_pPlayerHealthComps(pPlayerHealthComps)
 {
 }
 
@@ -25,5 +31,14 @@ void comps::BoulderComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	{
 		//delete the boulder
 		BoulderManager::GetInstance().RemoveBoulder(m_pPhysicsComp->GetTransform());
+	}
+
+	for (int i{}; i < m_pPlayerHealthComps.size(); ++i)
+	{
+		if (BoulderManager::GetInstance().CheckIfHit(m_pBoundingBox, i))
+		{
+			m_pPlayerHealthComps[i]->DropHealth(1);
+			LevelManager::GetInstance().ResetPlayerPos(i);
+		}
 	}
 }
