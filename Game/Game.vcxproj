@@ -43,6 +43,7 @@
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="PlayerVersusComponent.h" />
     <ClInclude Include="ScoreBoard.h" />
     <ClInclude Include="ScorePopUpComponent.h" />
     <ClInclude Include="ScorePopUpManager.h" />
@@ -78,6 +79,7 @@
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="PlayerVersusComponent.cpp" />
     <ClCompile Include="ScoreBoard.cpp" />
     <ClCompile Include="ScorePopUpComponent.cpp" />
     <ClCompile Include="ScorePopUpManager.cpp" />

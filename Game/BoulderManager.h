@@ -12,7 +12,7 @@ namespace comps
 class BoulderManager final : public dae::Singleton<BoulderManager>
 {
 public:
-	void MakeBoulder(std::shared_ptr<TransformComponent> transform, comps::Direction direction);
+	void MakeBoulder(float2 pos, comps::Direction direction);
 	void RemoveBoulder(std::shared_ptr <TransformComponent> pTransform);
 	bool CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBoulderBoundingBox, int playerId);
 	void RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& pPlayers);

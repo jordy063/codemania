@@ -33,6 +33,7 @@
 #include "UI.h"
 #include "BoulderManager.h"
 #include <thread>
+#include "PlayerVersusComponent.h"
 
 
 void dae::Minigin::Initialize()
@@ -76,24 +77,18 @@ void dae::Minigin::LoadGame()
 
 	MakePlayer(-1, 0, scene, m_pPlayers, { 100,70 },true);
 	MakePlayer(-2, 1, scene, m_pPlayers, { 200,70 },false);
-
-	Menu::GetInstance().RegisterPlayer2(m_pPlayers[1]);
-
-	BubbleManager::GetInstance().RegisterPlayers(m_pPlayers);
-	EnemyManager::GetInstance().RegisterPlayers(m_pPlayers);
-	ItemManager::GetInstance().RegisterPlayers(m_pPlayers);
-	BoulderManager::GetInstance().RegisterPlayers(m_pPlayers);
+	MakeEnemyPlayer(-2, 2, scene, m_pPlayers, { 300,70 });
 	
-	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 0);
 	
 	SoundManager2::GetInstance().Init();
 	std::string filename{ "../Sounds/drumloop.wav" };
 	SoundManager2::GetInstance().playMusic(filename);
 
-	m_pUI = std::shared_ptr<UI>(new UI(m_pPlayers));
-	m_pUI->Initialize();
-
 	LevelManager::GetInstance().Initialize(scene);
+
+	Menu::GetInstance().RegisterPlayer2(m_pPlayers[1]);
+
+	InitializeUI();
 
 	scene.Initialize();
 	Menu::GetInstance().Initialize();
@@ -175,47 +170,98 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene,std::v
 
 	pPlayerVector.push_back(pPlayer);
 
-	////enemy test
-	//auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
-	//scene.Add(enemyObject);
-	//enemyObject->GetTransform()->Translate(150, 100);
 
-	//auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8, 1, 0.2f, 16, 16));
-	//auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(), false, 30.0f));
-	//auto pBoundingBox = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene.GetTileMap()->GetCollisionWalls(1),
-	//	scene.GetTileMap()->GetCollisionPlatforms(1), pPhysicsComp, 16, 16));
-	//auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayer, pSpriteComp, pPhysicsComp, pBoundingBox));
+}
 
-	////add AIcomponent and do the same as in playerclass
+void dae::Minigin::MakeEnemyPlayer(int controllerId, int spriteId, Scene& scene, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos)
+{
+	UNREFERENCED_PARAMETER(controllerId);
+	UNREFERENCED_PARAMETER(spriteId);
+	UNREFERENCED_PARAMETER(scene);
 
-	//enemyObject->AddComponent(pSpriteComp, ComponentType::SPRITECOMP);
-	//enemyObject->AddComponent(pBoundingBox, ComponentType::BOUNDINGBOXCOMP);
-	//enemyObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
-	//enemyObject->AddComponent(ghostAiComp, ComponentType::GHOSTAICOMPONENT);
+	auto pPlayer = std::shared_ptr<dae::GameObject>(new dae::GameObject());
+	scene.Add(pPlayer);
 
-	////enemy test2
-	//auto enemyObject2 = std::shared_ptr <dae::GameObject>(new dae::GameObject());
-	//scene.Add(enemyObject2);
-	//enemyObject2->GetTransform()->Translate(150, 100);
+	float movementSpeed{ 100 };
+	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/EnemySheet.png", 6, 8, spriteId, 0.2f, 44, 22));
+	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(4));
+	auto pPlayerVersusComponent = std::shared_ptr<comps::PlayerVersusComponent>(new comps::PlayerVersusComponent(m_pPlayers));
+	auto pPlayerPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(pPlayer->GetTransform(), true, movementSpeed));
+	auto pPlayerinputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(pPlayerPhysicsComp, pPlayerspriteComp, controllerId));
 
-	//auto pSpriteComp2 = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Enemies.png", 5, 8, 0, 0.2f, 16, 16));
-	//auto pPhysicsComp2 = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject2->GetTransform(), true, 30.0f));
-	//auto pBoundingBox2 = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(scene.GetTileMap()->GetCollisionWalls(1),
-	//	scene.GetTileMap()->GetCollisionPlatforms(1), pPhysicsComp2, 16, 16));
-	//auto pZenChanAiComp = std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(pPlayerBoundingBoxComp, pPlayerHealthComp, pSpriteComp2, pPhysicsComp2, pBoundingBox2,pPlayerPhysicsComp));
+	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22, pPlayerPhysicsComp));
+	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(),
+		scene.GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
+	
+	
+	
+	pPlayer->AddComponent(pPlayerHealthComp, ComponentType::HEALTHCOMPONENT);
+	pPlayer->AddComponent(pPlayerspriteComp, ComponentType::SPRITECOMP);
+	pPlayer->AddComponent(pPlayerVersusComponent, ComponentType::PLAYERVERSUSCOMPONENT);
+	pPlayer->AddComponent(pPlayerBoundingBoxComp, ComponentType::BOUNDINGBOXCOMP);
+	pPlayer->AddComponent(pPlayerCollisionComp, ComponentType::COLLISIONCOMPONENT);
+	pPlayer->AddComponent(pPlayerPhysicsComp, ComponentType::PHYSICSCOMP);
+	pPlayer->AddComponent(pPlayerinputComp, ComponentType::INPUTCOMPONENT);
 
-	////add AIcomponent and do the same as in playerclass
+	
 
-	//enemyObject2->AddComponent(pSpriteComp2,ComponentType::SPRITECOMP);
-	//enemyObject2->AddComponent(pBoundingBox2, ComponentType::BOUNDINGBOXCOMP);
-	//enemyObject2->AddComponent(pPhysicsComp2,ComponentType::PHYSICSCOMP);
-	//enemyObject2->AddComponent(pZenChanAiComp, ComponentType::ZENCHANCOMPONENT);
+	pPlayerspriteComp->SetBeginEndFrames(32, 39);
+	pPlayer->GetTransform()->Translate(pos.x, pos.y);
 
-	///*auto test = m_pPlayer->GetComponent(ComponentType::SPRITECOMP);
-	//auto test2 = std::dynamic_pointer_cast<comps::SpriteComponent>(test);
-	//test2->SetActiveRow(3);
-	//
-	//UNREFERENCED_PARAMETER(test);*/
+
+
+	pPlayerVector.push_back(pPlayer);
+
+}
+
+void dae::Minigin::RegisterPlayersInManager()
+{
+	BubbleManager::GetInstance().RegisterPlayers(m_pPlayers);
+	EnemyManager::GetInstance().RegisterPlayers(m_pPlayers);
+	ItemManager::GetInstance().RegisterPlayers(m_pPlayers);
+	BoulderManager::GetInstance().RegisterPlayers(m_pPlayers);
+	LevelManager::GetInstance().SetAmountOfPlayers(int(m_pPlayers.size()));
+	
+}
+
+void dae::Minigin::SpawnEnemies()
+{
+	EnemyManager::GetInstance().MakeEnemies(SceneManager::GetInstance().GetActiveScene(), 0);
+}
+
+void dae::Minigin::InitializeUI()
+{
+	m_pUI = std::shared_ptr<UI>(new UI(m_pPlayers));
+	m_pUI->Initialize();
+}
+
+void dae::Minigin::RemovePlayer(bool isVersus)
+{
+	if (isVersus)
+	{
+		m_pPlayers[2].swap(m_pPlayers[1]);
+
+		//register components in the levelmanager
+		auto pPlayerCollisionComp = m_pPlayers[1]->GetComponent(ComponentType::COLLISIONCOMPONENT);
+		auto playerCollisionComp = std::dynamic_pointer_cast<comps::CollisionComponent>(pPlayerCollisionComp);
+
+		LevelManager::GetInstance().RegisterTransformCompRight(m_pPlayers[1]->GetTransform(), playerCollisionComp);
+	}
+
+	m_pPlayers[2]->Clear();
+	m_pPlayers.pop_back();
+
+
+
+
+}
+
+void dae::Minigin::RemovePlayers()
+{
+	m_pPlayers[2]->Clear();
+	m_pPlayers.pop_back();
+	m_pPlayers[1]->Clear();
+	m_pPlayers.pop_back();
 }
 
 void dae::Minigin::MakeGameAssets()
@@ -229,9 +275,11 @@ void dae::Minigin::MakeGameAssets()
 
 	//make the oberserver for the player
 
-
 	auto inputComp2{ m_pPlayers[1]->GetComponent(ComponentType::INPUTCOMPONENT) };
 	auto actualInputComp2 = std::dynamic_pointer_cast<comps::InputComponent>(inputComp2);
+
+	auto inputComp3{ m_pPlayers[2]->GetComponent(ComponentType::INPUTCOMPONENT) };
+	auto actualInputComp3 = std::dynamic_pointer_cast<comps::InputComponent>(inputComp3);
 	bool useControllers{ Menu::GetInstance().GetUseControllers() };
 
 	switch (Menu::GetInstance().GetGameMode())
@@ -244,9 +292,14 @@ void dae::Minigin::MakeGameAssets()
 		else
 		{
 			actualInputComp1->MakeObserver(-1);
+
 		}
+		RemovePlayers();
+		RegisterPlayersInManager();
+		SpawnEnemies();
 		break;
 	case GameMode::MULTIPLAYER:
+		
 		if (useControllers)
 		{
 			actualInputComp1->MakeObserver(0);
@@ -257,19 +310,25 @@ void dae::Minigin::MakeGameAssets()
 			actualInputComp1->MakeObserver(-1);
 			actualInputComp2->MakeObserver(-2);
 		}
+		RemovePlayer(false);
+		RegisterPlayersInManager();
+		SpawnEnemies();
 		m_pUI->AddPlayer2();
 		break;
 	case GameMode::VERSUS:
+		
 		if (useControllers)
 		{
 			actualInputComp1->MakeObserver(0);
-			actualInputComp2->MakeObserver(1);
+			actualInputComp3->MakeObserver(1);
 		}
 		else
 		{
 			actualInputComp1->MakeObserver(-1);
-			actualInputComp2->MakeObserver(-2);
+			actualInputComp3->MakeObserver(-2);
 		}
+		RemovePlayer(true);
+		RegisterPlayersInManager();
 		m_pUI->AddPlayer2();
 		//change the nessecary things
 		break;
@@ -340,9 +399,8 @@ void dae::Minigin::RunMainUpdate()
 		}
 		lag -= elapse;
 		
-		std::cout << "endedUpdated" << '\n';
 	}
-	std::cout << "endedLoopUpdate" << '\n';
+
 }
 
 void dae::Minigin::RunMainRender()
@@ -395,7 +453,5 @@ void dae::Minigin::RunMainRender()
 
 		frames++;
 		
-		std::cout << "endedRender" << '\n';
 	}
-	std::cout << "endedLoopRender" << '\n';
 }

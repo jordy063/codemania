@@ -97,11 +97,11 @@ void EnemyManager::MakeEnemiesLevel0(std::shared_ptr<dae::Scene> scene)
 	////enemy test2
 	//MakeEnemy({ 150,100 }, scene, EnemyType::ZENCHAN);
 	//enemy test
-	MakeEnemy({ 300,100 }, scene, EnemyType::GHOST);
+	//MakeEnemy({ 300,100 }, scene, EnemyType::GHOST);
 
 
-	//enemy test2
-	MakeEnemy({ 150,100 }, scene, EnemyType::ZENCHAN);
+	////enemy test2
+	//MakeEnemy({ 150,100 }, scene, EnemyType::ZENCHAN);
 
 
 

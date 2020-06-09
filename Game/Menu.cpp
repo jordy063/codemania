@@ -141,10 +141,11 @@ void Menu::Confirm()
             m_GameMode = GameMode::MULTIPLAYER;
             dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
             break;
-            /* case MenuItem::P2VERSUS:
-                 m_GameMode = GameMode::VERSUS;
-                 dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
-                 break;*/
+        case MenuItem::P2VERSUS:
+            m_GameMode = GameMode::VERSUS;
+            dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
+            break;
+
 
         case MenuItem::QUIT:
             m_IsQuitCalled = true;

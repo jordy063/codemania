@@ -53,7 +53,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 		m_IsAnimationStarted = true;
 	}
 	DoRandomJumps = false;
-	for (int i{}; i < 2; ++i)
+	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
 		if (m_pPlayerBoundingBoxes[i] != nullptr)
 		{
@@ -94,13 +94,14 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 		int direction2{};
 		direction1 = static_cast<int>(m_CurrentDirection);
 		direction2 = static_cast<int>(m_CurrentDirection);
+		
 
 		if (m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[0]->GetBoundingBox(0, 0).posY >= -0.01f)
 		{
 			//calculate direction for player 1
 			direction1 = CalculatePlayerDirection(m_pPlayers[0]);
 		}
-		if (m_pPlayerBoundingBoxes[1] != nullptr)
+		if (m_pPlayerBoundingBoxes.size() == 2)
 		{
 			if (m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[1]->GetBoundingBox(0, 0).posY >= -0.01f)
 			{
@@ -149,15 +150,17 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	//	//do damage and respawn player
 	//	player->TakeDamage();
 	//}
-	for (int i{}; i < 2; ++i)
+	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
-		if (m_pPlayerBoundingBoxes[i] != nullptr)
+		if (m_pPlayerBoundingBoxes[i] != nullptr && m_pPlayerHealthComps[i] != nullptr)
 		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))
 		{
-			if (m_pPlayerHealthComps[i] != nullptr)
-			//do damage and respawn player
-			m_pPlayerHealthComps[i]->DropHealth(1);
-			LevelManager::GetInstance().ResetPlayerPos(0);
+			
+			if (m_pPlayerHealthComps[i]->GetInvinsible() == false)
+			{
+				m_pPlayerHealthComps[i]->DropHealth(1);
+				LevelManager::GetInstance().ResetPlayerPos(i);
+			}
 
 		}
 	}
@@ -167,7 +170,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	if (m_BoulderTimer > m_BoulderTime)
 	{
 		m_BoulderTimer = 0;
-		BoulderManager::GetInstance().MakeBoulder(m_pPhysicsComp->GetTransform(),m_CurrentDirection);
+		BoulderManager::GetInstance().MakeBoulder(m_pPhysicsComp->GetTransform()->GetPosition(),m_CurrentDirection);
 	}
 	LevelManager::GetInstance().UpdateIfBelowLevel(m_pPhysicsComp->GetTransform());
 }

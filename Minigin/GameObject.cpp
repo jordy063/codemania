@@ -81,6 +81,10 @@ void dae::GameObject::Update(float elapsedSecs)
 	{
 		for (ComponentType type : m_Types)
 		{
+			if (type == ComponentType::HEALTHCOMPONENT)
+			{
+				std::cout << "test"<<'\n';
+			}
 			m_pComponents[type]->Update(*m_pScene, elapsedSecs, m_pTransform->GetPosition());
 		}
 	}

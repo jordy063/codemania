@@ -5,6 +5,8 @@
 #include "GameObject.h"
 #include "BubbleManager.h"
 #include "SoundManager2.h"
+#include "Menu.h"
+#include "BoulderManager.h"
 
 void MakeBullet(std::shared_ptr<comps::PhysicsComponent> physicsComp, comps::Direction direction,int id)
 {
@@ -19,7 +21,11 @@ void MakeBullet(std::shared_ptr<comps::PhysicsComponent> physicsComp, comps::Dir
 	{
 		pos.x += distanceFromPlayer;
 	}
-	BubbleManager::GetInstance().MakeBullet(pos, direction, id);
+	if (Menu::GetInstance().GetGameMode() != VERSUS || id == 0)
+		BubbleManager::GetInstance().MakeBullet(pos, direction, id);
+	else
+		BoulderManager::GetInstance().MakeBoulder(pos, direction);
+
 	
 }
 void changeDirection(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp,comps::Direction direction,float speed)
@@ -92,7 +98,10 @@ void StopMovingCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physics
 void ShootRightCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id)
 {
 	UNREFERENCED_PARAMETER(speed);
-	spriteComp->SetBeginEndFrames(33, 47,32);
+	if (Menu::GetInstance().GetGameMode() != VERSUS || id == 0)
+	{
+		spriteComp->SetBeginEndFrames(33, 47, 32);
+	}
 	//spriteComp->SetBeginEndFrames(33 + id * 16 *2, 47 + id * 16 *2);
 	MakeBullet(physicsComp, comps::Direction::RIGHT,id);
 
@@ -114,8 +123,11 @@ void ShootDownCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsC
 void ShootLeftCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp, float speed, int id)
 {
 	UNREFERENCED_PARAMETER(speed);
+
+	if (Menu::GetInstance().GetGameMode() != VERSUS || id == 0)
+	{
+		spriteComp->SetBeginEndFrames(48, 63, 32);
+	}
+		MakeBullet(physicsComp, comps::Direction::LEFT, id);
 	
-	spriteComp->SetBeginEndFrames(48, 63,32);
-	UNREFERENCED_PARAMETER(spriteComp);
-	MakeBullet(physicsComp, comps::Direction::LEFT,id);
 }

@@ -78,12 +78,17 @@ void comps::GhostAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	//put function in boundingbox isOverlapping
 	for (int i{}; i < m_pPlayerHealthComps.size(); ++i)
 	{
-		if(m_pPlayerBoundingBoxes[i] != nullptr)
+		if(m_pPlayerBoundingBoxes[i] != nullptr && m_pPlayerHealthComps[i] != nullptr)
 		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))
 		{
 			//do damage and respawn player
-			if(m_pPlayerHealthComps[i] != nullptr)
-			m_pPlayerHealthComps[i]->DropHealth(1);
+			
+			if (m_pPlayerHealthComps[i]->GetInvinsible() == false)
+			{
+				m_pPlayerHealthComps[i]->DropHealth(1);
+				LevelManager::GetInstance().ResetPlayerPos(i);
+			}
+			
 		}
 	}
 	m_PreviousSpeed = testVelocity.y;

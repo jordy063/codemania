@@ -31,6 +31,7 @@ void EnemyObserver::DownCounter()
 		LevelManager::GetInstance().UpgradeLevel();
 		
 		//check if the levelmanager is done. after that we spawn our enemies
+
 		
 		EnemyManager::GetInstance().MakeEnemies(dae::SceneManager::GetInstance().GetActiveScene(), LevelManager::GetInstance().GetCurrentLevel());
 		//TODO

@@ -53,16 +53,14 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 		m_IsAnimationStarted = true;
 	}
 	DoRandomJumps = false;
-	for (int i{}; i < 2; ++i)
+	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
-		if (m_pPlayerBoundingBoxes[i] != nullptr)
+		float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[i]->GetBoundingBox(0, 0).posY - 1 };
+		if (difference > 0 && m_pPlayerPhysicsCompss[i]->GetAirBorne() == false)
 		{
-			float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[i]->GetBoundingBox(0, 0).posY - 1 };
-			if (difference > 0 && m_pPlayerPhysicsCompss[i]->GetAirBorne() == false)
-			{
-				DoRandomJumps = true;
-			}
+			DoRandomJumps = true;
 		}
+		
 	}
 	if (DoRandomJumps)
 	{
@@ -145,15 +143,21 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 	//	//do damage and respawn player
 	//	player->TakeDamage();
 	//}
-	for (int i{}; i < 2; ++i)
+	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
-		if (m_pPlayerBoundingBoxes[i] != nullptr)
+		
 		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))
 		{
 			//do damage and respawn player
-			if (m_pPlayerHealthComps[i] != nullptr)
-			m_pPlayerHealthComps[i]->DropHealth(1);
-
+		
+			if (m_pPlayerHealthComps[i]->GetInvinsible() == false)
+			{
+				m_pPlayerHealthComps[i]->DropHealth(1);
+				LevelManager::GetInstance().ResetPlayerPos(i);
+			}
+			
+				
+			
 		}
 	}
 	/*m_StartTimer += elapsedSecs;

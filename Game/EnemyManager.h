@@ -30,6 +30,7 @@ public:
 private:
 	std::list <std::pair<std::shared_ptr<dae::GameObject>,int>> m_pEnemies;
 	std::vector<std::shared_ptr<dae::GameObject>> m_pPlayerObjects;
+	
 
 	void MakeEnemiesLevel0(std::shared_ptr<dae::Scene> scene);
 	void MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene);

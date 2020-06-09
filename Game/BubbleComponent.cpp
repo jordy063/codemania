@@ -8,10 +8,11 @@
 #include "BubbleManager.h"
 #include "EnemyObserver.h"
 #include "ItemManager.h"
+#include "Menu.h"
 
 
 comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,
-	std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction,int id)
+	std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction,int id,int playerAmount)
 	:m_pPhysicsComp(pPhysicsComp)
 	, m_pBoundingBoxComp(pBoundingBoxComp)
 	, m_pSpriteComp(pSpriteBoxComp)
@@ -24,6 +25,7 @@ comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent>
 	, m_EnemyId(-1)
 	, m_EnemyTrapTime(5)
 	, m_EnemyTrapTimer()
+	, m_PlayerAmount(playerAmount)
 {
 }
 
@@ -83,8 +85,14 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	//if nothing is hit
 	if (m_HasHitEnemy == false)
 	{
-		for (int playerId{}; playerId < 2; ++playerId)
+		if (Menu::GetInstance().GetGameMode() == GameMode::VERSUS)
 		{
+			m_PlayerAmount = 1;
+		}
+
+		for (int playerId{}; playerId < m_PlayerAmount; ++playerId)
+		{
+			
 			switch (BubbleManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, playerId))
 			{
 			case HitType::UPHIT:

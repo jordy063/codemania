@@ -27,7 +27,6 @@ namespace dae
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
-		InputManager() { std::cout << "new inputmanager"; }
 		bool ProcessInput();
 		bool IsPressed(ControllerButton button) const;
 		void Register(std::shared_ptr<InputBaseObserver> inputBaseObserver, int controllerId);

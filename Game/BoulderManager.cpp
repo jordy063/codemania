@@ -14,7 +14,7 @@
 #include "HealthComponent.h"
 
 
-void BoulderManager::MakeBoulder(std::shared_ptr<TransformComponent> transform,comps::Direction direction)
+void BoulderManager::MakeBoulder(float2 pos,comps::Direction direction)
 {
 	auto pBoulderObject{ std::shared_ptr<dae::GameObject>(new dae::GameObject()) };
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(pBoulderObject);
@@ -35,7 +35,7 @@ void BoulderManager::MakeBoulder(std::shared_ptr<TransformComponent> transform,c
 	pBoulderObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
 	pBoulderObject->AddComponent(pBoulderBox, ComponentType::BOULDERCOMPONENT);
 
-	pBoulderObject->GetTransform()->Translate(transform->GetPosition());
+	pBoulderObject->GetTransform()->Translate(pos);
 
 	
 	if (direction == comps::Direction::RIGHT)

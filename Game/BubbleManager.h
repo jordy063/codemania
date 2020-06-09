@@ -28,6 +28,7 @@ public:
 	void AddBoundingBoxToList(std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 	void RemoveBullet(std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 	HitType CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox, int playerId);
+	bool CheckPlayer2HitsBullet();
 	float2 GetBubbleSpeed() const { return m_BulletSpeed; }
 	void MovePlayerWithBullet(int playerId);
 

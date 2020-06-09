@@ -1,37 +1,4 @@
-﻿  BoulderComponent.cpp
-  BoulderManager.cpp
-  BubbleComponent.cpp
-  Bullet.cpp
-  BubbleManager.cpp
-  Command.cpp
-  Enemy.cpp
-  EnemyManager.cpp
-  EnemyObserver.cpp
-  Ghost.cpp
-  GhostAIComponent.cpp
-  HealthComponent.cpp
-  InputComponent.cpp
-  InputBaseObserver.cpp
-  InputManager.cpp
-  InputObserver.cpp
-  ItemComponent.cpp
-  ItemManager.cpp
-  Main.cpp
-  MaitaAIComponent.cpp
-  Menu.cpp
-  MenuObserver.cpp
-  Minigin.cpp
-  Player.cpp
-  PlayerComponent.cpp
-  ScoreBoard.cpp
-  ScorePopUpComponent.cpp
-  ScorePopUpManager.cpp
-  ShowHealthComponent.cpp
-  ShowScoreComponent.cpp
-  UI.cpp
-  ZenChan.cpp
-  ZenChanAIComponent.cpp
-     Creating library D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Debug\Game.lib and object D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Debug\Game.exp
+﻿  Command.cpp
   Game.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Debug\Game.exe
   D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2\lib\x64\SDL2.dll
   1 File(s) copied

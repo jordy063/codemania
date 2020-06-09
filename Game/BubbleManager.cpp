@@ -12,6 +12,7 @@
 #include "BubbleComponent.h"
 #include "CollisionComponent.h"
 
+
 void BubbleManager::MakeBullet(const float2& position, comps::Direction direction, int id)
 {
 	//make the component and at it too current scene
@@ -26,7 +27,7 @@ void BubbleManager::MakeBullet(const float2& position, comps::Direction directio
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(bulletObject);
 
 	bulletObject->GetTransform()->Translate(position);
-
+	
 	float defaultSpeed{ 20.0f };
 	auto spriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/Bubble.png", 5, 8, id, 0.2f, 40, 20));
 	auto physicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(bulletObject->GetTransform(), false, defaultSpeed));
@@ -35,7 +36,7 @@ void BubbleManager::MakeBullet(const float2& position, comps::Direction directio
 
 	auto pCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(),
 		dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(), physicsComp, BoundingBox));
-	auto bubbleComp = std::shared_ptr<comps::BubbleComponent>(new comps::BubbleComponent(physicsComp,BoundingBox,pCollisionComp,spriteComp,direction,id));
+	auto bubbleComp = std::shared_ptr<comps::BubbleComponent>(new comps::BubbleComponent(physicsComp,BoundingBox,pCollisionComp,spriteComp,direction,id,int( m_pPlayerBoundingBoxes.size())));
 
 	bulletObject->AddComponent(spriteComp, ComponentType::SPRITECOMP);
 	bulletObject->AddComponent(BoundingBox, ComponentType::BOUNDINGBOXCOMP);
@@ -59,6 +60,8 @@ void BubbleManager::RegisterPlayers(const std::vector<std::shared_ptr<dae::GameO
 
 		auto physicsComp = pPlayerObject->GetComponent(ComponentType::PHYSICSCOMP);
 		m_pPlayerPhysicsComps.push_back(std::dynamic_pointer_cast<comps::PhysicsComponent>(physicsComp));
+
+		//if mode = versus also add the healthcomp
 	}
 }
 
@@ -158,6 +161,19 @@ HitType BubbleManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> p
 	//
 	//return m_pPlayerBoundingBox->IsOverlapping(pBulletBoundingBox);
 	
+}
+
+bool BubbleManager::CheckPlayer2HitsBullet()
+{
+	for (std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox : m_pTriggeredBullets)
+	{
+		bool isHit{ m_pPlayerBoundingBoxes[1]->IsOverlapping(pBulletBoundingBox) };
+		if (isHit)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void BubbleManager::MovePlayerWithBullet(int playerId)

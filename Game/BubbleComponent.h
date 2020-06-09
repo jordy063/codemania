@@ -19,7 +19,7 @@ namespace comps
 	{
 	public:
 		BubbleComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,
-			std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction, int id
+			std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::SpriteComponent> pSpriteBoxComp, comps::Direction direction, int id,int playerAmount
 			);
 		~BubbleComponent() = default;
 
@@ -45,6 +45,7 @@ namespace comps
 	
 		float m_EnemyTrapTimer;
 		float m_EnemyTrapTime;
+		int m_PlayerAmount;
 		int m_EnemyId;
 		EnemyType m_EnemyType;
 		std::shared_ptr<dae::GameObject> m_Enemy;

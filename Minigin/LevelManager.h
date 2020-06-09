@@ -25,6 +25,7 @@ public:
 	void UpdateIfBelowLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime = false, float2 startPos = {});
 	void UpdateIfAboveLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime = false, float2 startPos = {});
 	void ResetPlayerPos(int index);
+	void SetAmountOfPlayers(int i);
 private:
 	int m_CurrentLevel{0};
 	float2 m_Translation{ 0,0 };
@@ -32,11 +33,11 @@ private:
 	float m_LevelHeight{ 24*25 };
 	float2 m_TransitionSpeed{5,100 };
 	float m_HorintalProgress{};
-	float2 m_CurrentPlayerPos{};
-	float2 m_DistancePerSec{};
-	float2 m_PlayerTranslation{};
+	float2 m_CurrentPlayerPos[2]{};
+	float2 m_DistancePerSec[2];
+	float2 m_PlayerTranslation[2];
 
-	float2 m_PlayerDefaultPos{50,500};
+	float2 m_PlayerDefaultPos[2];
 	float2 m_PlayerTranlateTime{ 5,1 };
 
 	std::shared_ptr< TransformComponent> m_pPlayerTransforms[2];
@@ -46,6 +47,8 @@ private:
 	bool m_IsLocationYReached = false;
 	bool IsCollisionSet = true;
 	bool m_ShouldUpdate = false;
-	float2 CalculateAngle();
+	int m_PlayerAmount;
+	float2 CalculateAngle(int index);
+
 };
 

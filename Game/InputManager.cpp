@@ -42,12 +42,11 @@ bool dae::InputManager::ProcessInput()
 			checkButtons(k);
 		}
 	}
-	std::cout << "input called" << '\n';
+
 	SDL_Event e;
 	
 	while (!m_EventQueue.empty()) {
 		e = m_EventQueue.front();
-		std::cout << "playing" << '\n';
 		if (e.type == SDL_QUIT) {
 			return false;
 		}
