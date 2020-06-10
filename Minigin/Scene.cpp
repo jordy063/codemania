@@ -85,14 +85,6 @@ void dae::Scene::Update(float elapsedSecs)
 	m_Lag += elapsedSecs;
 	m_Frames++;
 
-	/*if (m_Lag >= 1)
-	{
-		
-		m_pFpsTextComp->SetText("fps: " + std::to_string(int(m_Frames)));
-		m_Frames = 0;
-		m_Lag -= 1;
-	}*/
-
 	for(auto gameObject : mObjects)
 
 	{

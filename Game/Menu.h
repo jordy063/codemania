@@ -23,12 +23,6 @@ enum MenuItem
 	CONTROLLERSOFF,
 	CONTROLLERSON
 };
-enum GameMode
-{
-	SINGLEPLAYER,
-	MULTIPLAYER,
-	VERSUS
-};
 //we should have a vector with 2 textures
 
 class Menu final: public dae::Singleton<Menu>
@@ -48,7 +42,6 @@ public:
 	void RegisterPlayer2(std::shared_ptr<dae::GameObject> pPlayer);
 	void CheckChangeControllers();
 	bool GetUseControllers() const { return m_UseControllers; }
-	GameMode GetGameMode()const { return m_GameMode; };
 	
 private:
 	std::shared_ptr<dae::GameObject> m_pPlayer;
@@ -60,21 +53,18 @@ private:
 	int m_SelectIndex;
 	std::shared_ptr<dae::Font> m_pFont;
 	bool m_ShowMenu = true;
-	int buttonAmount = 5;
+	int m_ButtonAmount = 5;
 	std::shared_ptr<MenuObserver> m_pMenuObserver;
 	bool m_UseControllers = false;
-	GameMode m_GameMode = GameMode::SINGLEPLAYER;
+	const std::string m_Language{ "nl" };
 	//textures
 	std::shared_ptr<dae::Texture2D> m_pTitleTexture;
+	bool m_IsQuitCalled = false;
 
 	bool readLanguageParameters(const std::string& line, const std::string& languagee);
-	void makeGameObject();
-	bool m_IsQuitCalled = false;
 	void FillInTexture(std::map<MenuItem, std::shared_ptr<dae::Texture2D>>& menuTextures, SDL_Color color);
 	void RenderMenuItems();
 	void RenderTexture(std::shared_ptr<dae::Texture2D> pTexture, float2 offset, float2 pos, float2 dimensions);
-
-	
 
 };
 

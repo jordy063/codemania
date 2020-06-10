@@ -1,11 +1,14 @@
 #include "MiniginPCH.h"
 #include "HealthComponent.h"
+#include "GameOverMenu.h"
+#include "GameInfo.h"
 
-comps::HealthComponent::HealthComponent(int health)
+comps::HealthComponent::HealthComponent(int health,int id)
 	:m_Health(health)
 	, m_StartHealth(health)
 	, m_InvinsibleTime(2)
 	, m_InvinsibleTimer(0)
+	, m_Id(id)
 {
 }
 
@@ -15,6 +18,11 @@ void comps::HealthComponent::DropHealth(int amount)
 	{
 		m_Health -= amount;
 		m_IsInvisble = true;
+	}
+	if (m_Health <= 0)
+	{
+		GameOverMenu::GetInstance().RegisterDeath(m_Id);
+		GameInfo::GetInstance().SetGameState(GameState::GameOverMenu);
 	}
 }
 

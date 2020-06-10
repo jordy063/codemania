@@ -43,4 +43,9 @@ void comps::PlayerVersusComponent::Update(const dae::Scene& scene, float elapsed
 	//if yes we do damage en put the player back in the corner
 
 	//also check if the player1 overlaps with this player. if so do damage to player 1 and put him in his corner
+	if (m_pPlayerBoundingBoxes[0]->IsOverlapping(m_pPlayerBoundingBoxes[1]))
+	{
+		m_pPlayerHealthComps[0]->DropHealth(1);
+		LevelManager::GetInstance().ResetPlayerPos(0);
+	}
 }

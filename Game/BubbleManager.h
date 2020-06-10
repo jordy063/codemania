@@ -37,6 +37,6 @@ private:
 	std::list<std::shared_ptr<dae::GameObject>> m_pBullets;
 	std::vector<std::shared_ptr<comps::BoundingBoxComponent>> m_pPlayerBoundingBoxes;
 	std::vector < std::shared_ptr<comps::PhysicsComponent>> m_pPlayerPhysicsComps;
-	float2 m_BulletSpeed = { 30.f ,15.0f};
+	float2 m_BulletSpeed = { 60.f ,15.0f};
 };
 

@@ -34,6 +34,9 @@
 #include "BoulderManager.h"
 #include <thread>
 #include "PlayerVersusComponent.h"
+#include "GameOverMenu.h"
+#include "EndLevelMenu.h"
+#include "GameInfo.h"
 
 
 void dae::Minigin::Initialize()
@@ -92,6 +95,8 @@ void dae::Minigin::LoadGame()
 
 	scene.Initialize();
 	Menu::GetInstance().Initialize();
+	GameOverMenu::GetInstance().Initialize();
+	EndLevelMenu::GetInstance().Initialize();
 
 	dae::ResourceManager::GetInstance().LoadTexture("../Graphics/scores.png");
 	dae::ResourceManager::GetInstance().LoadTexture("../Graphics/items.png");
@@ -102,9 +107,51 @@ void dae::Minigin::LoadGame()
 
 void dae::Minigin::Update(float elapsedSecs)
 {
-
+	auto& sceneManager = SceneManager::GetInstance();
+	auto& menu = Menu::GetInstance();
+	auto& gameOverMenu = GameOverMenu::GetInstance();
+	auto& endLevelMenu = EndLevelMenu::GetInstance();
 	
-	LevelManager::GetInstance().Update( elapsedSecs);
+
+	auto gameState = GameInfo::GetInstance().GetGameState();
+	switch (gameState)
+	{
+	case MainMenu:
+		menu.Update();
+
+		if (menu.GetIsQuitCalled())
+		{
+			m_DoContinue = false;
+		}
+		break;
+	case Playing:
+		if (m_HasMadeAssets)
+		{
+			sceneManager.Update(elapsedSecs);
+			LevelManager::GetInstance().Update(elapsedSecs);
+		}
+		if (LevelManager::GetInstance().GetCurrentLevel() == 3)
+			GameInfo::GetInstance().SetGameState(GameState::EndLevelMenu);
+		break;
+	case GameOverMenu:
+		gameOverMenu.Update();
+		if (gameOverMenu.GetIsQuitCalled())
+		{
+			m_DoContinue = false;
+		}
+
+		break;
+	case EndLevelMenu:
+		endLevelMenu.Update();
+		if (endLevelMenu.GetIsQuitCalled())
+		{
+			m_DoContinue = false;
+		}
+		break;
+	default:
+		break;
+	}
+	//LevelManager::GetInstance().Update( elapsedSecs);
 
 }
 
@@ -149,7 +196,7 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene,std::v
 	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22,pPlayerPhysicsComp));
 	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(),
 		scene.GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
-	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(4));
+	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(4, !isPlayerOne));
 
 
 	pPlayer->AddComponent(pPlayerspriteComp, ComponentType::SPRITECOMP);
@@ -184,7 +231,7 @@ void dae::Minigin::MakeEnemyPlayer(int controllerId, int spriteId, Scene& scene,
 
 	float movementSpeed{ 100 };
 	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/EnemySheet.png", 6, 8, spriteId, 0.2f, 44, 22));
-	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(4));
+	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(4,1));
 	auto pPlayerVersusComponent = std::shared_ptr<comps::PlayerVersusComponent>(new comps::PlayerVersusComponent(m_pPlayers));
 	auto pPlayerPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(pPlayer->GetTransform(), true, movementSpeed));
 	auto pPlayerinputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(pPlayerPhysicsComp, pPlayerspriteComp, controllerId));
@@ -282,7 +329,7 @@ void dae::Minigin::MakeGameAssets()
 	auto actualInputComp3 = std::dynamic_pointer_cast<comps::InputComponent>(inputComp3);
 	bool useControllers{ Menu::GetInstance().GetUseControllers() };
 
-	switch (Menu::GetInstance().GetGameMode())
+	switch (GameInfo::GetInstance().GetGameMode())
 	{
 	case GameMode::SINGLEPLAYER:
 		if (useControllers)
@@ -344,10 +391,7 @@ void dae::Minigin::RunMainUpdate()
 	//float secsPerUpdate{ 0.002f };
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag{ 0.0f };
-	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
-	auto& menu = Menu::GetInstance();
-
 
 
 	while (m_DoContinue)
@@ -361,9 +405,6 @@ void dae::Minigin::RunMainUpdate()
 	
 		m_DoContinue = input.ProcessInput();
 
-		auto gameState = InputManager::GetInstance().GetGameState();
-		UNREFERENCED_PARAMETER(sceneManager);
-
 		//if it's bigger than 0 we update
 
 		
@@ -372,31 +413,8 @@ void dae::Minigin::RunMainUpdate()
 
 		float elapse = lag;
 
+		Update(elapse);
 		
-		switch (gameState)
-		{
-		case dae::MainMenu:
-			menu.Update();
-
-			if (menu.GetIsQuitCalled())
-			{
-				m_DoContinue = false;
-			}
-			break;
-		case dae::Playing:
-			if (m_HasMadeAssets)
-			{
-				sceneManager.Update(elapse);
-				Update(elapse);
-			}
-			break;
-		case dae::GameOverMenu:
-			break;
-		case dae::EndMenu:
-			break;
-		default:
-			break;
-		}
 		lag -= elapse;
 		
 	}
@@ -412,8 +430,9 @@ void dae::Minigin::RunMainRender()
 	auto& renderer = Renderer::GetInstance();
 	float lag_render{ 0.0f };
 	auto& menu = Menu::GetInstance();
+	auto& gameOverMenu = GameOverMenu::GetInstance();
+	auto& endLevelMenu = EndLevelMenu::GetInstance();
 
-	
 	while (m_DoContinue)
 	{
 
@@ -425,17 +444,17 @@ void dae::Minigin::RunMainRender()
 		
 		InputManager::GetInstance().FillEventQueue();
 
-		auto gameState = InputManager::GetInstance().GetGameState();
+		auto gameState = GameInfo::GetInstance().GetGameState();
 		//if it's bigger than 0 we update
 
 
 		
 		switch (gameState)
 		{
-		case dae::MainMenu:
+		case MainMenu:
 			menu.Render();
 			break;
-		case dae::Playing:
+		case Playing:
 			if (m_HasMadeAssets == false)
 			{
 				m_HasMadeAssets = true;
@@ -443,9 +462,11 @@ void dae::Minigin::RunMainRender()
 			}
 			renderer.Render();
 			break;
-		case dae::GameOverMenu:
+		case GameOverMenu:
+			gameOverMenu.Render();
 			break;
-		case dae::EndMenu:
+		case EndLevelMenu:
+			endLevelMenu.Render();
 			break;
 		default:
 			break;

@@ -4,7 +4,7 @@
 #include "HealthComponent.h"
 #include "PhysicsComponent.h"
 #include "BoulderManager.h"
-#include "Menu.h"
+#include "GameInfo.h"
 #include "LevelManager.h"
 comps::MaitaAIComponent::MaitaAIComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayerObjects, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
 	std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
@@ -112,7 +112,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 		else
 			direction2 = direction1;
 
-		if (direction1 == direction2 || Menu::GetInstance().GetGameMode() == GameMode::SINGLEPLAYER)
+		if (direction1 == direction2 || GameInfo::GetInstance().GetGameMode() == GameMode::SINGLEPLAYER)
 		{
 			switch (direction1)
 			{

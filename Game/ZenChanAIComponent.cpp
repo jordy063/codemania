@@ -5,6 +5,7 @@
 #include "PhysicsComponent.h"
 #include "Menu.h"
 #include "LevelManager.h"
+#include "GameInfo.h"
 
 
 comps::ZenChanAIComponent::ZenChanAIComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayerObjects, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
@@ -107,7 +108,7 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 		}
 		else
 			direction2 = direction1;
-		if (direction1 == direction2 ||Menu::GetInstance().GetGameMode()==GameMode::SINGLEPLAYER)
+		if (direction1 == direction2 || GameInfo::GetInstance().GetGameMode()==GameMode::SINGLEPLAYER)
 		{
 			switch (direction1)
 			{

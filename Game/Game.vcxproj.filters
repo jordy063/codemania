@@ -22,7 +22,7 @@
     <Filter Include="Header Files\Patterns">
       <UniqueIdentifier>{34ae4bab-3e7d-4d70-9818-d0c20ada171a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\helpers">
+    <Filter Include="Header Files\menus">
       <UniqueIdentifier>{682b7a45-b0c3-44a9-aff4-a0a0db872038}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -79,7 +79,7 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
-      <Filter>Header Files\helpers</Filter>
+      <Filter>Header Files\menus</Filter>
     </ClInclude>
     <ClInclude Include="ItemComponent.h">
       <Filter>Header Files\Components</Filter>
@@ -94,7 +94,7 @@
       <Filter>Header Files\Patterns</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>Header Files\helpers</Filter>
+      <Filter>Header Files\menus</Filter>
     </ClInclude>
     <ClInclude Include="ScoreBoard.h">
       <Filter>Header Files\Managers</Filter>
@@ -125,6 +125,21 @@
     </ClInclude>
     <ClInclude Include="PlayerVersusComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverMenu.h">
+      <Filter>Header Files\menus</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverMenuObserver.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="EndLevelMenu.h">
+      <Filter>Header Files\menus</Filter>
+    </ClInclude>
+    <ClInclude Include="EndMenuObserver.h">
+      <Filter>Header Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInfo.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +198,7 @@
       <Filter>Header Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">
-      <Filter>Header Files\helpers</Filter>
+      <Filter>Header Files\menus</Filter>
     </ClCompile>
     <ClCompile Include="ItemComponent.cpp">
       <Filter>Header Files\Components</Filter>
@@ -198,7 +213,7 @@
       <Filter>Header Files\Patterns</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>Header Files\helpers</Filter>
+      <Filter>Header Files\menus</Filter>
     </ClCompile>
     <ClCompile Include="ScoreBoard.cpp">
       <Filter>Header Files\Managers</Filter>
@@ -229,6 +244,21 @@
     </ClCompile>
     <ClCompile Include="PlayerVersusComponent.cpp">
       <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverMenu.cpp">
+      <Filter>Header Files\menus</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverMenuObserver.cpp">
+      <Filter>Header Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="EndLevelMenu.cpp">
+      <Filter>Header Files\menus</Filter>
+    </ClCompile>
+    <ClCompile Include="EndMenuObserver.cpp">
+      <Filter>Header Files\Patterns</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInfo.cpp">
+      <Filter>Header Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

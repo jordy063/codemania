@@ -10,6 +10,7 @@ d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\font.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\fpscomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\fpscounter.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\gameobject.obj
+d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\levelmanager.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\log.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\logger.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\miniginpch.obj
@@ -27,7 +28,6 @@ d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\tilemaploader.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\transform.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\transformcomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\xboxcontroller.obj
-d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\levelmanager.obj
 d:\jordy\dae2-redo\programming 4\examproject\x64\debug\minigin.lib
 d:\jordy\dae2-redo\programming 4\examproject\x64\debug\minigin.pdb
 d:\jordy\dae2-redo\programming 4\examproject\minigin\x64\debug\minigin.tlog\cl.command.1.tlog

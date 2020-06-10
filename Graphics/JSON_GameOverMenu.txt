@@ -1,0 +1,5 @@
+{
+"nl": {"menu_PlayAgain" : "Speel Opnieuw", "Menu_Quit" : "Stoppen"},
+"en": {"menu_PlayAgain" : "Play Again", "Menu_Quit" : "Quit"},
+}
+

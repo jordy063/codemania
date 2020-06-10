@@ -157,7 +157,7 @@ float2 LevelManager::CalculateAngle(int index)
 	
 
 	auto distanceX = m_PlayerDefaultPos[index].x - m_CurrentPlayerPos[index].x;
-	auto distanceY = m_PlayerDefaultPos[index].y + (m_CurrentLevel - 1) * m_LevelHeight - m_CurrentPlayerPos[index].y;
+	auto distanceY = m_PlayerDefaultPos[index].y + (m_CurrentLevel - 1) * m_LevelHeight - m_CurrentPlayerPos[index].y + m_PlayerCatchupDifference;
 
 	auto distancePerSec = float2{ distanceX,distanceY };
 

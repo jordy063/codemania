@@ -4,6 +4,7 @@
 #include "Font.h"
 #include <SDL.h>
 #include "InputManager.h"
+#include "GameInfo.h"
 #include "InputBaseObserver.h"
 #include "GameObject.h"
 
@@ -12,10 +13,10 @@ void Menu::readDataFromJSON()
 {
 	//open file
     std::ifstream myfile;
-    myfile.open("../Graphics/JSON.txt");
+    myfile.open("../Graphics/JSON_MainMenu.txt");
     if (myfile.fail())
     {
-        std::cout << "could not find JSON file" << std::endl;
+        throw(std::runtime_error(std::string("could not find JSON file: ") + SDL_GetError()));
     }
 
 
@@ -30,20 +31,16 @@ void Menu::readDataFromJSON()
         //else read all parameters
         std::string line;
         int index{};
-        std::string language{};
+        
         while (std::getline(myfile, line))
         {
             switch (index)
             {
             case 0:
-                language = line;
-                index++;
-                break;
-            case 1:
                 index++;
                 break;
             default:
-                if (readLanguageParameters(line, language))
+                if (readLanguageParameters(line, m_Language))
                 {
                     myfile.close();
                 }
@@ -52,16 +49,6 @@ void Menu::readDataFromJSON()
                 //here we read all parameters
 
                 break;
-            }
-            if (index == 0)
-            {
-                language = line;
-                index++;
-            }
-            if (index == 0)
-            {
-                language = line;
-                index++;
             }
 
         }
@@ -100,9 +87,7 @@ void Menu::Render()
     RenderTexture(m_pTitleTexture, { 0,0 }, { 100,0 }, { 400,200 });
     RenderMenuItems();
    
-    
     SDL_RenderPresent(renderer);
-
 
 }
 
@@ -113,19 +98,19 @@ void Menu::SetShowMenu(bool showMenu)
 
 void Menu::MoveUp()
 {
-    m_SelectIndex += buttonAmount - 1;
-    m_SelectIndex %= buttonAmount;
+    m_SelectIndex += m_ButtonAmount - 1;
+    m_SelectIndex %= m_ButtonAmount;
 }
 
 void Menu::MoveDown()
 {
     m_SelectIndex++;
-    m_SelectIndex %= buttonAmount;
+    m_SelectIndex %= m_ButtonAmount;
 }
 
 void Menu::Confirm()
 {
-    if (dae::InputManager().GetInstance().GetGameState() == dae::GameState::MainMenu)
+    if (GameInfo::GetInstance().GetGameState() == GameState::MainMenu)
     {
         //get the item by selectindex
         MenuItem action = static_cast<MenuItem>(m_SelectIndex);
@@ -134,16 +119,17 @@ void Menu::Confirm()
         {
         case MenuItem::P1PLAY:
             m_pPlayer->Clear();
-            m_GameMode = GameMode::SINGLEPLAYER;
-            dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
+            GameInfo::GetInstance().SetGameMode(GameMode::SINGLEPLAYER);
+            GameInfo::GetInstance().SetGameState(GameState::Playing);
             break;
         case MenuItem::P2PLAY:
-            m_GameMode = GameMode::MULTIPLAYER;
-            dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
+          
+            GameInfo::GetInstance().SetGameMode(GameMode::MULTIPLAYER);
+            GameInfo::GetInstance().SetGameState(GameState::Playing);
             break;
         case MenuItem::P2VERSUS:
-            m_GameMode = GameMode::VERSUS;
-            dae::InputManager::GetInstance().SetGameState(dae::GameState::Playing);
+            GameInfo::GetInstance().SetGameMode(GameMode::VERSUS);
+            GameInfo::GetInstance().SetGameState(GameState::Playing);
             break;
 
 
@@ -165,7 +151,7 @@ void Menu::RegisterPlayer2(std::shared_ptr<dae::GameObject> pPlayer)
 
 void Menu::CheckChangeControllers()
 {
-    if(m_SelectIndex == buttonAmount - 1)
+    if(m_SelectIndex == m_ButtonAmount - 1)
     m_UseControllers = !m_UseControllers;
 }
 
@@ -206,11 +192,7 @@ bool Menu::readLanguageParameters(const std::string& line,const std::string& lan
      
 }
 
-void Menu::makeGameObject()
-{
-    //here we can make a texture component for the title
-    //we can also place the fonts with the data we've read
-}
+
 
 void Menu::FillInTexture(std::map<MenuItem, std::shared_ptr<dae::Texture2D>>& menuTextures,SDL_Color color)
 {
@@ -238,7 +220,7 @@ void Menu::RenderMenuItems()
 {
     int counter{};
    
-    for (int i{}; i < buttonAmount - 1; ++i)
+    for (int i{}; i < m_ButtonAmount - 1; ++i)
     {
         if (counter != m_SelectIndex)
         {
@@ -251,7 +233,7 @@ void Menu::RenderMenuItems()
     counter = 0;
  
 
-    for (int i{}; i < buttonAmount - 1; ++i)
+    for (int i{}; i < m_ButtonAmount - 1; ++i)
     {
         if (counter == m_SelectIndex)
         {
@@ -259,7 +241,7 @@ void Menu::RenderMenuItems()
         }
         counter++;
     }
-    counter = buttonAmount - 1;
+    counter = m_ButtonAmount - 1;
    
     if (m_UseControllers == true)
     {

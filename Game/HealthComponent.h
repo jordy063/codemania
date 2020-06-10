@@ -5,7 +5,7 @@ namespace comps
 	class HealthComponent final : public comps::BaseComponent
 	{
 	public:
-		HealthComponent(int health);
+		HealthComponent(int health, int id);
 		~HealthComponent() = default;;
 		int GetHealth() const { return m_Health; };
 		void DropHealth(int amount);
@@ -21,5 +21,6 @@ namespace comps
 		bool m_IsInvisble = true;
 		float m_InvinsibleTime;
 		float m_InvinsibleTimer;
+		int m_Id;
 	};
 }

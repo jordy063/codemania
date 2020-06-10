@@ -8,7 +8,7 @@
 #include "BubbleManager.h"
 #include "EnemyObserver.h"
 #include "ItemManager.h"
-#include "Menu.h"
+#include "GameInfo.h"
 
 
 comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,
@@ -85,7 +85,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	//if nothing is hit
 	if (m_HasHitEnemy == false)
 	{
-		if (Menu::GetInstance().GetGameMode() == GameMode::VERSUS)
+		if (GameInfo::GetInstance().GetGameMode() == GameMode::VERSUS)
 		{
 			m_PlayerAmount = 1;
 		}

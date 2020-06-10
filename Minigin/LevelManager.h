@@ -39,6 +39,7 @@ private:
 
 	float2 m_PlayerDefaultPos[2];
 	float2 m_PlayerTranlateTime{ 5,1 };
+	float m_PlayerCatchupDifference{ 100 };
 
 	std::shared_ptr< TransformComponent> m_pPlayerTransforms[2];
 	std::shared_ptr< comps::CollisionComponent> m_pPlayerCollisions[2];

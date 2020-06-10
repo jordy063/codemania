@@ -6,7 +6,7 @@
 #include "BoundingBoxComponent.h"
 #include "HealthComponent.h"
 #include "LevelManager.h"
-#include "Menu.h"
+#include "GameInfo.h"
 
 comps::BoulderComponent::BoulderComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox,
 	std::vector<std::shared_ptr<comps::HealthComponent>> pPlayerHealthComps)
@@ -38,7 +38,7 @@ void comps::BoulderComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	{
 		//if i = 1 && gamemode = versus
 		//don't do anything
-		if (Menu::GetInstance().GetGameMode() == VERSUS && i == 1)
+		if (GameInfo::GetInstance().GetGameMode() == VERSUS && i == 1)
 		{
 
 		}

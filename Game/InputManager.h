@@ -16,13 +16,6 @@ namespace dae
 		ButtonX,
 		ButtonY
 	};
-	enum GameState
-	{
-		MainMenu,
-		Playing,
-		GameOverMenu,
-		EndMenu,
-	};
 
 	class InputManager final : public Singleton<InputManager>
 	{
@@ -35,13 +28,10 @@ namespace dae
 		void checkButtons(int controllerId);
 		void DoKeyFunctionality(SDL_Event e, std::shared_ptr<InputBaseObserver> inputObserver, bool move, int id);
 		void DoControllerFunctionality(WORD e, std::shared_ptr<InputBaseObserver> inputObserver, bool move, int controllerId);
-		void SetGameState(GameState gameState);
-		GameState GetGameState() const { return m_GameState; }
 		void FillEventQueue();
 		
 	private:
 		XINPUT_STATE currentState{};
-		GameState m_GameState = MainMenu;
 		//InputObserver* pInputObserver;
 		std::map<int,std::vector<std::shared_ptr<InputBaseObserver>>> pInputObserver;
 		bool m_IsShooting = false;
