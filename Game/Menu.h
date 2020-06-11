@@ -32,7 +32,7 @@ public:
 	void readDataFromJSON();
 
 	virtual void Initialize();
-	virtual void Update();
+	virtual void Update(float elapsedSecs);
 	virtual void Render();
 	void SetShowMenu(bool showMenu);
 	void MoveUp();
@@ -42,8 +42,12 @@ public:
 	void RegisterPlayer2(std::shared_ptr<dae::GameObject> pPlayer);
 	void CheckChangeControllers();
 	bool GetUseControllers() const { return m_UseControllers; }
+	void ResetMenu();
 	
 private:
+	bool m_MaySelect = false;
+	float m_SelectTimer{};
+	const float m_SelectTime{ 2 };
 	std::shared_ptr<dae::GameObject> m_pPlayer;
 	std::string m_Filename;
 	//std::vector< std::shared_ptr<dae::Texture2D>> m_pOnOffTextures;

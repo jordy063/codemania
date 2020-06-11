@@ -86,7 +86,6 @@ void comps::GhostAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 			if (m_pPlayerHealthComps[i]->GetInvinsible() == false)
 			{
 				m_pPlayerHealthComps[i]->DropHealth(1);
-				LevelManager::GetInstance().ResetPlayerPos(i);
 			}
 			
 		}

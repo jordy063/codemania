@@ -26,6 +26,8 @@ comps::BubbleComponent::BubbleComponent(std::shared_ptr<comps::PhysicsComponent>
 	, m_EnemyTrapTime(5)
 	, m_EnemyTrapTimer()
 	, m_PlayerAmount(playerAmount)
+	,m_AddBoundingBoxTime(0.5f)
+	, m_IsBoundingBoxTimerReached(false)
 {
 }
 
@@ -80,12 +82,18 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 		BubbleManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp, m_pBoundingBoxComp);
 		m_IsTimerReached = true;
 	}
+	
+	if (m_GoUpTimer > m_AddBoundingBoxTime && m_IsBoundingBoxTimerReached == false)
+	{
+		BubbleManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp, m_pBoundingBoxComp);
+		m_IsBoundingBoxTimerReached = true;
+	}
 
 
 	//if nothing is hit
 	if (m_HasHitEnemy == false)
 	{
-		if (GameInfo::GetInstance().GetGameMode() == GameMode::VERSUS)
+		if (GameInfo::GetInstance().GetGameMode() != GameMode::MULTIPLAYER)
 		{
 			m_PlayerAmount = 1;
 		}

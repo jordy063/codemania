@@ -84,7 +84,7 @@ void EndLevelMenu::Render()
 
     //here we also draw game over or winner with the player number depending on the gamemode
   
-    dae::Renderer::GetInstance().RenderTexture(*m_pTitleTexture, 75, 200.0f);
+    dae::Renderer::GetInstance().RenderTexture(*m_pTitleTexture, 50, 200.0f);
       
     RenderMenuItems();
 
@@ -110,7 +110,7 @@ void EndLevelMenu::MoveDown()
 
 void EndLevelMenu::Confirm()
 {
-    if (GameInfo::GetInstance().GetGameState() == GameState::GameOverMenu)
+    if (GameInfo::GetInstance().GetGameState() == GameState::ENDLEVELMENU)
     {
         //get the item by selectindex
 
@@ -119,7 +119,7 @@ void EndLevelMenu::Confirm()
         switch (action)
         {
         case EndLevelMenuItem::PLAYAGAIN:
-            GameInfo::GetInstance().SetGameState(GameState::Playing);
+            GameInfo::GetInstance().SetGameState(RESET);
             break;
         case EndLevelMenuItem::QUIT:
             m_IsQuitCalled = true;

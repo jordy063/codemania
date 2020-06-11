@@ -180,3 +180,9 @@ void BubbleManager::MovePlayerWithBullet(int playerId)
 {
 	m_pPlayerPhysicsComps[playerId]->SetSpeedY(-m_BulletSpeed.y);
 }
+
+void BubbleManager::Reset()
+{
+	m_pPlayerBoundingBoxes.clear();
+	m_pPlayerPhysicsComps.clear();
+}

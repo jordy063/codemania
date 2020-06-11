@@ -26,6 +26,7 @@ public:
 	int CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBullet, int& index, std::shared_ptr<dae::GameObject>& other);
 	void RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& pPlayers);
 	void AddEnemyToList(std::pair<std::shared_ptr<dae::GameObject>, EnemyType> pEnemy);
+	void RemoveEnemies();
 
 private:
 	std::list <std::pair<std::shared_ptr<dae::GameObject>,int>> m_pEnemies;

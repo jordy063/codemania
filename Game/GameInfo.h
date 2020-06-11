@@ -9,10 +9,12 @@ enum GameMode
 };
 enum GameState
 {
-	MainMenu,
-	Playing,
-	GameOverMenu,
-	EndLevelMenu,
+	MAINMENU,
+	PLAYING,
+	GAMEOVERMENU,
+	ENDLEVELMENU,
+	RESET,
+
 };
 
 class GameInfo final : public dae::Singleton< GameInfo>
@@ -25,6 +27,6 @@ public:
 
 private:
 	GameMode m_GameMode = GameMode::SINGLEPLAYER;
-	GameState m_GameState = GameState::MainMenu;
+	GameState m_GameState = GameState::MAINMENU;
 };
 

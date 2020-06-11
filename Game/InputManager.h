@@ -29,6 +29,7 @@ namespace dae
 		void DoKeyFunctionality(SDL_Event e, std::shared_ptr<InputBaseObserver> inputObserver, bool move, int id);
 		void DoControllerFunctionality(WORD e, std::shared_ptr<InputBaseObserver> inputObserver, bool move, int controllerId);
 		void FillEventQueue();
+		void ResetPlayerControl();
 		
 	private:
 		XINPUT_STATE currentState{};

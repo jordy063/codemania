@@ -45,6 +45,8 @@ namespace comps
 	
 		float m_EnemyTrapTimer;
 		float m_EnemyTrapTime;
+		float m_AddBoundingBoxTime;
+		bool m_IsBoundingBoxTimerReached;
 		int m_PlayerAmount;
 		int m_EnemyId;
 		EnemyType m_EnemyType;

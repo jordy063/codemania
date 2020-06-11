@@ -26,6 +26,7 @@ public:
 	void UpdateIfAboveLevel(std::shared_ptr<TransformComponent> pTranform, bool firstTime = false, float2 startPos = {});
 	void ResetPlayerPos(int index);
 	void SetAmountOfPlayers(int i);
+	void Reset();
 private:
 	int m_CurrentLevel{0};
 	float2 m_Translation{ 0,0 };
@@ -50,6 +51,7 @@ private:
 	bool m_ShouldUpdate = false;
 	int m_PlayerAmount;
 	float2 CalculateAngle(int index);
+
 
 };
 

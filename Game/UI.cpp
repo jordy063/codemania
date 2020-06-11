@@ -10,14 +10,13 @@
 #include "Font.h"
 #include "Menu.h"
 
-UI::UI(std::vector<std::shared_ptr<dae::GameObject>> pPlayers)
+UI::UI(std::shared_ptr<dae::GameObject> pPlayer)
 	:m_FileName{ "../Graphics/UIBar.png" }
 {
-	for (std::shared_ptr<dae::GameObject> pPlayer : pPlayers)
-	{
-		auto healthComp = pPlayer->GetComponent(ComponentType::HEALTHCOMPONENT);
-		m_pPlayerHealthComps.push_back(std::dynamic_pointer_cast<comps::HealthComponent>(healthComp));
-	}
+
+	auto healthComp = pPlayer->GetComponent(ComponentType::HEALTHCOMPONENT);
+	m_pPlayerHealthComps.push_back(std::dynamic_pointer_cast<comps::HealthComponent>(healthComp));
+	
 }
 
 void UI::Initialize()
@@ -40,10 +39,10 @@ void UI::Initialize()
 
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(score1Object);
 
-	auto score1TextComp = std::shared_ptr<comps::ShowScoreComponent>(new comps::ShowScoreComponent(m_pFont, 64, 28, { 0,255,0 }));
-	score1TextComp->SetText("Score: 0");
+	m_pScoreComp = std::shared_ptr<comps::ShowScoreComponent>(new comps::ShowScoreComponent(m_pFont, 64, 28, { 0,255,0 }));
+	m_pScoreComp->SetText("Score: 0");
 
-	score1Object->AddComponent(score1TextComp, ComponentType::SHOWSCORECOMPONENT);
+	score1Object->AddComponent(m_pScoreComp, ComponentType::SHOWSCORECOMPONENT);
 	score1Object->SetPosition(270, 5);
 
 	
@@ -66,16 +65,27 @@ void UI::Initialize()
 	
 }
 
-void UI::AddPlayer2()
+void UI::AddPlayer2(std::shared_ptr<dae::GameObject> pPlayer2)
 {
-	//health PLAYER 2
-	auto health2Object = std::shared_ptr<dae::GameObject>(new dae::GameObject());
+	auto healthComp = pPlayer2->GetComponent(ComponentType::HEALTHCOMPONENT);
+	m_pPlayerHealthComps.push_back(std::dynamic_pointer_cast<comps::HealthComponent>(healthComp));
 
-	dae::SceneManager::GetInstance().GetActiveScene()->Add(health2Object);
+	//health PLAYER 2
+	m_pPlayer2HealthObject = std::shared_ptr<dae::GameObject>(new dae::GameObject());
+
+	dae::SceneManager::GetInstance().GetActiveScene()->Add(m_pPlayer2HealthObject);
 
 	auto health2TextComp = std::shared_ptr<comps::ShowHealthComponent>(new comps::ShowHealthComponent(m_pFont, 64, 28, { 0,255,0 }, m_pPlayerHealthComps[1]));
 	health2TextComp->SetText("health: 4");
 
-	health2Object->AddComponent(health2TextComp, ComponentType::SHOWHEALTHCOMPONENT);
-	health2Object->SetPosition(400, 5);
+	m_pPlayer2HealthObject->AddComponent(health2TextComp, ComponentType::SHOWHEALTHCOMPONENT);
+	m_pPlayer2HealthObject->SetPosition(400, 5);
+}
+
+void UI::Reset()
+{
+	m_pPlayer2HealthObject->Clear();
+	m_pPlayerHealthComps[0]->ResetHealth();
+	m_pPlayerHealthComps.pop_back();
+	m_pScoreComp->SetText("Score: 0");
 }

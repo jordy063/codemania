@@ -180,3 +180,26 @@ void LevelManager::SetAmountOfPlayers(int i)
 	m_PlayerAmount = i;
 }
 
+void LevelManager::Reset()
+{
+	m_Translation = {};
+	m_CurrentLevel = 0;
+	m_TransisionProgress = 0;
+	IsCollisionSet = false;
+	m_PlayerLocationSet = false;
+	m_PlayerTranslation[0] = {};
+	m_PlayerTranslation[1] = {};
+	
+	auto tileMap = dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap();
+	tileMap->UpdateLevel(m_CurrentLevel);
+	for (int i{}; i < m_PlayerAmount; ++i)
+	{
+		ResetPlayerPos(i);
+		m_pPlayerTransforms[i]->Translate(m_PlayerDefaultPos[i].x, m_PlayerDefaultPos[i].y + m_CurrentLevel * m_LevelHeight);
+		m_pPlayerCollisions[i]->SetCollision(tileMap->GetCollisionWalls(), tileMap->GetCollisionPlatforms());
+	}
+	m_PlayerAmount = 0;
+	
+
+}
+

@@ -86,6 +86,16 @@ void EnemyManager::AddEnemyToList(std::pair<std::shared_ptr<dae::GameObject> ,En
 	m_pEnemies.push_back(pEnemy);
 }
 
+void EnemyManager::RemoveEnemies()
+{
+	for (std::pair < std::shared_ptr<dae::GameObject>, int> pEnemy : m_pEnemies)
+	{
+		pEnemy.first->Clear();
+	}
+	
+	m_pEnemies.clear();
+}
+
 void EnemyManager::MakeEnemiesLevel0(std::shared_ptr<dae::Scene> scene)
 {
 

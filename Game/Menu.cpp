@@ -71,9 +71,17 @@ void Menu::Initialize()
     dae::InputManager::GetInstance().Register(m_pMenuObserver, -1);
 }
 
-void Menu::Update()
+void Menu::Update(float elapsedSecs)
 {
-    dae::InputManager().GetInstance().ProcessInput();
+    if (m_MaySelect == false)
+    {
+        m_SelectTimer += elapsedSecs;
+    }
+    if (m_SelectTimer > m_SelectTime)
+    {
+        m_SelectTimer = 0;
+        m_MaySelect = true;
+    }
 
 }
 
@@ -110,7 +118,7 @@ void Menu::MoveDown()
 
 void Menu::Confirm()
 {
-    if (GameInfo::GetInstance().GetGameState() == GameState::MainMenu)
+    if (GameInfo::GetInstance().GetGameState() == GameState::MAINMENU && m_MaySelect)
     {
         //get the item by selectindex
         MenuItem action = static_cast<MenuItem>(m_SelectIndex);
@@ -120,16 +128,16 @@ void Menu::Confirm()
         case MenuItem::P1PLAY:
             m_pPlayer->Clear();
             GameInfo::GetInstance().SetGameMode(GameMode::SINGLEPLAYER);
-            GameInfo::GetInstance().SetGameState(GameState::Playing);
+            GameInfo::GetInstance().SetGameState(GameState::PLAYING);
             break;
         case MenuItem::P2PLAY:
           
             GameInfo::GetInstance().SetGameMode(GameMode::MULTIPLAYER);
-            GameInfo::GetInstance().SetGameState(GameState::Playing);
+            GameInfo::GetInstance().SetGameState(GameState::PLAYING);
             break;
         case MenuItem::P2VERSUS:
             GameInfo::GetInstance().SetGameMode(GameMode::VERSUS);
-            GameInfo::GetInstance().SetGameState(GameState::Playing);
+            GameInfo::GetInstance().SetGameState(GameState::PLAYING);
             break;
 
 
@@ -153,6 +161,11 @@ void Menu::CheckChangeControllers()
 {
     if(m_SelectIndex == m_ButtonAmount - 1)
     m_UseControllers = !m_UseControllers;
+}
+
+void Menu::ResetMenu()
+{
+    m_MaySelect = false;
 }
 
 bool Menu::readLanguageParameters(const std::string& line,const std::string& language )

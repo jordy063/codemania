@@ -296,3 +296,10 @@ void dae::InputManager::FillEventQueue()
 		m_EventQueue.push(e);
 	}
 }
+
+void dae::InputManager::ResetPlayerControl()
+{
+	pInputObserver[-2].clear();
+	pInputObserver[0].clear();
+	pInputObserver[1].clear();
+}

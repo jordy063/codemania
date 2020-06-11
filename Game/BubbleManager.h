@@ -31,6 +31,7 @@ public:
 	bool CheckPlayer2HitsBullet();
 	float2 GetBubbleSpeed() const { return m_BulletSpeed; }
 	void MovePlayerWithBullet(int playerId);
+	void Reset();
 
 private:
 	std::list<std::shared_ptr<comps::BoundingBoxComponent>> m_pTriggeredBullets;

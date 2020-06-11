@@ -13,6 +13,7 @@ public:
 	bool CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pItem);
 	void DoEffect(ItemType type);
 	void RemoveItem(std::shared_ptr<comps::BoundingBoxComponent> pItemBoundingBox);
+	
 
 private:
 	//not sure if I need a private vector yet

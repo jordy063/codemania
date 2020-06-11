@@ -6,16 +6,19 @@
 #include "BubbleManager.h"
 #include "LevelManager.h"
 
-comps::PlayerVersusComponent::PlayerVersusComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayers)
+comps::PlayerVersusComponent::PlayerVersusComponent(std::shared_ptr<dae::GameObject> pPlayer1, std::shared_ptr < comps::BoundingBoxComponent> pEnemyPlayerBoundingBox,
+	std::shared_ptr < comps::HealthComponent> pEnemyPlayerHealthComp)
 {
-	for (std::shared_ptr<dae::GameObject> pPlayerObject : pPlayers)
-	{
-		auto boundingBoxComp = pPlayerObject->GetComponent(ComponentType::BOUNDINGBOXCOMP);
+	
+		auto boundingBoxComp = pPlayer1->GetComponent(ComponentType::BOUNDINGBOXCOMP);
 		m_pPlayerBoundingBoxes.push_back(std::dynamic_pointer_cast<comps::BoundingBoxComponent>(boundingBoxComp));
 
-		auto healthComp = pPlayerObject->GetComponent(ComponentType::HEALTHCOMPONENT);
+		auto healthComp = pPlayer1->GetComponent(ComponentType::HEALTHCOMPONENT);
 		m_pPlayerHealthComps.push_back(std::dynamic_pointer_cast<comps::HealthComponent>(healthComp));
-	}
+
+		m_pPlayerBoundingBoxes.push_back(pEnemyPlayerBoundingBox);
+		m_pPlayerHealthComps.push_back(pEnemyPlayerHealthComp);
+	
 }
 
 void comps::PlayerVersusComponent::Initialize(const dae::Scene& scene)
@@ -28,15 +31,10 @@ void comps::PlayerVersusComponent::Update(const dae::Scene& scene, float elapsed
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
-	if (m_pPlayerHealthComps[1]->GetInvinsible() == false)
-	{
-		std::cout<<"invinsible over"<<'\n';
-	}
 
 	if (BubbleManager::GetInstance().CheckPlayer2HitsBullet())
 	{
 		m_pPlayerHealthComps[1]->DropHealth(1);
-		LevelManager::GetInstance().ResetPlayerPos(1);
 		
 	}
 	//check if the boundingbox hits any bullets.
@@ -46,6 +44,5 @@ void comps::PlayerVersusComponent::Update(const dae::Scene& scene, float elapsed
 	if (m_pPlayerBoundingBoxes[0]->IsOverlapping(m_pPlayerBoundingBoxes[1]))
 	{
 		m_pPlayerHealthComps[0]->DropHealth(1);
-		LevelManager::GetInstance().ResetPlayerPos(0);
 	}
 }

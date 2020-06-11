@@ -56,11 +56,6 @@ void comps::ItemComponent::Update(const dae::Scene& scene, float elapsedSecs, fl
 
 		if (ItemManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
 		{
-			if (m_IsDownCounterCalled == false)
-			{
-				EnemyObserver::GetInstance().DownCounter();
-				m_IsDownCounterCalled = true;
-			}
 			ItemManager::GetInstance().DoEffect(m_ItemType);
 			ScorePopUpManager::GetInstance().MakeScorePopUp(m_ItemType, m_SpriteId,m_pPhysicsComp->GetTransform()->GetPosition());
 			ItemManager::GetInstance().RemoveItem(m_pBoundingBoxComp);

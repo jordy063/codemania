@@ -128,7 +128,7 @@ void GameOverMenu::MoveDown()
 
 void GameOverMenu::Confirm()
 {
-    if (GameInfo::GetInstance().GetGameState() == GameState::GameOverMenu)
+    if (GameInfo::GetInstance().GetGameState() == GameState::GAMEOVERMENU)
     {
         //get the item by selectindex
 
@@ -137,7 +137,7 @@ void GameOverMenu::Confirm()
         switch (action)
         {
         case GameOverMenuItem::PLAYAGAIN:
-            GameInfo::GetInstance().SetGameState(GameState::Playing);
+            GameInfo::GetInstance().SetGameState(RESET);
             break;
         case GameOverMenuItem::QUIT:
             m_IsQuitCalled = true;

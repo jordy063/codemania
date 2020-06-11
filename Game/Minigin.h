@@ -20,6 +20,7 @@ namespace dae
 		void Initialize();
 		void LoadGame();
 		void Update(float elapsedSecs);
+		void render() const;
 		void Cleanup();
 		void Run();
 
@@ -31,8 +32,8 @@ namespace dae
 		std::shared_ptr<comps::SpriteComponent> m_pPlayer2SpriteComp;
 		bool m_DoContinue = true;
 
-		void MakePlayer(int controllerId, int spriteId,Scene& scene, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos, bool isPlayerOne);
-		void MakeEnemyPlayer(int controllerId, int spriteId, Scene& scene, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos);
+		void MakePlayer(int controllerId, int spriteId, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos, bool isPlayerOne);
+		void MakeEnemyPlayer(int controllerId, int spriteId, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos);
 		void RegisterPlayersInManager();
 		void SpawnEnemies();
 		void InitializeUI();
@@ -42,6 +43,10 @@ namespace dae
 		bool m_HasMadeAssets = false;
 		void RunMainUpdate();
 		void RunMainRender();
+		void ResetGame();
+		void clearPlayers();
+		void ResetLevelManager();
+		void ResetHealth();
 
 		
 	};

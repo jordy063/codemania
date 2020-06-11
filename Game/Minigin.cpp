@@ -37,6 +37,8 @@
 #include "GameOverMenu.h"
 #include "EndLevelMenu.h"
 #include "GameInfo.h"
+#include "ScoreBoard.h"
+
 
 
 void dae::Minigin::Initialize()
@@ -78,9 +80,9 @@ void dae::Minigin::LoadGame()
 
 	scene.AddTileMap(loader);
 
-	MakePlayer(-1, 0, scene, m_pPlayers, { 100,70 },true);
-	MakePlayer(-2, 1, scene, m_pPlayers, { 200,70 },false);
-	MakeEnemyPlayer(-2, 2, scene, m_pPlayers, { 300,70 });
+	MakePlayer(-1, 0, m_pPlayers, { 100,70 },true);
+	MakePlayer(-2, 1, m_pPlayers, { 200,70 },false);
+	MakeEnemyPlayer(-2, 2, m_pPlayers, { 300,70 });
 	
 	
 	SoundManager2::GetInstance().Init();
@@ -116,24 +118,29 @@ void dae::Minigin::Update(float elapsedSecs)
 	auto gameState = GameInfo::GetInstance().GetGameState();
 	switch (gameState)
 	{
-	case MainMenu:
-		menu.Update();
+	case MAINMENU:
+		menu.Update(elapsedSecs);
 
 		if (menu.GetIsQuitCalled())
 		{
 			m_DoContinue = false;
 		}
 		break;
-	case Playing:
-		if (m_HasMadeAssets)
+	case PLAYING:
+		if (m_HasMadeAssets == false)
+		{
+			m_HasMadeAssets = true;
+			MakeGameAssets();
+		}
+		else
 		{
 			sceneManager.Update(elapsedSecs);
 			LevelManager::GetInstance().Update(elapsedSecs);
 		}
 		if (LevelManager::GetInstance().GetCurrentLevel() == 3)
-			GameInfo::GetInstance().SetGameState(GameState::EndLevelMenu);
+			GameInfo::GetInstance().SetGameState(GameState::ENDLEVELMENU);
 		break;
-	case GameOverMenu:
+	case GAMEOVERMENU:
 		gameOverMenu.Update();
 		if (gameOverMenu.GetIsQuitCalled())
 		{
@@ -141,18 +148,48 @@ void dae::Minigin::Update(float elapsedSecs)
 		}
 
 		break;
-	case EndLevelMenu:
+	case ENDLEVELMENU:
 		endLevelMenu.Update();
 		if (endLevelMenu.GetIsQuitCalled())
 		{
 			m_DoContinue = false;
 		}
 		break;
+	case RESET:
+		ResetGame();
 	default:
 		break;
 	}
 	//LevelManager::GetInstance().Update( elapsedSecs);
 
+}
+
+void dae::Minigin::render() const
+{
+	auto& menu = Menu::GetInstance();
+	auto& gameOverMenu = GameOverMenu::GetInstance();
+	auto& endLevelMenu = EndLevelMenu::GetInstance();
+	auto& renderer = Renderer::GetInstance();
+	InputManager::GetInstance().FillEventQueue();
+
+	auto gameState = GameInfo::GetInstance().GetGameState();
+	switch (gameState)
+	{
+	case MAINMENU:
+		menu.Render();
+		break;
+	case PLAYING:
+		renderer.Render();
+		break;
+	case GAMEOVERMENU:
+		gameOverMenu.Render();
+		break;
+	case ENDLEVELMENU:
+		endLevelMenu.Render();
+		break;
+	default:
+		break;
+	}
 }
 
 void dae::Minigin::Cleanup()
@@ -179,14 +216,13 @@ void dae::Minigin::Run()
 	Cleanup();
 }
 
-void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene,std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector,float2 pos,bool isPlayerOne)
+void dae::Minigin::MakePlayer(int controllerId, int spriteId,std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector,float2 pos,bool isPlayerOne)
 {
 	UNREFERENCED_PARAMETER(controllerId);
 	UNREFERENCED_PARAMETER(spriteId);
-	UNREFERENCED_PARAMETER(scene);
 	
 	auto pPlayer = std::shared_ptr<dae::GameObject>(new dae::GameObject());
-	scene.Add(pPlayer);
+	SceneManager::GetInstance().GetActiveScene()->Add(pPlayer);
 
 	float movementSpeed{ 100 };
 	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/CharacterSprite.png", 13, 8, spriteId, 0.2f, 44, 22));
@@ -194,8 +230,8 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene,std::v
 	auto pPlayerinputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(pPlayerPhysicsComp, pPlayerspriteComp, controllerId));
 	
 	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22,pPlayerPhysicsComp));
-	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(),
-		scene.GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
+	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(),
+		SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
 	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(4, !isPlayerOne));
 
 
@@ -220,44 +256,46 @@ void dae::Minigin::MakePlayer(int controllerId, int spriteId,Scene& scene,std::v
 
 }
 
-void dae::Minigin::MakeEnemyPlayer(int controllerId, int spriteId, Scene& scene, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos)
+void dae::Minigin::MakeEnemyPlayer(int controllerId, int spriteId, std::vector<std::shared_ptr<dae::GameObject>>& pPlayerVector, float2 pos)
 {
 	UNREFERENCED_PARAMETER(controllerId);
 	UNREFERENCED_PARAMETER(spriteId);
-	UNREFERENCED_PARAMETER(scene);
 
 	auto pPlayer = std::shared_ptr<dae::GameObject>(new dae::GameObject());
-	scene.Add(pPlayer);
+	SceneManager::GetInstance().GetActiveScene()->Add(pPlayer);
+	
 
 	float movementSpeed{ 100 };
 	auto pPlayerspriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/EnemySheet.png", 6, 8, spriteId, 0.2f, 44, 22));
 	auto pPlayerHealthComp = std::shared_ptr<comps::HealthComponent>(new comps::HealthComponent(4,1));
-	auto pPlayerVersusComponent = std::shared_ptr<comps::PlayerVersusComponent>(new comps::PlayerVersusComponent(m_pPlayers));
+	
 	auto pPlayerPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(pPlayer->GetTransform(), true, movementSpeed));
 	auto pPlayerinputComp = std::shared_ptr<comps::InputComponent>(new comps::InputComponent(pPlayerPhysicsComp, pPlayerspriteComp, controllerId));
 
 	auto pPlayerBoundingBoxComp = std::shared_ptr<comps::BoundingBoxComponent>(new comps::BoundingBoxComponent(22, 22, pPlayerPhysicsComp));
-	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(scene.GetTileMap()->GetCollisionWalls(),
-		scene.GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
+	auto pPlayerCollisionComp = std::shared_ptr<comps::CollisionComponent>(new comps::CollisionComponent(SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionWalls(),
+		SceneManager::GetInstance().GetActiveScene()->GetTileMap()->GetCollisionPlatforms(), pPlayerPhysicsComp, pPlayerBoundingBoxComp));
+	auto pPlayerVersusComponent = std::shared_ptr<comps::PlayerVersusComponent>(new comps::PlayerVersusComponent(m_pPlayers[0], pPlayerBoundingBoxComp, pPlayerHealthComp));
 	
 	
 	
 	pPlayer->AddComponent(pPlayerHealthComp, ComponentType::HEALTHCOMPONENT);
 	pPlayer->AddComponent(pPlayerspriteComp, ComponentType::SPRITECOMP);
-	pPlayer->AddComponent(pPlayerVersusComponent, ComponentType::PLAYERVERSUSCOMPONENT);
 	pPlayer->AddComponent(pPlayerBoundingBoxComp, ComponentType::BOUNDINGBOXCOMP);
+	
 	pPlayer->AddComponent(pPlayerCollisionComp, ComponentType::COLLISIONCOMPONENT);
 	pPlayer->AddComponent(pPlayerPhysicsComp, ComponentType::PHYSICSCOMP);
 	pPlayer->AddComponent(pPlayerinputComp, ComponentType::INPUTCOMPONENT);
 
-	
+
+	pPlayer->AddComponent(pPlayerVersusComponent, ComponentType::PLAYERVERSUSCOMPONENT);
 
 	pPlayerspriteComp->SetBeginEndFrames(32, 39);
 	pPlayer->GetTransform()->Translate(pos.x, pos.y);
-
-
-
 	pPlayerVector.push_back(pPlayer);
+
+
+	
 
 }
 
@@ -278,7 +316,7 @@ void dae::Minigin::SpawnEnemies()
 
 void dae::Minigin::InitializeUI()
 {
-	m_pUI = std::shared_ptr<UI>(new UI(m_pPlayers));
+	m_pUI = std::shared_ptr<UI>(new UI(m_pPlayers[0]));
 	m_pUI->Initialize();
 }
 
@@ -360,7 +398,7 @@ void dae::Minigin::MakeGameAssets()
 		RemovePlayer(false);
 		RegisterPlayersInManager();
 		SpawnEnemies();
-		m_pUI->AddPlayer2();
+		m_pUI->AddPlayer2(m_pPlayers[1]);
 		break;
 	case GameMode::VERSUS:
 		
@@ -376,7 +414,7 @@ void dae::Minigin::MakeGameAssets()
 		}
 		RemovePlayer(true);
 		RegisterPlayersInManager();
-		m_pUI->AddPlayer2();
+		m_pUI->AddPlayer2(m_pPlayers[1]);
 		//change the nessecary things
 		break;
 	}
@@ -424,55 +462,87 @@ void dae::Minigin::RunMainUpdate()
 void dae::Minigin::RunMainRender()
 {
 
-	int frames{};
-	//float secsPerRender{ 1.0f / 300 };
-	auto lastTime = std::chrono::high_resolution_clock::now();
-	auto& renderer = Renderer::GetInstance();
-	float lag_render{ 0.0f };
-	auto& menu = Menu::GetInstance();
-	auto& gameOverMenu = GameOverMenu::GetInstance();
-	auto& endLevelMenu = EndLevelMenu::GetInstance();
-
+	//we don't have to pass elapsedSecs as the render is const anyway so checks only happen in the update
 	while (m_DoContinue)
 	{
 
-		//we calculated the lagg
-		auto currentTime = std::chrono::high_resolution_clock::now();
-		float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
-		lastTime = currentTime;
-		lag_render += elapsedSec;
-		
-		InputManager::GetInstance().FillEventQueue();
+		render();
 
-		auto gameState = GameInfo::GetInstance().GetGameState();
-		//if it's bigger than 0 we update
+	}
+}
 
+void dae::Minigin::ResetGame()
+{
+	clearPlayers();
+	m_pUI->Reset();
 
-		
-		switch (gameState)
-		{
-		case MainMenu:
-			menu.Render();
-			break;
-		case Playing:
-			if (m_HasMadeAssets == false)
-			{
-				m_HasMadeAssets = true;
-				MakeGameAssets();
-			}
-			renderer.Render();
-			break;
-		case GameOverMenu:
-			gameOverMenu.Render();
-			break;
-		case EndLevelMenu:
-			endLevelMenu.Render();
-			break;
-		default:
-			break;
-		}
+	//reset gamestate
+	GameInfo::GetInstance().SetGameState(GameState::MAINMENU);
 
-		frames++;
-		
+	//reset controls
+	InputManager::GetInstance().ResetPlayerControl();
+
+	//reset players in bulletmanager
+	BubbleManager::GetInstance().Reset();
+	//remove enemies
+	EnemyManager::GetInstance().RemoveEnemies();
+	//reset menu
+	Menu::GetInstance().ResetMenu();
+	//resetLevelManager
+	
+	//reset Scoreboard
+	ScoreBoard::GetInstance().ResetScore();
+	m_HasMadeAssets = false;
+
+	ResetLevelManager();
+	
+}
+
+void dae::Minigin::clearPlayers()
+{
+	
+	auto gameMode = GameInfo::GetInstance().GetGameMode();
+	switch (gameMode)
+	{
+	case SINGLEPLAYER:
+		//make enemy + normal player
+		MakePlayer(-2, 1, m_pPlayers, { 200,70 }, false);
+		MakeEnemyPlayer(-2, 2, m_pPlayers, { 300,70 });
+
+		break;
+	case MULTIPLAYER:
+		//make enemyplayer
+		MakeEnemyPlayer(-2, 2, m_pPlayers, { 300,70 });
+		break;
+	case VERSUS:
+		//make player2
+		MakePlayer(-2, 1, m_pPlayers, { 200,70 }, false);
+		m_pPlayers[2].swap(m_pPlayers[1]);
+		break;
+	default:
+		break;
+	}
+}
+
+void dae::Minigin::ResetLevelManager()
+{
+	LevelManager::GetInstance().Reset();
+
+	auto pPlayerCollisionComp = m_pPlayers[1]->GetComponent(ComponentType::COLLISIONCOMPONENT);
+	auto playerCollisionComp = std::dynamic_pointer_cast<comps::CollisionComponent>(pPlayerCollisionComp);
+
+	LevelManager::GetInstance().RegisterTransformCompRight(m_pPlayers[1]->GetTransform(), playerCollisionComp);
+
+}
+
+void dae::Minigin::ResetHealth()
+{
+	
+	for (std::shared_ptr<dae::GameObject> pPlayer : m_pPlayers)
+	{
+		auto pPlayerHealthComp = pPlayer->GetComponent(ComponentType::HEALTHCOMPONENT);
+		auto playerHealthComp = std::dynamic_pointer_cast<comps::HealthComponent>(pPlayerHealthComp);
+
+		playerHealthComp->ResetHealth();
 	}
 }

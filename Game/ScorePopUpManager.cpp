@@ -52,3 +52,4 @@ void ScorePopUpManager::RemoveScorePopUp(std::shared_ptr <TransformComponent> pT
 	}
 
 }
+

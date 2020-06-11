@@ -3,6 +3,7 @@
 #include "PhysicsComponent.h"
 #include "ScoreBoard.h"
 #include "ScorePopUpManager.h"
+#include "EnemyObserver.h"
 
 comps::ScorePopUpComponent::ScorePopUpComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp,ItemType itemType)
 	:m_pPhysicsComp(pPhysicsComp)
@@ -38,6 +39,9 @@ void comps::ScorePopUpComponent::Update(const dae::Scene& scene, float elapsedSe
 		default:
 			break;
 		}
+		EnemyObserver::GetInstance().DownCounter();
+	
+		
 		
 		ScorePopUpManager::GetInstance().RemoveScorePopUp(m_pPhysicsComp->GetTransform());
 	}

@@ -17,6 +17,7 @@ class ScorePopUpManager final: public dae::Singleton< ScorePopUpManager>
 public:
 	void MakeScorePopUp(ItemType itemType, int spriteId, float2 position);
 	void RemoveScorePopUp(std::shared_ptr <TransformComponent> pTransform);
+
 private:
 	std::set<std::shared_ptr<dae::GameObject>> m_pScoreObjects;
 };

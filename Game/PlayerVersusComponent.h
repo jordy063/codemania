@@ -11,7 +11,8 @@ namespace comps
 	class PlayerVersusComponent final : public comps::BaseComponent
 	{
 	public:
-		PlayerVersusComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayers);
+		PlayerVersusComponent(std::shared_ptr<dae::GameObject> pPlayer1, std::shared_ptr < comps::BoundingBoxComponent> pEnemyPlayerBoundingBox,
+			std::shared_ptr < comps::HealthComponent> pEnemyPlayerHealthComp);
 
 	protected:
 		virtual void Initialize(const dae::Scene& scene) override;
