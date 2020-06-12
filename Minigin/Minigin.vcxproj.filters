@@ -69,9 +69,6 @@
     <ClInclude Include="Logger.h">
       <Filter>engine\helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>engine\helpers</Filter>
-    </ClInclude>
     <ClInclude Include="TileMapLoader.h">
       <Filter>engine\helpers</Filter>
     </ClInclude>
@@ -99,12 +96,6 @@
     <ClInclude Include="Singleton.h">
       <Filter>engine\helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Audio.h">
-      <Filter>engine\prefabs</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>engine\prefabs</Filter>
-    </ClInclude>
     <ClInclude Include="structs.h">
       <Filter>engine\prefabs</Filter>
     </ClInclude>
@@ -112,9 +103,6 @@
       <Filter>engine\prefabs</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
-      <Filter>engine\prefabs</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
       <Filter>engine\prefabs</Filter>
     </ClInclude>
     <ClInclude Include="CollisionComponent.h">
@@ -158,9 +146,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>engine\scene</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>engine\helpers</Filter>
-    </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>engine\helpers</Filter>
     </ClCompile>
@@ -188,16 +173,7 @@
     <ClCompile Include="XboxController.cpp">
       <Filter>engine\helpers</Filter>
     </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>engine\prefabs</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>engine\prefabs</Filter>
-    </ClCompile>
     <ClCompile Include="Texture2D.cpp">
-      <Filter>engine\prefabs</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
       <Filter>engine\prefabs</Filter>
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">

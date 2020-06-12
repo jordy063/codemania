@@ -7,7 +7,4 @@ public:
 	void OnDirectionalKey(comps::Direction direction, bool move) override;
 	void OnSelectKey(int spriteId) override;
 
-private:
-	int m_ControllerId;
-
 };

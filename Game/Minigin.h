@@ -1,6 +1,4 @@
 #pragma once
-#include "Player.h"
-#include "Ghost.h"
 #include "Menu.h"
 
 struct SDL_Window;
@@ -26,7 +24,6 @@ namespace dae
 
 	private:
 		std::vector<std::shared_ptr<dae::GameObject>> m_pPlayers;
-		std::shared_ptr<Enemy> m_pEnemy;
 		std::shared_ptr<InputObserver> pInputObserver;
 		std::shared_ptr<UI> m_pUI;
 		std::shared_ptr<comps::SpriteComponent> m_pPlayer2SpriteComp;

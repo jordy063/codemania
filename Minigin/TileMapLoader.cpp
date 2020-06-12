@@ -150,7 +150,7 @@ void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> sce
                 {
                     //check the values
 
-                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv1 = true
                     if (line.find("\"") == std::string::npos)
                     {
                         collisionDataWalls1Read = true;
@@ -163,7 +163,7 @@ void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> sce
                 {
                     //check the values
 
-                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv1 = true
                     if (line.find("\"") == std::string::npos)
                     {
                         collisionDataPlatforms1Read = true;
@@ -208,7 +208,7 @@ void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> sce
                 {
                     //check the values
 
-                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv3 = true
                     if (line.find("\"") == std::string::npos)
                     {
                         collisionDataWalls3Read = true;
@@ -223,7 +223,7 @@ void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> sce
                 {
                     //check the values
 
-                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv2 = true
+                    //at the end, if the value isn't valid we set the bool to true and collisiondata lv3 = true
                     if (line.find("\"") == std::string::npos)
                     {
                         collisionDataPlatforms3Read = true;
@@ -241,22 +241,7 @@ void TileMapLoader::LoadFile(int amountOfChunks, std::shared_ptr<dae::Scene> sce
 
 
     }
-    //string[] lines = System.IO.File.ReadAllLines(filename);
 
-    //for (int layerIndex = 0; layerIndex < amountOfTextureLayers; ++layerIndex)
-    //{
-    //    //ReadLayerProperties(lines);
-    //    for (int chunkIndex = 0; chunkIndex < amountOfChunks; chunkIndex++)
-    //    {
-
-    //      //  ReadChunkProperties(lines, mapTiles);
-    //        Index += 1;
-
-    //    }
-    //    Index += 2;
-    //}
-    //ReadCollisionInfo(lines);
-    //ReadCollisionData(lines);
 
 }
 intPair TileMapLoader::ReadChunkData(const std::string& sentence)
@@ -310,6 +295,7 @@ void TileMapLoader::ReadTextureData(const std::string& sentence, intPair chunkPo
     {
 
         size_t indexOfComma = sentence.find_first_of(",", start);
+        //for the last texture it's different
         if (j == 15)
         {
             std::string lastNumber = sentence.substr(start, sentence.length() - start);
@@ -330,7 +316,7 @@ void TileMapLoader::ReadTextureData(const std::string& sentence, intPair chunkPo
                 TileObject->AddComponent(TextureComp, ComponentType::TEXTURECOMPONENT);
                 scene->Add(TileObject);
             }
-            //PngTiles.Add(new Tile(mapTiles[spriteIndexOfLast - 1], new Vector2((xPos - StartPos.X) * ChunkWidth + j * 16 + (int)TransformPos.X, (yPos - StartPos.Y) * ChunkHeight + i * 16 + (int)TransformPos.Y)));
+           
         }
         else if (indexOfComma != -1)
         {
@@ -409,7 +395,7 @@ void TileMapLoader::ReadCollisionData(const std::string& sentence, std::list<std
 
     auto rect = std::shared_ptr<rectangle_>(new rectangle_{ XPos * scale + m_TransformPos.x, YPos * scale + m_TransformPos.y, width * scale, height * scale });
 
-    //works as intended but 
+    
     collision.push_back(rect);
 
 

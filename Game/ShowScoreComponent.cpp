@@ -13,6 +13,7 @@ void comps::ShowScoreComponent::Update(const dae::Scene& scene, float elapsedSec
 	UNREFERENCED_PARAMETER(pos);
 	int score{ ScoreBoard::GetInstance().GetScore() };
 
+	//we only update the score if the score is changed
 	if (m_Score != score)
 	{
 		SetText("Score: " + std::to_string(score));

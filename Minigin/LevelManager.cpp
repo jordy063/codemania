@@ -24,6 +24,7 @@ void LevelManager::Update(float elapsedSecs)
 			m_TransisionProgress += min(elapsedSecs * m_TransitionSpeed.y / m_LevelHeight, m_CurrentLevel);
 			m_Translation.y = m_TransisionProgress * m_LevelHeight;
 
+			//we only calculated the angle once
 			if (m_PlayerLocationSet == false)
 			{
 				for (int i{}; i < m_PlayerAmount; ++i)
@@ -33,7 +34,7 @@ void LevelManager::Update(float elapsedSecs)
 				m_PlayerLocationSet = true;
 			}
 			
-			//int i = 1;
+		
 			
 			for (int i{}; i < m_PlayerAmount; ++i)
 			{
@@ -71,33 +72,34 @@ void LevelManager::Update(float elapsedSecs)
 
 	}
 
-		else
+	else
+	{
+		//if the update is done we update the collision
+		m_ShouldUpdate = false;
+		if (IsCollisionSet == false)
 		{
-			//if a bool is false, set it to true. if we update lv that bool is false
-			m_ShouldUpdate = false;
-			if (IsCollisionSet == false)
-			{
-				//upgrade collision
-				auto tileMap = dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap();
-				tileMap->UpdateLevel(m_CurrentLevel);
-				for(int i{}; i < m_PlayerAmount; ++i)
-					m_pPlayerCollisions[i]->SetCollision(tileMap->GetCollisionWalls(), tileMap->GetCollisionPlatforms());
+			//upgrade collision
+			auto tileMap = dae::SceneManager::GetInstance().GetActiveScene()->GetTileMap();
+			tileMap->UpdateLevel(m_CurrentLevel);
+			for(int i{}; i < m_PlayerAmount; ++i)
+				m_pPlayerCollisions[i]->SetCollision(tileMap->GetCollisionWalls(), tileMap->GetCollisionPlatforms());
 
 
-				IsCollisionSet = true;
-
-			}
-
-			m_IsLocationYReached = false;
-			m_PlayerLocationSet = false;
-
-			for (int i{}; i < m_PlayerAmount; ++i)
-			{
-				UpdateIfBelowLevel(m_pPlayerTransforms[i]);
-				UpdateIfAboveLevel(m_pPlayerTransforms[i]);
-			}
+			IsCollisionSet = true;
 
 		}
+
+		m_IsLocationYReached = false;
+		m_PlayerLocationSet = false;
+
+		//here we check if the players leave the current level and get placed back
+		for (int i{}; i < m_PlayerAmount; ++i)
+		{
+			UpdateIfBelowLevel(m_pPlayerTransforms[i]);
+			UpdateIfAboveLevel(m_pPlayerTransforms[i]);
+		}
+
+	}
 	
 
 }

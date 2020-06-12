@@ -27,21 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ghost.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ZenChan.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
@@ -55,9 +40,6 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="ZenChanAIComponent.h">
@@ -149,21 +131,6 @@
     <ClCompile Include="Minigin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ghost.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ZenChan.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Header Files\Managers</Filter>
     </ClCompile>
@@ -177,9 +144,6 @@
       <Filter>Header Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="InputComponent.cpp">
-      <Filter>Header Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
       <Filter>Header Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="ZenChanAIComponent.cpp">

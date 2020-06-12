@@ -24,7 +24,6 @@ class BubbleManager final : public dae::Singleton< BubbleManager>
 public:
 	void MakeBullet(const float2& position, comps::Direction direction, int id);
 	void RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& pPlayers);
-	void Update();
 	void AddBoundingBoxToList(std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 	void RemoveBullet(std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox);
 	HitType CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox, int playerId);

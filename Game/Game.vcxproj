@@ -22,18 +22,15 @@
     <ClInclude Include="BoulderComponent.h" />
     <ClInclude Include="BoulderManager.h" />
     <ClInclude Include="BubbleComponent.h" />
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="BubbleManager.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="EndLevelMenu.h" />
     <ClInclude Include="EndMenuObserver.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemyObserver.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GameOverMenu.h" />
     <ClInclude Include="GameOverMenuObserver.h" />
-    <ClInclude Include="Ghost.h" />
     <ClInclude Include="GhostAIComponent.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="InputComponent.h" />
@@ -46,8 +43,6 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuObserver.h" />
     <ClInclude Include="Minigin.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerVersusComponent.h" />
     <ClInclude Include="ScoreBoard.h" />
     <ClInclude Include="ScorePopUpComponent.h" />
@@ -55,25 +50,21 @@
     <ClInclude Include="ShowHealthComponent.h" />
     <ClInclude Include="ShowScoreComponent.h" />
     <ClInclude Include="UI.h" />
-    <ClInclude Include="ZenChan.h" />
     <ClInclude Include="ZenChanAIComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoulderComponent.cpp" />
     <ClCompile Include="BoulderManager.cpp" />
     <ClCompile Include="BubbleComponent.cpp" />
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BubbleManager.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="EndLevelMenu.cpp" />
     <ClCompile Include="EndMenuObserver.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EnemyObserver.cpp" />
     <ClCompile Include="GameInfo.cpp" />
     <ClCompile Include="GameOverMenu.cpp" />
     <ClCompile Include="GameOverMenuObserver.cpp" />
-    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GhostAIComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="InputComponent.cpp" />
@@ -87,8 +78,6 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuObserver.cpp" />
     <ClCompile Include="Minigin.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="PlayerVersusComponent.cpp" />
     <ClCompile Include="ScoreBoard.cpp" />
     <ClCompile Include="ScorePopUpComponent.cpp" />
@@ -96,7 +85,6 @@
     <ClCompile Include="ShowHealthComponent.cpp" />
     <ClCompile Include="ShowScoreComponent.cpp" />
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="ZenChan.cpp" />
     <ClCompile Include="ZenChanAIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

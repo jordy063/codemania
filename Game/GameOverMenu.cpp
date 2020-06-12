@@ -244,6 +244,8 @@ void GameOverMenu::RenderMenuItems()
 {
     int counter{};
 
+    //depending on which button is selected we render a different texture
+
     for (int i{}; i < m_ButtonAmount; ++i)
     {
         if (counter != m_SelectIndex)

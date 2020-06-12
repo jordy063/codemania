@@ -1,7 +1,5 @@
 #pragma once
 #include <memory>
-
-#include "Transform.h"
 #include "TransformComponent.h"
 #include "Texture2D.h"
 #include "SceneObject.h"

@@ -1,14 +1,11 @@
-﻿  Audio.cpp
-  BaseComponent.cpp
+﻿  BaseComponent.cpp
   BoundingBoxComponent.cpp
   CollisionComponent.cpp
-  Entity.cpp
   Font.cpp
   FpsComponent.cpp
   FPSCounter.cpp
   GameObject.cpp
   LevelManager.cpp
-  Log.cpp
   Logger.cpp
   MiniginPCH.cpp
   PhysicsComponent.cpp
@@ -22,7 +19,6 @@
   Texture2D.cpp
   TextureComponent.cpp
   TileMapLoader.cpp
-  Transform.cpp
   TransformComponent.cpp
   XboxController.cpp
   Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Debug\Minigin.lib

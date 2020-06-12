@@ -16,6 +16,8 @@
 
 void BoulderManager::MakeBoulder(float2 pos,comps::Direction direction)
 {
+	//we make a boulderobject and add it to our scene
+
 	auto pBoulderObject{ std::shared_ptr<dae::GameObject>(new dae::GameObject()) };
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(pBoulderObject);
 
@@ -37,7 +39,7 @@ void BoulderManager::MakeBoulder(float2 pos,comps::Direction direction)
 
 	pBoulderObject->GetTransform()->Translate(pos);
 
-	
+	//the speed and srpite is set here because we never change it on the way
 	if (direction == comps::Direction::RIGHT)
 	{
 		pSpriteComp->SetBeginEndFrames(0, 3);
@@ -54,6 +56,7 @@ void BoulderManager::MakeBoulder(float2 pos,comps::Direction direction)
 
 void BoulderManager::RemoveBoulder(std::shared_ptr <TransformComponent> pTransform)
 {
+	//here we check if the positions are the same and remove the boulder from the list
 	std::shared_ptr <dae::GameObject> pGameObjectToRemove{ nullptr };
 	for (std::shared_ptr <dae::GameObject> pBoulderObject : m_pBoulders)
 	{
@@ -81,13 +84,12 @@ bool BoulderManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBo
 	}
 
 	return false;
-	//
-	//return m_pPlayerBoundingBox->IsOverlapping(pBulletBoundingBox);
 
 }
 
 void BoulderManager::RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& pPlayers)
 {
+	//register the components needed during the game
 	for (std::shared_ptr<dae::GameObject> pPlayerObject : pPlayers)
 	{
 		auto boundingBoxComp = pPlayerObject->GetComponent(ComponentType::BOUNDINGBOXCOMP);

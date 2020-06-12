@@ -3,6 +3,7 @@
 #include <list>
 #include "Singleton.h"
 #include "structs.h"
+#include "PhysicsComponent.h"
 class Player;
 class Enemy;
 class Bullet;
@@ -36,6 +37,6 @@ private:
 	void MakeEnemiesLevel0(std::shared_ptr<dae::Scene> scene);
 	void MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene);
 	void MakeEnemiesLevel2(std::shared_ptr<dae::Scene> scene);
-	void MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene, EnemyType type);
+	void MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene, EnemyType type, comps::Direction direction);
 };
 

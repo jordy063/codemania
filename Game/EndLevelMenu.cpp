@@ -81,8 +81,6 @@ void EndLevelMenu::Render()
 
 
     SDL_RenderClear(renderer);
-
-    //here we also draw game over or winner with the player number depending on the gamemode
   
     dae::Renderer::GetInstance().RenderTexture(*m_pTitleTexture, 50, 200.0f);
       
@@ -169,7 +167,6 @@ void EndLevelMenu::FillInTexture(std::map<EndLevelMenuItem, std::shared_ptr<dae:
 {
     for (std::pair<EndLevelMenuItem, std::string> menuItem : m_MenuMap)
     {
-        //const SDL_Color color = { 255,255,255 }; // only white text is supported now
         const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), menuItem.second.c_str(), color);
         if (surf == nullptr)
         {
@@ -190,7 +187,6 @@ void EndLevelMenu::FillInTexture(std::map<EndLevelMenuItem, std::shared_ptr<dae:
 void EndLevelMenu::FillInTitle(SDL_Color color)
 {
     std::string title{ "you actually completed it. well done!" };
-   
 
     const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), title.c_str(), color);
     if (surf == nullptr)
@@ -212,6 +208,7 @@ void EndLevelMenu::RenderMenuItems()
 {
     int counter{};
 
+    //depending on which button is selected we render a different texture
     for (int i{}; i < m_ButtonAmount; ++i)
     {
         if (counter != m_SelectIndex)

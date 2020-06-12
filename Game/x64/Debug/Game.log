@@ -1,18 +1,15 @@
 ﻿  BoulderComponent.cpp
   BoulderManager.cpp
   BubbleComponent.cpp
-  Bullet.cpp
   BubbleManager.cpp
   Command.cpp
   EndLevelMenu.cpp
   EndMenuObserver.cpp
-  Enemy.cpp
   EnemyManager.cpp
   EnemyObserver.cpp
   GameInfo.cpp
   GameOverMenu.cpp
   GameOverMenuObserver.cpp
-  Ghost.cpp
   GhostAIComponent.cpp
   HealthComponent.cpp
   InputComponent.cpp
@@ -26,8 +23,6 @@
   Menu.cpp
   MenuObserver.cpp
   Minigin.cpp
-  Player.cpp
-  PlayerComponent.cpp
   PlayerVersusComponent.cpp
   ScoreBoard.cpp
   ScorePopUpComponent.cpp
@@ -35,7 +30,6 @@
   ShowHealthComponent.cpp
   ShowScoreComponent.cpp
   UI.cpp
-  ZenChan.cpp
   ZenChanAIComponent.cpp
      Creating library D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Debug\Game.lib and object D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Debug\Game.exp
   Game.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Debug\Game.exe

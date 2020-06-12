@@ -9,11 +9,11 @@
 
 void ScorePopUpManager::MakeScorePopUp(ItemType itemType,int spriteId,float2 position)
 {
-	//make a gameobject with a certain component
-	//we need to set a specific for a spritecomp. not a texturecomp
 	UNREFERENCED_PARAMETER(itemType);
 	UNREFERENCED_PARAMETER(spriteId);
 	UNREFERENCED_PARAMETER(position);
+
+	//make the object and add the right components
 	
 	auto pScoreObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
 	pScoreObject->GetTransform()->Translate(position);
@@ -36,6 +36,7 @@ void ScorePopUpManager::MakeScorePopUp(ItemType itemType,int spriteId,float2 pos
 
 void ScorePopUpManager::RemoveScorePopUp(std::shared_ptr <TransformComponent> pTransform)
 {
+	//remove the object with the given transform
 	std::shared_ptr <dae::GameObject> pGameObjectToRemove{ nullptr };
 	for (std::shared_ptr <dae::GameObject> pScoreObject : m_pScoreObjects)
 	{

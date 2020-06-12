@@ -21,7 +21,6 @@ namespace dae
 	{
 	public:
 		bool ProcessInput();
-		bool IsPressed(ControllerButton button) const;
 		void Register(std::shared_ptr<InputBaseObserver> inputBaseObserver, int controllerId);
 		void NotifyInput(SDL_Event e, bool move);
 		void NotifyInputController(WORD e, bool move, int controllerId);

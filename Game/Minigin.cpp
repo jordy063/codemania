@@ -13,10 +13,8 @@
 #include "TextureComponent.h"
 #include "TextComponent.h"
 #include "InputObserver.h"
-#include "Enemy.h"
 #include "XboxController.h"
 #include "TileMapLoader.h"
-//#include "SoundManager.h"
 #include "SoundManager2.h"
 #include "EnemyManager.h"
 #include "BubbleManager.h"
@@ -38,7 +36,7 @@
 #include "EndLevelMenu.h"
 #include "GameInfo.h"
 #include "ScoreBoard.h"
-
+#include "EnemyObserver.h"
 
 
 void dae::Minigin::Initialize()
@@ -86,8 +84,7 @@ void dae::Minigin::LoadGame()
 	
 	
 	SoundManager2::GetInstance().Init();
-	std::string filename{ "../Sounds/drumloop.wav" };
-	SoundManager2::GetInstance().playMusic(filename);
+	
 
 	LevelManager::GetInstance().Initialize(scene);
 
@@ -418,10 +415,13 @@ void dae::Minigin::MakeGameAssets()
 		//change the nessecary things
 		break;
 	}
+	if (SoundManager2::GetInstance().isPlaying() == false)
+	{
+		std::string filename{ "../Sounds/levelSong.wav" };
+		SoundManager2::GetInstance().playMusic(filename);
+	}
 
-	
-
-	
+	EnemyObserver::GetInstance().RegistersPlayerHealthComps(m_pPlayers);
 }
 
 void dae::Minigin::RunMainUpdate()
@@ -493,6 +493,8 @@ void dae::Minigin::ResetGame()
 	//reset Scoreboard
 	ScoreBoard::GetInstance().ResetScore();
 	m_HasMadeAssets = false;
+
+	EnemyObserver::GetInstance().Reset();
 
 	ResetLevelManager();
 	

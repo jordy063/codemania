@@ -33,13 +33,6 @@ dae::Scene::Scene(const std::string name) : mName(name)
 dae::Scene::~Scene()
 {
 
-	//for (unsigned int i{}; i < mObjects.size(); ++i)
-	//{
-	//	if (mObjects.at(i) != nullptr )
-	//	{
-	//		//delete mObjects.at(i);
-	//	}
-	//}
 }
 
 void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
@@ -47,10 +40,6 @@ void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
 	mObjects.push_back(object);
 
 	
-}
-void dae::Scene::Add(const std::shared_ptr<Entity>& object)
-{
-	AddGameObject(object->GetGameObject());
 }
 
 void dae::Scene::AddGameObject(const std::shared_ptr<GameObject>& object)

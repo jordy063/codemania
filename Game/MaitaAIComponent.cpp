@@ -7,7 +7,7 @@
 #include "GameInfo.h"
 #include "LevelManager.h"
 comps::MaitaAIComponent::MaitaAIComponent(std::vector<std::shared_ptr<dae::GameObject>> pPlayerObjects, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
-	std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
+	std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox, comps::Direction direction)
 	:m_pPhysicsComp(pPhysicsComp)
 	, m_pBoundingBoxComp(pBoundingBox)
 	, m_pSpriteComp(pSpriteComp)
@@ -17,11 +17,11 @@ comps::MaitaAIComponent::MaitaAIComponent(std::vector<std::shared_ptr<dae::GameO
 	, m_JumpTimer(0)
 	, m_JumpTime(1.0f)
 	, m_pPlayers(pPlayerObjects)
-	,m_BoulderTimer()
-	,m_BoulderTime(4.0f)
-	,m_PreviousSpeed(0)
-	,m_IsAnimationStarted(false)
-	,m_CurrentDirection(comps::Direction::RIGHT)
+	, m_BoulderTimer()
+	, m_BoulderTime(4.0f)
+	, m_PreviousSpeed(0)
+	, m_IsAnimationStarted(false)
+	, m_CurrentDirection(direction)
 {
 	m_Speed = { 30.0f,15.0f };
 }
@@ -29,6 +29,7 @@ comps::MaitaAIComponent::MaitaAIComponent(std::vector<std::shared_ptr<dae::GameO
 
 void comps::MaitaAIComponent::Initialize(const dae::Scene& scene)
 {
+	//register te components needed during the game
 	UNREFERENCED_PARAMETER(scene);
 	for (std::shared_ptr<dae::GameObject> pPlayerObject : m_pPlayers)
 	{
@@ -47,12 +48,26 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 {
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(pos);
+
+	//at the start we set the right direction + sprite
 	if (m_IsAnimationStarted == false)
 	{
-		m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
+		if (m_CurrentDirection == comps::Direction::LEFT)
+		{
+
+			m_MoveLeftCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
+		}
+		else
+		{
+
+			m_MoveRightCommand.Execute(m_pPhysicsComp, m_pSpriteComp, m_Speed.x);
+		}
+
 		m_IsAnimationStarted = true;
 	}
 	DoRandomJumps = false;
+
+	//we check if a player is above the enemy
 	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
 		if (m_pPlayerBoundingBoxes[i] != nullptr)
@@ -64,6 +79,8 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 			}
 		}
 	}
+
+	//when DoRandomJumps = true we start a timer and make a jump at a random duration
 	if (DoRandomJumps)
 	{
 		if (m_JumpTimeSet == false)
@@ -87,7 +104,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 		m_JumpTimer += elapsedSecs;
 	}
 
-
+	//see if the direction should be changed
 	if (m_Timer > m_ChangeDirectionTime && DoRandomJumps == true)
 	{
 		int direction1{};
@@ -95,7 +112,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 		direction1 = static_cast<int>(m_CurrentDirection);
 		direction2 = static_cast<int>(m_CurrentDirection);
 		
-
+		//when the enemy goes below the player we update it's direction.
 		if (m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[0]->GetBoundingBox(0, 0).posY >= -0.01f)
 		{
 			//calculate direction for player 1
@@ -112,6 +129,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 		else
 			direction2 = direction1;
 
+		//if the directions are the same we go that way but if not player 1 takes priority
 		if (direction1 == direction2 || GameInfo::GetInstance().GetGameMode() == GameMode::SINGLEPLAYER)
 		{
 			switch (direction1)
@@ -132,6 +150,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 
 	float2 velocity = m_pPhysicsComp->GetVelocity();
 
+	//if the enemy hits a wall we go the other direction
 	if (velocity.x == 0)
 	{
 		if (m_CurrentDirection == comps::Direction::RIGHT)
@@ -145,18 +164,15 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 			m_CurrentDirection = comps::Direction::RIGHT;
 		}
 	}
-	//if (IsOverlapping(player))
-	//{
-	//	//do damage and respawn player
-	//	player->TakeDamage();
-	//}
+	
+	//when a player overlaps with the enemy we do damage
 	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
 		if (m_pPlayerBoundingBoxes[i] != nullptr && m_pPlayerHealthComps[i] != nullptr)
 		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))
 		{
 			
-			if (m_pPlayerHealthComps[i]->GetInvinsible() == false)
+			if (m_pPlayerHealthComps[i]->GetIsInvinsible() == false)
 			{
 				m_pPlayerHealthComps[i]->DropHealth(1);
 			}
@@ -166,6 +182,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	m_Timer += elapsedSecs;
 	m_BoulderTimer += elapsedSecs;
 
+	//we spawn boulder at a fixed duration to the player direction
 	if (m_BoulderTimer > m_BoulderTime)
 	{
 		m_BoulderTimer = 0;
@@ -174,6 +191,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	LevelManager::GetInstance().UpdateIfBelowLevel(m_pPhysicsComp->GetTransform());
 }
 
+//return an int but this corresponds to our comps::direction 
 int comps::MaitaAIComponent::CalculatePlayerDirection(std::shared_ptr<dae::GameObject> pPlayer)
 {
 
@@ -184,8 +202,5 @@ int comps::MaitaAIComponent::CalculatePlayerDirection(std::shared_ptr<dae::GameO
 	else
 
 		return 1;
-
-
-
 
 }

@@ -9,6 +9,7 @@ SoundManager2::AudioState SoundManager2::currentState = FAULT;
 
 void SoundManager2::Init()
 {
+    //initialize audio device
     if (SDL_Init(SDL_INIT_AUDIO) != -1)
     {
         if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
@@ -36,7 +37,7 @@ void SoundManager2::playMusic(const std::string& fileName)
 
         if (music == NULL)
         {
-            std::cerr << "Error loading music file: " << fileName << std::endl;
+            throw std::runtime_error(std::string("Error loading music file: " + fileName) + SDL_GetError());
         }
         else
         {
@@ -110,7 +111,7 @@ void SoundManager2::playEffect(const std::string& fileName)
 
     }
 
-        Mix_PlayChannel(-1, m_EffectsMap[fileName], 0);
+    Mix_PlayChannel(-1, m_EffectsMap[fileName], 0);
     
 
 }

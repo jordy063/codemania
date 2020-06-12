@@ -26,8 +26,8 @@ void comps::BoulderComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
+	
 	//check if it hits a wall on the side.
-
 	if (m_pPhysicsComp->GetVelocity().x == 0)
 	{
 		//delete the boulder
@@ -38,17 +38,18 @@ void comps::BoulderComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	{
 		//if i = 1 && gamemode = versus
 		//don't do anything
-		if (GameInfo::GetInstance().GetGameMode() == VERSUS && i == 1)
+		if (GameInfo::GetInstance().GetGameMode() != VERSUS && i != 1)
 		{
 
 		}
 		else
 		{
-
+			//we check if it hits a player
 			if (BoulderManager::GetInstance().CheckIfHit(m_pBoundingBox, i))
 			{
-				if (m_pPlayerHealthComps[i]->GetInvinsible() == false)
+				if (m_pPlayerHealthComps[i]->GetIsInvinsible() == false)
 				{
+					//do damage
 					m_pPlayerHealthComps[i]->DropHealth(1);
 					LevelManager::GetInstance().ResetPlayerPos(i);
 				}

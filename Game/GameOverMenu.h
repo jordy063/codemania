@@ -41,7 +41,7 @@ private:
 	std::vector< std::shared_ptr<dae::Texture2D>> m_pTitleTextures;
 	std::shared_ptr<dae::Font> m_pFont;
 	int m_ButtonAmount = 2;
-	int m_SelectIndex;
+	int m_SelectIndex = 0;
 	int m_DeathId = -1;
 	std::shared_ptr<GameOverMenuObserver> m_pGameOverMenuObserver;
 

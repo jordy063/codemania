@@ -5,13 +5,17 @@
 #include "Scene.h"
 #include <set>
 #include <list>
+
+namespace comps
+{
+	class BoundingBoxComponent;
+}
 class ItemManager final : public dae::Singleton< ItemManager>
 {
 public:
 	void makeItem(float2 pos, ItemType type,int spriteId);
 	void RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& playerObjects);
 	bool CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pItem);
-	void DoEffect(ItemType type);
 	void RemoveItem(std::shared_ptr<comps::BoundingBoxComponent> pItemBoundingBox);
 	
 

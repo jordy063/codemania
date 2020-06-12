@@ -4,36 +4,13 @@
 #include "InputObserver.h"
 #include "InputComponent.h"
 #include "XboxController.h"
-#include "Audio.h"
 
 
 
 bool dae::InputManager::ProcessInput()
 {
 	
-
-
-	//DWORD dwResult;
-	//for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
-	//{
-
-
-	//	ZeroMemory(&currentState, sizeof(XINPUT_STATE));
-
-	//	// Simply get the state of the controller from XInput.
-	//	dwResult = XInputGetState(i, &currentState);
-
-	//	if (dwResult == ERROR_SUCCESS)
-	//	{
-	//		// Controller is connected 
-	//		std::cout << "Button A has been pressed" << std::endl;
-	//	}
-	//	else
-	//	{
-	//		// Controller is not connected 
-
-	//	}
-	//}
+	//check the buttons for every inputobserver
 	for (std::map<int, std::vector<std::shared_ptr<InputBaseObserver>>>::iterator iter = pInputObserver.begin(); iter != pInputObserver.end(); ++iter)
 	{
 		int k = iter->first;
@@ -45,6 +22,8 @@ bool dae::InputManager::ProcessInput()
 
 	SDL_Event e;
 	
+	//if the queue isn't empty we check if anything is pressed
+	//we have seperate notifies for key up and keydown to stop moving if we don't press anything
 	while (!m_EventQueue.empty()) {
 		e = m_EventQueue.front();
 		if (e.type == SDL_QUIT) {
@@ -66,21 +45,6 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-bool dae::InputManager::IsPressed(ControllerButton button) const
-{
-	switch (button)
-	{
-	case ControllerButton::ButtonA:
-		return currentState.Gamepad.wButtons & XINPUT_GAMEPAD_A;
-	case ControllerButton::ButtonB:
-		return currentState.Gamepad.wButtons & XINPUT_GAMEPAD_B;
-	case ControllerButton::ButtonX:
-		return currentState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
-	case ControllerButton::ButtonY:
-		return currentState.Gamepad.wButtons & XINPUT_GAMEPAD_Y;
-	default: return false;
-	}
-}
 void dae::InputManager::Register(std::shared_ptr<InputBaseObserver> inputObserver,int controllerId)
 {
 	// contains
@@ -88,6 +52,8 @@ void dae::InputManager::Register(std::shared_ptr<InputBaseObserver> inputObserve
 }
 void dae::InputManager::NotifyInput(SDL_Event e,bool move)
 {
+	//if the observer with the controller id isn't empty we check what we should do
+	// -1 and -2 are keyboard
 	if (!pInputObserver[-1].empty())
 	{
 		for (auto inputObserver : pInputObserver[-1]) {
@@ -164,25 +130,14 @@ void dae::InputManager::NotifyInput(SDL_Event e,bool move)
 }
 void dae::InputManager::checkButtons(int controllerId)
 {
-	//if(currentState.Gamepad.wButtons)
-	//if (IsPressed(ControllerButton::ButtonA))
-	//{
-	//	std::cout << "Button A has been pressed" << std::endl;
-	//}	
-	//else if (IsPressed(ControllerButton::ButtonB))
-	//	std::cout << "Button B has been pressed" << std::endl;
-	//else if (IsPressed(ControllerButton::ButtonY))
-	//	std::cout << "Button Y has been pressed" << std::endl;
-	//else if (IsPressed(ControllerButton::ButtonX))
-	//{
-	//	std::cout << "Button X has been pressed" << std::endl;
-	//}
 
 	xboxController xbox(controllerId);
 
 	
 	xbox.getState();
 	WORD words[5]{ 1,2,4,8,4096 };
+
+	//go over all buttons and only add them if they aren't in the map yet
 	for (WORD i:words)
 	{
 		std::pair<int, WORD> k{ controllerId , i};
@@ -200,9 +155,10 @@ void dae::InputManager::checkButtons(int controllerId)
 }
 void dae::InputManager::NotifyInputController(WORD e, bool move,int controllerId)
 {
-	if (!pInputObserver[-2].empty())
+	//if the observer with the controller id isn't empty we check what we should do
+	if (!pInputObserver[controllerId].empty())
 	{
-		for (auto inputObserver : pInputObserver[-2]) {
+		for (auto inputObserver : pInputObserver[controllerId]) {
 			switch (e)
 			{
 			case XINPUT_GAMEPAD_DPAD_UP:
@@ -228,11 +184,6 @@ void dae::InputManager::NotifyInputController(WORD e, bool move,int controllerId
 			}
 		}
 	}
-	//ServiceLocator::GetAudio();
-	//Audio* test;
-	//test->PlaySound()
-	//service->RegisterAudioService()
-
 
 }
 void dae::InputManager::DoKeyFunctionality(SDL_Event e, std::shared_ptr<InputBaseObserver> inputObserver,bool move,int id)

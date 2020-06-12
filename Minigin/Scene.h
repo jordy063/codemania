@@ -1,6 +1,5 @@
 #pragma once
 #include "SceneManager.h"
-#include "Entity.h"
 #include "FPSCounter.h"
 #include <list>
 namespace comps 
@@ -18,7 +17,6 @@ namespace dae
 		friend Scene& SceneManager::CreateScene(const std::string name);
 	public:
 		void Add(const std::shared_ptr<SceneObject>& object);
-		void Add(const std::shared_ptr<Entity>& object);
 		void AddGameObject(const std::shared_ptr<GameObject>& object);
 		void AddTileMap(const std::shared_ptr<TileMapLoader>& tileMapLoader);
 

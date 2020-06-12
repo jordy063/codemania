@@ -10,14 +10,14 @@ comps::InputComponent::InputComponent(std::shared_ptr<comps::PhysicsComponent> p
 	, m_timeout1{0}
 	,m_timeout2{0}
 	, m_ShootDuration{1.0}
+	,m_IsShooting(false)
+	,m_ShootTimer(0)
+	,m_ActiveRow(0)
 {
+	//we fill the directions up that we will have.
 	DirToRow[Direction::LEFT] = 0 ;
 	DirToRow[Direction::RIGHT] = 1;
 	UNREFERENCED_PARAMETER(controllerId);
-	//pInputObserver = std::make_shared<InputObserver>(this, controllerId);
-	////pInputObserver = new InputObserver(this);
-	//dae::InputManager::GetInstance().Register(pInputObserver,controllerId);
-	//pSpriteComp->SetActiveRowStop();
 
 }
 
@@ -36,6 +36,8 @@ void comps::InputComponent::Update(const dae::Scene& scene, float elapsedSecs, f
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
+
+	//we don't want to be able to spam so we have a delay
 	m_timeout1 -= elapsedSecs;
 	m_timeout2 -= elapsedSecs;
 
@@ -60,6 +62,8 @@ void comps::InputComponent::changeDirection(Direction direction)
 	float movementSpeed{ pPhysicsComp->GetMovementSpeed() };
 	float jumpSpeed{ 320 };
 	
+	//this is called by inputObserver
+	//according to the direction the right command gets called
 	switch (direction)
 	{
 		case Direction::LEFT:
@@ -94,7 +98,7 @@ void comps::InputComponent::ShootBullet(Direction direction,int spriteId)
 {
 	float movementSpeed{ 20 };
 	
-	//set timer
+	//we shoot the bubble set timer
 	switch (spriteId)
 	{
 	case 0:
@@ -146,10 +150,11 @@ void comps::InputComponent::ShootBullet(Direction direction,int spriteId)
 	}
 }
 
+//this function adds input to the player
 void comps::InputComponent::MakeObserver(int controllerId)
 {
+	
 	pInputObserver = std::make_shared<InputObserver>(this, controllerId);
-	//pInputObserver = new InputObserver(this);
 	dae::InputManager::GetInstance().Register(pInputObserver, controllerId);
 }
 

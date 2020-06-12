@@ -14,7 +14,7 @@ namespace comps
 	class TextureComponent;
 }
 
-enum MenuItem
+enum class MenuItem
 {
 	P1PLAY,
 	P2PLAY,

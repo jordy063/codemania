@@ -178,7 +178,7 @@ bool Menu::readLanguageParameters(const std::string& line,const std::string& lan
     std::string readLanguage = line.substr(startIndex + 1, endIndex - startIndex - 1);
     if (readLanguage == language)
     {
-        for (int i{}; i <= MenuItem::CONTROLLERSON; ++i)
+        for (int i{}; i <= int(MenuItem::CONTROLLERSON); ++i)
         {
             startIndex = endIndex + 1;
 
@@ -232,7 +232,7 @@ void Menu::FillInTexture(std::map<MenuItem, std::shared_ptr<dae::Texture2D>>& me
 void Menu::RenderMenuItems()
 {
     int counter{};
-   
+    //depending on which button is selected we render a different texture
     for (int i{}; i < m_ButtonAmount - 1; ++i)
     {
         if (counter != m_SelectIndex)
@@ -256,6 +256,8 @@ void Menu::RenderMenuItems()
     }
     counter = m_ButtonAmount - 1;
    
+    //this is for the buttons specifically.
+    //if we have the buttons selected we can use right or left to switch textures
     if (m_UseControllers == true)
     {
         if (counter == m_SelectIndex)

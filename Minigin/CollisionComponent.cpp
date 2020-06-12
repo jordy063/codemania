@@ -57,7 +57,7 @@ void comps::CollisionComponent::Update(const dae::Scene& scene, float elapsedSec
 		bool platFormTouchedYCurrent{ IsRectangleOverlapping(0, false,m_CollisionPlatforms) };
 		bool wallsTouchedY{ IsRectangleOverlapping(elapsedSecs * 2, false, m_CollisionWalls) };
 
-
+		//check if the object touches the ground
 		if (platFormTouchedY && !platFormTouchedYCurrent)
 		{
 			if (m_pPhysicsComp->GetVelocity().y > 0)
@@ -66,11 +66,13 @@ void comps::CollisionComponent::Update(const dae::Scene& scene, float elapsedSec
 				m_pPhysicsComp->SetAirborne(false);
 			}
 		}
+		//if it touches a wall we set y speed to 0
 		if (wallsTouchedY)
 		{
 			m_pPhysicsComp->SetSpeedY(0);
 			m_pPhysicsComp->SetAirborne(false);
 		}
+		//if it touches nothing we're airborn
 		if (wallsTouchedY == false && platFormTouchedY == false)
 		{
 			m_pPhysicsComp->SetAirborne(true);

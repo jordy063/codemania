@@ -34,7 +34,7 @@ private:
 	std::shared_ptr<dae::Texture2D> m_pTitleTexture;
 	std::shared_ptr<dae::Font> m_pFont;
 	int m_ButtonAmount = 2;
-	int m_SelectIndex;
+	int m_SelectIndex = 0;
 	int m_DeathId = -1;
 	std::shared_ptr<EndMenuObserver> m_pEndMenuObserver;
 

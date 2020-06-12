@@ -81,17 +81,9 @@ void dae::GameObject::Update(float elapsedSecs)
 	{
 		for (ComponentType type : m_Types)
 		{
-			if (type == ComponentType::HEALTHCOMPONENT)
-			{
-				std::cout << "test"<<'\n';
-			}
 			m_pComponents[type]->Update(*m_pScene, elapsedSecs, m_pTransform->GetPosition());
 		}
 	}
-	/*for (std::shared_ptr<comps::BaseComponent> comp : m_pComponents)
-	{
-		comp->Update(*m_pScene, elapsedSecs, m_pTransform->GetPosition());
-	}*/
 }
 
 void dae::GameObject::Render() 
@@ -104,10 +96,6 @@ void dae::GameObject::Render()
 			m_pComponents[type]->Render(*m_pScene, m_pTransform->GetPosition());
 		}
 	}
-	/*for (std::shared_ptr<comps::BaseComponent> comp : m_pComponents)
-	{
-		comp->Render(*m_pScene, m_pTransform->GetPosition());
-	}*/
 
 }
 

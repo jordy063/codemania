@@ -1,12 +1,12 @@
 #include "MiniginPCH.h"
 #include "Command.h"
-#include "Bullet.h"
 #include "SceneManager.h"
 #include "GameObject.h"
 #include "BubbleManager.h"
 #include "SoundManager2.h"
 #include "GameInfo.h"
 #include "BoulderManager.h"
+
 
 void MakeBullet(std::shared_ptr<comps::PhysicsComponent> physicsComp, comps::Direction direction,int id)
 {
@@ -22,7 +22,11 @@ void MakeBullet(std::shared_ptr<comps::PhysicsComponent> physicsComp, comps::Dir
 		pos.x += distanceFromPlayer;
 	}
 	if (GameInfo::GetInstance().GetGameMode() != VERSUS || id == 0)
+	{
 		BubbleManager::GetInstance().MakeBullet(pos, direction, id);
+		std::string filename{ "../Sounds/jumpSound.wav" };
+		SoundManager2::GetInstance().playEffect(filename);
+	}
 	else
 		BoulderManager::GetInstance().MakeBoulder(pos, direction);
 
@@ -30,6 +34,7 @@ void MakeBullet(std::shared_ptr<comps::PhysicsComponent> physicsComp, comps::Dir
 }
 void changeDirection(std::shared_ptr<comps::PhysicsComponent> physicsComp, std::shared_ptr<comps::SpriteComponent> spriteComp,comps::Direction direction,float speed)
 {
+	//depending on our direction we change our speed + prite
 	if (direction == comps::Direction::RIGHT || direction == comps::Direction::LEFT)
 	{
 		physicsComp->SetSpeedX(direction == comps::Direction::RIGHT ? speed : -speed);
@@ -75,6 +80,7 @@ void MoveUpCommand::Execute(std::shared_ptr<comps::PhysicsComponent> physicsComp
 	UNREFERENCED_PARAMETER(id);
 	if (!physicsComp->GetAirBorne() || physicsComp->GetGravityEnabled() == false)
 	{
+		
 		changeDirection(physicsComp, spriteComp, comps::Direction::UP, speed);
 	}
 

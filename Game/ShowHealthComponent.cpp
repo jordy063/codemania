@@ -20,6 +20,7 @@ void comps::ShowHealthComponent::Update(const dae::Scene& scene, float elapsedSe
 	UNREFERENCED_PARAMETER(pos);
 	int health{ m_pHealthComp->GetHealth() };
 
+	//we only update it if the health we get is changed
 	if (m_Health != health)
 	{
 		m_Health--;

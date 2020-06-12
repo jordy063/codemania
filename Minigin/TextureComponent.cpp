@@ -71,6 +71,8 @@ void comps::TextureComponent::Render(const dae::Scene & scene, float2 pos)
 		auto texSize = m_pTexture->GetSize();
 		int xShift = int(m_Offset.x) + (texSize.first * (int)m_Alignment.first) / 2;
 		int yShift = int(m_Offset.y) + (texSize.second * (int)m_Alignment.second) / 2;
+
+		//here we update our texture according to our translation from the levelmanager
 		if (m_AllowScrolling)
 		{
 			xShift += (int)LevelManager::GetInstance().GetTranslationX();

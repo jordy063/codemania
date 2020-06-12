@@ -39,6 +39,7 @@ void comps::BubbleComponent::Initialize(const dae::Scene& scene)
 
 void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, float2 pos)
 {
+	//at the start we set the speed for the current direction
 	if (speedSet == false)
 	{
 		m_pPhysicsComp->SetMovement(m_Direction, BubbleManager::GetInstance().GetBubbleSpeed().x);
@@ -49,26 +50,24 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	UNREFERENCED_PARAMETER(scene);
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
-	//here we can check if the bullet overlaps an enemy and set the sprite to the right row
 
-	//call a function of the enemy manager which takes a rectangle/boundingbox
+
 	int index{};
 	//if enemy is hit
 	if (m_HasHitEnemy == false)
 	{
+		//here we can check if the bullet overlaps an enemy and set the sprite to the right row
 		int enemyId = EnemyManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, index, m_Enemy);
 		m_EnemyType = static_cast<EnemyType>(enemyId);
 		if (enemyId != -1)
 		{
-			//this should be according to the type of enemy
+			//we change the sprite according to the enemy type
 			m_pSpriteComp->SetBeginEndFrames(16 + index * 8, 24 + 8 * index);
 			m_pPhysicsComp->SetSpeedX(0);
 			m_pPhysicsComp->SetGravity(false);
 			m_pPhysicsComp->SetMovement(comps::Direction::UP, BubbleManager::GetInstance().GetBubbleSpeed().y);
-			//change the sprite + physicscomp and add the collision
 			m_HasHitEnemy = true;
 
-			
 			m_EnemyId = enemyId;
 		}
 	}
@@ -82,7 +81,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 		BubbleManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp, m_pBoundingBoxComp);
 		m_IsTimerReached = true;
 	}
-	
+	//checks if bullet should get it's boundingbox
 	if (m_GoUpTimer > m_AddBoundingBoxTime && m_IsBoundingBoxTimerReached == false)
 	{
 		BubbleManager::GetInstance().AddBoundingBoxToList(m_pCollisionComp, m_pBoundingBoxComp);
@@ -93,11 +92,13 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	//if nothing is hit
 	if (m_HasHitEnemy == false)
 	{
+		//only in multiplayer both players can collide with bubbles
 		if (GameInfo::GetInstance().GetGameMode() != GameMode::MULTIPLAYER)
 		{
 			m_PlayerAmount = 1;
 		}
 
+		//depending on where the player hits he can write or pop a bubble
 		for (int playerId{}; playerId < m_PlayerAmount; ++playerId)
 		{
 			
@@ -115,6 +116,7 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 			}
 		}
 		
+		//if the lifetime is up we delete the bullet
 		if (m_GoUpTimer > m_LifeTime)
 		{
 			BubbleManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
@@ -123,16 +125,19 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 	}
 	else
 	{
+		//here an enemy was hit
+		//if the player hits the bubble we spawn an item according to the enemy type
 		if (BubbleManager::GetInstance().CheckIfHit(m_pBoundingBoxComp, m_SpriteId))
 		{
-			//spawn item
-			//spriteid will be the type of the enemy
+			//spawn item + remove bullet
 			ItemType type = static_cast<ItemType>(m_EnemyId);
 			ItemManager::GetInstance().makeItem(m_pPhysicsComp->GetTransform()->GetPosition(), type,m_SpriteId);
 			m_Enemy->Clear();
 			BubbleManager::GetInstance().RemoveBullet(m_pCollisionComp, m_pBoundingBoxComp);
 			
 		}
+
+		//if the enemy is trapped for too long it gets free
 		m_EnemyTrapTimer += elapsedSecs;
 		if (m_EnemyTrapTimer > m_EnemyTrapTime)
 		{
@@ -145,11 +150,4 @@ void comps::BubbleComponent::Update(const dae::Scene& scene, float elapsedSecs, 
 		}
 	}
 
-	
-	//check if bullet overlaps with enemy. if so we change our sprite,clear the enemy,make him go up and add them to the list(maybe with bool) if the bool is true we can fill up a list in the bulletmanager and then whenever an enemy is hit 
-	//also check if the bullet reached travel time. if so we add the bullet to the list and make him go up
-
-
-
-	//if the bullet has an enemy and player comes near it we call the enemyManagerDowncounter and remove the bullet
 }

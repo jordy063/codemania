@@ -2,9 +2,9 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
 #include "SceneObject.h"
-#include "Transform.h"
 #include <SDL.h>
 #include "Logger.h"
+#include <assert.h>
 
 
 

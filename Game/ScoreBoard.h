@@ -10,5 +10,5 @@ public:
 	void ResetScore();
 
 private:
-	int m_Score;
+	int m_Score = 0;
 };

@@ -84,6 +84,7 @@ void UI::AddPlayer2(std::shared_ptr<dae::GameObject> pPlayer2)
 
 void UI::Reset()
 {
+	//we only reset the first one because the other player gets remade
 	m_pPlayer2HealthObject->Clear();
 	m_pPlayerHealthComps[0]->ResetHealth();
 	m_pPlayerHealthComps.pop_back();

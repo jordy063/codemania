@@ -1,9 +1,6 @@
 #include "MiniginPCH.h"
 #include "EnemyManager.h"
-#include "Ghost.h"
 #include "Scene.h"
-#include "ZenChan.h"
-#include "Bullet.h"
 #include "BoundingBoxComponent.h"
 #include "GhostAIComponent.h"
 #include "GameObject.h"
@@ -11,12 +8,13 @@
 #include "CollisionComponent.h"
 #include "EnemyObserver.h"
 #include "MaitaAIComponent.h"
+#include "TileMapLoader.h"
 
 
 void EnemyManager::MakeEnemies(std::shared_ptr<dae::Scene> scene,int level)
 {
-	//OPTION 1
-	//we check how how enemies we currently have and see if we need more of that type
+	
+	//make enemies according to the level given
 	switch (level)
 	{
 	case 0:
@@ -33,10 +31,6 @@ void EnemyManager::MakeEnemies(std::shared_ptr<dae::Scene> scene,int level)
 		break;
 	}
 
-
-	//OPTION 2
-	//we make all enemies and add them to the scene
-	//we just create new enemies every time
 }
 
 void EnemyManager::Update(float elapsedSecs, std::shared_ptr<Player> player)
@@ -49,8 +43,8 @@ void EnemyManager::Update(float elapsedSecs, std::shared_ptr<Player> player)
 int EnemyManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox,int& index, std::shared_ptr<dae::GameObject>& other)
 {
 	UNREFERENCED_PARAMETER(pBulletBoundingBox);
-	//GetBoundingBoxOfBullet and check with all enemies
-
+	
+	//check if the bullet overlaps with an enemy
 	for (std::pair<std::shared_ptr<dae::GameObject>,int> enemy : m_pEnemies)
 	{
 
@@ -82,7 +76,7 @@ void EnemyManager::RegisterPlayers(const std::vector<std::shared_ptr<dae::GameOb
 
 void EnemyManager::AddEnemyToList(std::pair<std::shared_ptr<dae::GameObject> ,EnemyType> pEnemy)
 {
-
+	//we remove the enemy when we change our bullet so it doesn't check if it's hit anymore
 	m_pEnemies.push_back(pEnemy);
 }
 
@@ -115,7 +109,7 @@ void EnemyManager::MakeEnemiesLevel0(std::shared_ptr<dae::Scene> scene)
 
 
 
-	MakeEnemy({ 250,100 }, scene, EnemyType::MAITA);
+	MakeEnemy({ 250,100 }, scene, EnemyType::MAITA,comps::Direction::RIGHT);
 
 }
 void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
@@ -123,18 +117,18 @@ void EnemyManager::MakeEnemiesLevel1(std::shared_ptr<dae::Scene> scene)
 	scene->GetTileMap()->UpdateLevel(1);
 
 	////enemy test
-	//MakeEnemy({ 300,700 }, scene, EnemyType::GHOST);
+	MakeEnemy({ 300,700 }, scene, EnemyType::GHOST, comps::Direction::RIGHT);
 
-	//MakeEnemy({ 500,900 }, scene, EnemyType::GHOST);
-	//MakeEnemy({ 100,900 }, scene, EnemyType::GHOST);
+	MakeEnemy({ 500,900 }, scene, EnemyType::GHOST, comps::Direction::LEFT);
+	MakeEnemy({ 100,900 }, scene, EnemyType::GHOST, comps::Direction::RIGHT);
 
 
 
 	////enemy test2
-	//MakeEnemy({ 200,700 }, scene, EnemyType::ZENCHAN);
+	MakeEnemy({ 200,700 }, scene, EnemyType::ZENCHAN, comps::Direction::LEFT);
 
 
-	MakeEnemy({ 250,700 }, scene, EnemyType::MAITA);
+	MakeEnemy({ 250,700 }, scene, EnemyType::MAITA,comps::Direction::RIGHT);
 
 }
 void EnemyManager::MakeEnemiesLevel2(std::shared_ptr<dae::Scene> scene)
@@ -142,21 +136,26 @@ void EnemyManager::MakeEnemiesLevel2(std::shared_ptr<dae::Scene> scene)
 	scene->GetTileMap()->UpdateLevel(2);
 
 	//enemy test
-	MakeEnemy({ 100,1400 }, scene, EnemyType::GHOST);
+	MakeEnemy({ 100,1400 }, scene, EnemyType::GHOST, comps::Direction::LEFT);
+	MakeEnemy({ 500,1400 }, scene, EnemyType::GHOST, comps::Direction::RIGHT);
 
 
 	//enemy test2
-	MakeEnemy({ 150,1400 }, scene, EnemyType::ZENCHAN);
+	MakeEnemy({ 150,1400 }, scene, EnemyType::ZENCHAN, comps::Direction::LEFT);
+	MakeEnemy({ 300,1400 }, scene, EnemyType::ZENCHAN, comps::Direction::RIGHT);
 
 
-	MakeEnemy({ 250,1400 }, scene, EnemyType::MAITA);
-
+	MakeEnemy({ 250,1400 }, scene, EnemyType::MAITA, comps::Direction::RIGHT);
+	MakeEnemy({ 400,1400 }, scene, EnemyType::MAITA, comps::Direction::LEFT);
 }
 
 
-void EnemyManager::MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene,EnemyType type)
+void EnemyManager::MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene,EnemyType type,comps::Direction direction)
 {
+	//we upcount our enemyamount
 	EnemyObserver::GetInstance().UpCounter();
+
+	//make the actual opject.
 	auto enemyObject = std::shared_ptr <dae::GameObject>(new dae::GameObject());
 	
 	enemyObject->GetTransform()->Translate(pos.x, pos.y);
@@ -164,6 +163,7 @@ void EnemyManager::MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene,Enemy
 	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/EnemySheet.png", 6, 8, type, 0.2f, 44, 22));
 
 	std::shared_ptr<comps::PhysicsComponent> pPhysicsComp;
+	//everything but ghost has gravity enabled
 	if (type == EnemyType::GHOST)
 	{
 		pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(enemyObject->GetTransform(), false, 30.0f));
@@ -183,46 +183,30 @@ void EnemyManager::MakeEnemy(float2 pos, std::shared_ptr<dae::Scene> scene,Enemy
 	enemyObject->AddComponent(pBoundingBox, ComponentType::BOUNDINGBOXCOMP);
 	enemyObject->AddComponent(pCollisionComp, ComponentType::COLLISIONCOMPONENT);
 	enemyObject->AddComponent(pPhysicsComp, ComponentType::PHYSICSCOMP);
+
+	//we add a different AI component according to the enemy type
 	if (type == EnemyType::ZENCHAN)
 	{
-		auto pZenChanAiComp{ std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox)) };
+		auto pZenChanAiComp{ std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox,direction)) };
 		enemyObject->AddComponent(pZenChanAiComp, ComponentType::ZENCHANCOMPONENT);
 	}
 	else if (type == EnemyType::GHOST)
 	{
-		auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox));
+		auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox, direction));
 		enemyObject->AddComponent(ghostAiComp, ComponentType::GHOSTAICOMPONENT);
 	}
 	if (type == EnemyType::MAITA)
 	{
-		auto pMaitaAiComp{ std::shared_ptr<comps::MaitaAIComponent>(new comps::MaitaAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox)) };
+		auto pMaitaAiComp{ std::shared_ptr<comps::MaitaAIComponent>(new comps::MaitaAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox,direction)) };
 		enemyObject->AddComponent(pMaitaAiComp, ComponentType::MAITAAICOMPNENT);
 
 	}
+	//according to our enemy type we also add the right itemType
 	auto itemType = static_cast<ItemType>(type);
 	m_pEnemies.push_back({ enemyObject,itemType });
 
-	/*switch (type)
-	{
-	case ZENCHAN:
-		auto pZenChanAiComp{ std::shared_ptr<comps::ZenChanAIComponent>(new comps::ZenChanAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox) };
-		enemyObject->AddComponent(pZenChanAiComp, ComponentType::ZENCHANCOMPONENT);
-		break;
-	case GHOST:
-		auto ghostAiComp = std::shared_ptr<comps::GhostAIComponent>(new comps::GhostAIComponent(m_pPlayerObjects, pSpriteComp, pPhysicsComp, pBoundingBox));
-		enemyObject->AddComponent(ghostAiComp, ComponentType::GHOSTAICOMPONENT);
-		break;
-	case MAITA:
-		break;
-	default:
-		break;
-	}*/
+	
 	scene->Add(enemyObject);
 	enemyObject->Initialize();
-	//add AIcomponent and do the same as in playerclass
 
-	
-	
-
-	
 }

@@ -6,6 +6,7 @@
 #include "ItemManager.h"
 #include "EnemyObserver.h"
 #include "ScorePopUpManager.h"
+#include "SoundManager2.h"
 
 comps::ItemComponent::ItemComponent(std::shared_ptr<comps::PhysicsComponent> pPhysicsComp, std::shared_ptr<comps::SpriteComponent> pSpriteComp,
 	std::shared_ptr<comps::BoundingBoxComponent> pBoundingBoxComp,ItemType type,int spriteId)
@@ -18,14 +19,12 @@ comps::ItemComponent::ItemComponent(std::shared_ptr<comps::PhysicsComponent> pPh
 	, m_LifeTime(10)
 	, m_SpriteId(spriteId)
 {
-	//here we ask the components we want
 	
 }
 
 void comps::ItemComponent::Initialize(const dae::Scene& scene)
 {
 	UNREFERENCED_PARAMETER(scene);
-	//this will probably be empty
 }
 
 void comps::ItemComponent::Update(const dae::Scene& scene, float elapsedSecs, float2 pos)
@@ -34,35 +33,41 @@ void comps::ItemComponent::Update(const dae::Scene& scene, float elapsedSecs, fl
 	UNREFERENCED_PARAMETER(elapsedSecs);
 	UNREFERENCED_PARAMETER(pos);
 	
+	//when an enemy dies we play the right deathanimation
 	if (m_HasJumped == false)
 	{
-		m_pPhysicsComp->SetSpeedX(15);
-		m_pPhysicsComp->SetSpeedY(-250);
+		m_pPhysicsComp->SetSpeedX(m_Speed.x);
+		m_pPhysicsComp->SetSpeedY(m_Speed.y);
 		m_pSpriteComp->SetBeginEndFrames(m_ItemType * 4,3 + m_ItemType * 4);
 		m_HasJumped = true;
 	}
 
+	//when it hits the ground we change the texture to an item
 	else if(m_pPhysicsComp->GetAirBorne() == false && IsLootAble == false)
 	{
 		m_pPhysicsComp->SetSpeedX(0);
 		m_pSpriteComp->SetBeginEndFrames(12 + m_ItemType, 12 + m_ItemType);
 		IsLootAble = true;
 
-		//lower it a little bit
 	}
 
+	//if the item has hit the ground we can pick it up
 	else if (IsLootAble)
 	{
 
 		if (ItemManager::GetInstance().CheckIfHit(m_pBoundingBoxComp))
 		{
-			ItemManager::GetInstance().DoEffect(m_ItemType);
+			std::string filename{ "../Sounds/scoreSound.wav" };
+			SoundManager2::GetInstance().playEffect(filename);
 			ScorePopUpManager::GetInstance().MakeScorePopUp(m_ItemType, m_SpriteId,m_pPhysicsComp->GetTransform()->GetPosition());
 			ItemManager::GetInstance().RemoveItem(m_pBoundingBoxComp);
 
 			
 		}
 	}
+	
+	//when an item is picked up we start a timer and lower the enemy count
+	//this is important for the enemy observer
 	m_NotifyTimer += elapsedSecs;
 	if(m_IsDownCounterCalled == false)
 	{
@@ -73,21 +78,10 @@ void comps::ItemComponent::Update(const dae::Scene& scene, float elapsedSecs, fl
 		}
 	}
 
+	//if we wait too long the item gets removed
 	if (m_NotifyTimer > m_LifeTime)
 	{
 		ItemManager::GetInstance().RemoveItem(m_pBoundingBoxComp);
 	}
-	//if they bullet hits an enemy we make an item.
-	//an item has a physicscomponent with gravity but we give it a certain force.
-	//depending on the enemy the first frames will be the death animation of that enemy
-	//if it touches the ground we change the sprite to an item and only then the player can pick it up
 
-
-
-
-	//check if the player overlaps with this boundingbox
-
-	//if so we have to place a score instead of the texture
-
-	//after that the texture has to become unactive
 }

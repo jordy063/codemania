@@ -34,5 +34,6 @@ namespace comps
 		bool m_IsDownCounterCalled = false;
 		float m_LifeTime;
 		int m_SpriteId;
+		const float2 m_Speed = { 15,-250 };
 	};
 }

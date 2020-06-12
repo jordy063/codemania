@@ -1,7 +1,6 @@
 #include "MiniginPCH.h"
 #include "BubbleManager.h"
 #include "SceneManager.h"
-#include "Bullet.h"
 #include "GameObject.h"
 #include "EnemyManager.h"
 #include "SpriteComponent.h"
@@ -15,14 +14,8 @@
 
 void BubbleManager::MakeBullet(const float2& position, comps::Direction direction, int id)
 {
-	//make the component and at it too current scene
-	//auto pos = physicsComp->GetTransform()->GetPosition();
-	/*auto bullet = std::shared_ptr<Bullet>(new Bullet(direction, speed, dae::SceneManager::GetInstance().GetActiveScene(), id));
+	//here we make the object and add the rigth components
 
-	bullet->GetGameObject()->GetTransform()->Translate(position.x, position.y);
-	dae::SceneManager::GetInstance().GetActiveScene()->AddGameObject(bullet->GetGameObject());
-
-	m_pBullets.push_back(bullet);*/
 	auto bulletObject = std::shared_ptr<dae::GameObject>(new dae::GameObject());
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(bulletObject);
 
@@ -44,15 +37,14 @@ void BubbleManager::MakeBullet(const float2& position, comps::Direction directio
 	bulletObject->AddComponent(physicsComp, ComponentType::PHYSICSCOMP);
 	bulletObject->AddComponent(bubbleComp, ComponentType::BUBBLECOMPONENT);
 
+	//when it's done we at it to the list
 	m_pBullets.push_back(bulletObject);
 
-	//this has to be in a component allong with overrlap of character
-	/*physicsComp->SetMovement(direction, m_Speed);
-	spriteComp->SetBeginEndFrames(id * 8, 7 + id * 8);*/
 }
 
 void BubbleManager::RegisterPlayers(const std::vector<std::shared_ptr<dae::GameObject>>& pPlayers)
 {
+	//register the components needed during the game
 	for (std::shared_ptr<dae::GameObject> pPlayerObject : pPlayers)
 	{
 		auto boundingBoxComp = pPlayerObject->GetComponent(ComponentType::BOUNDINGBOXCOMP);
@@ -60,45 +52,35 @@ void BubbleManager::RegisterPlayers(const std::vector<std::shared_ptr<dae::GameO
 
 		auto physicsComp = pPlayerObject->GetComponent(ComponentType::PHYSICSCOMP);
 		m_pPlayerPhysicsComps.push_back(std::dynamic_pointer_cast<comps::PhysicsComponent>(physicsComp));
-
-		//if mode = versus also add the healthcomp
 	}
 }
 
-void BubbleManager::Update()
-{
-	//for all enemies check if they overlap
-	/*for (std::shared_ptr<Bullet> bullet : m_pBullets)
-	{
-		EnemyManager::GetInstance().CheckIfHit(bullet);
-	}*/
-
-	//if they do change the enemy to a different sprite depending on the type Also set it in a certain state
-	//while in that state it goes up for a small amount of time and has collision
-}
 
 void BubbleManager::AddBoundingBoxToList(std::shared_ptr<comps::CollisionComponent> pCollisionComp, std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
 {
-	
+	//this gets called a bit after the bullet is made
+	//this happens because we don't want the player to collide with the bullet instantly
+
 	m_pTriggeredBullets.push_back(pBoundingBox);
-	
 	
 	for (std::shared_ptr<comps::BoundingBoxComponent> boundingBox : m_pTriggeredBullets)
 	{
-		//we need all boundingboxes 
-		pCollisionComp->SetExtraCollisions(m_pTriggeredBullets);
+		//for all bulletBoundingboxes
 		//set the current list of boundingboxes in the boundingboxcomp
+		pCollisionComp->SetExtraCollisions(m_pTriggeredBullets);
+		
 	}
 }
 
 void BubbleManager::RemoveBullet(std::shared_ptr<comps::CollisionComponent> pCollisionComp,std::shared_ptr<comps::BoundingBoxComponent> pBoundingBox)
 {
-	//get the boundingboxcomp of every gameobject and check if those boundingboxes are the same
-	//here we should update the collision comp of every gameobject
+	
 	m_pTriggeredBullets.remove(pBoundingBox);
 	
+
 	std::shared_ptr<dae::GameObject> pGameObjectToRemove{ nullptr };
-	pCollisionComp->SetExtraCollisions(m_pTriggeredBullets);
+	
+	//we check which bullet it is
 	for (std::shared_ptr<dae::GameObject> pGameObject : m_pBullets)
 	{
 		
@@ -107,29 +89,29 @@ void BubbleManager::RemoveBullet(std::shared_ptr<comps::CollisionComponent> pCol
 
 		if (boundingbox == pBoundingBox)
 		{
+			//we disable it instead of clear because we still want it back
 			pGameObject->Disable();
 			pGameObjectToRemove = pGameObject;
 			
 		}
 	}
+	//remove the object we captured
 	if (pGameObjectToRemove != nullptr)
 	{
 		m_pBullets.remove(pGameObjectToRemove);
 	}
 
+	//after removing the bullet we update the extra collision in our collisioncomps
 	for (std::shared_ptr<dae::GameObject> pGameObject : m_pBullets)
 	{
 		auto collisionP = pGameObject->GetComponent(ComponentType::COLLISIONCOMPONENT);
 		auto collision = std::dynamic_pointer_cast<comps::CollisionComponent>(collisionP);
 
-
-			//we need all boundingboxes 
-			collision->SetExtraCollisions(m_pTriggeredBullets);
-			//set the current list of boundingboxes in the boundingboxcomp
-		
+		//for all collisionComps
+		//update the collisioncomps with the changed list of boundingboxes
+		collision->SetExtraCollisions(m_pTriggeredBullets);
+	
 	}
-
-
 
 }
 
@@ -152,19 +134,16 @@ HitType BubbleManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> p
 			//move the player on the bubble
 			return HitType::UPHIT;
 		}
-
-		//check if the position is lower, then he's left or right of the bubble.
-		//else if it's the same here's on top and should move with it
 	}
 	
 	return HitType::NOHIT;
-	//
-	//return m_pPlayerBoundingBox->IsOverlapping(pBulletBoundingBox);
+
 	
 }
 
 bool BubbleManager::CheckPlayer2HitsBullet()
 {
+	//check if player 2 is hit. this only gets called when in versus mode
 	for (std::shared_ptr<comps::BoundingBoxComponent> pBulletBoundingBox : m_pTriggeredBullets)
 	{
 		bool isHit{ m_pPlayerBoundingBoxes[1]->IsOverlapping(pBulletBoundingBox) };

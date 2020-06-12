@@ -32,6 +32,7 @@ void dae::ResourceManager::Init(std::string&& dataPath)
 
 void dae::ResourceManager::LoadTexture(const std::string& file)
 {
+	//we only load it if it's not in the map yet
 	std::string fullPath = mDataPath + file;
 	if (m_pTextures[fullPath] == nullptr)
 	{

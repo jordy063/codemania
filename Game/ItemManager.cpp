@@ -19,7 +19,6 @@ void ItemManager::makeItem(float2 pos,ItemType type,int spriteId)
 	//add this to scene
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(itemObject);
 	itemObject->GetTransform()->Translate(pos);
-	//needs a texture/physics/collision/itemComp
 	
 	auto pSpriteComp = std::shared_ptr<comps::SpriteComponent>(new comps::SpriteComponent("../Graphics/ItemSheet.png", 4,4, 0, 0.2f, 22, 22));
 	auto pPhysicsComp = std::shared_ptr<comps::PhysicsComponent>(new comps::PhysicsComponent(itemObject->GetTransform(), true));
@@ -37,11 +36,6 @@ void ItemManager::makeItem(float2 pos,ItemType type,int spriteId)
 	itemObject->AddComponent(pItemComponent, ComponentType::ITEMCOMPONENT);
 
 	m_pItems.insert(itemObject);
-
-	//question
-	//when it hits a platform it goes ignore that platform the first time but set xSpeed = 0;
-	//aside from that everything is the same as the normal collisionComp
-	//could make a function that tells me if I hit a wall
 
 }
 
@@ -70,19 +64,6 @@ bool ItemManager::CheckIfHit(std::shared_ptr<comps::BoundingBoxComponent> pItemB
 	return false;
 }
 
-void ItemManager::DoEffect(ItemType type)
-{
-	switch (type)
-	{
-	case FRIES:
-		break;
-	case MELON:
-		break;
-	default:
-		break;
-	}
-
-}
 
 void ItemManager::RemoveItem(std::shared_ptr<comps::BoundingBoxComponent> pItemBoundingBox)
 {
