@@ -69,7 +69,7 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 	DoRandomJumps = false;
 
 	//we check if a player is above the enemy
-	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
+	for (unsigned int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
 		float difference{ m_pPhysicsComp->GetTransform()->GetPosition().y - m_pPlayerBoundingBoxes[i]->GetBoundingBox(0, 0).posY - 1 };
 		if (difference > 0 && m_pPlayerPhysicsCompss[i]->GetAirBorne() == false)
@@ -160,7 +160,7 @@ void comps::ZenChanAIComponent::Update(const dae::Scene& scene, float elapsedSec
 	}
 	
 	//when a player overlaps with the enemy we do damage
-	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
+	for (unsigned int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
 		
 		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="left-up" width="52" height="100" tilewidth="16" tileheight="16" infinite="1" nextlayerid="10" nextobjectid="77">
+ <tileset firstgid="1" name="levelTiles" tilewidth="16" tileheight="16" tilecount="4" columns="4">
+  <image source="levelTiles.png" width="64" height="16"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="52" height="100">
+  <data encoding="csv">
+   <chunk x="0" y="0" width="16" height="16">
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</chunk>
+   <chunk x="0" y="16" width="16" height="16">
+2,2,2,2,0,0,2,2,2,0,0,2,2,2,2,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,0,0,2,0,0,0,0,0,0,0,0,2,0,0,2,
+2,0,2,2,0,2,2,0,0,2,2,0,2,2,0,2,
+2,0,2,0,0,0,0,0,0,0,0,0,0,2,0,2,
+2,0,2,0,0,2,2,2,2,2,2,0,0,2,0,2,
+2,0,0,0,2,2,0,0,0,0,2,2,0,0,0,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,2,2,2,0,0,0,0,0,0,0,2,2,2,2,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,0,0,2,2,2,2,0,0,2,2,2,2,0,0,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,2,2,2,0,0,2,2,2,0,0,2,2,2,2,2
+</chunk>
+   <chunk x="0" y="32" width="16" height="16">
+4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
+4,0,4,4,4,0,0,0,4,0,0,0,4,0,0,4,
+4,0,4,0,0,0,0,4,4,4,0,4,4,4,0,4,
+4,0,4,4,4,0,0,0,4,0,0,0,4,0,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
+4,0,0,0,0,4,4,4,4,4,4,0,0,0,0,4,
+4,0,4,4,4,4,0,0,0,0,4,4,4,4,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
+4,0,4,4,4,4,4,4,4,4,4,4,4,4,0,4,
+4,0,4,0,0,4,0,0,0,0,4,0,0,4,0,4,
+4,0,4,0,0,4,0,0,0,0,4,0,0,4,0,4,
+4,0,4,4,4,4,4,4,4,4,4,4,4,4,0,4,
+4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,
+4,0,0,4,0,0,4,4,4,0,0,0,4,0,0,4,
+4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4
+</chunk>
+  </data>
+ </layer>
+ <objectgroup id="4" name="CollisionWalls1">
+  <object id="16" x="0.5" y="1" width="254.5" height="14"/>
+  <object id="17" x="240" y="15" width="15.5" height="240.5"/>
+  <object id="18" x="0.5" y="15" width="15" height="241"/>
+  <object id="19" x="15.5" y="240" width="224" height="15.5"/>
+ </objectgroup>
+ <objectgroup id="5" name="CollisionPlatforms1">
+  <object id="22" x="16.3333" y="96.3333" width="31.3333" height="15.3333"/>
+  <object id="23" x="15.6667" y="143.667" width="32" height="16.3333"/>
+  <object id="24" x="16" y="192" width="32" height="16"/>
+  <object id="25" x="80" y="192" width="95.6667" height="15.3333"/>
+  <object id="26" x="208" y="192.333" width="31.6667" height="15"/>
+  <object id="27" x="208" y="144" width="31.6667" height="16"/>
+  <object id="28" x="80" y="143.667" width="96.3333" height="16"/>
+  <object id="29" x="80.3333" y="96" width="95.6667" height="15.3333"/>
+  <object id="30" x="208.333" y="96" width="31.6667" height="16"/>
+ </objectgroup>
+ <objectgroup id="6" name="CollisionWalls2">
+  <object id="31" x="0.333333" y="255.667" width="63.6667" height="16"/>
+  <object id="32" x="96" y="256" width="48" height="15.6667"/>
+  <object id="33" x="176.333" y="255.667" width="79" height="15.6667"/>
+  <object id="34" x="239.5" y="271.5" width="16" height="240.5"/>
+  <object id="35" x="-0.5" y="271.5" width="16" height="240"/>
+  <object id="36" x="16" y="495.5" width="48" height="16.5"/>
+  <object id="37" x="96" y="496" width="47.5" height="15.5"/>
+  <object id="38" x="176" y="496" width="63.5" height="15.5"/>
+ </objectgroup>
+ <objectgroup id="7" name="CollisionPlatforms2">
+  <object id="39" x="32" y="320.333" width="15.3333" height="47.6667"/>
+  <object id="40" x="48" y="304" width="16" height="32"/>
+  <object id="41" x="15.3333" y="399.667" width="48.3333" height="16"/>
+  <object id="42" x="48" y="447.667" width="63.6667" height="16.3333"/>
+  <object id="43" x="64" y="367.667" width="31.6667" height="16.6667"/>
+  <object id="44" x="79.6667" y="351.667" width="96.3333" height="16"/>
+  <object id="45" x="160" y="367.667" width="31.6667" height="15.6667"/>
+  <object id="46" x="80" y="320" width="32" height="16"/>
+  <object id="47" x="144.333" y="320" width="31.6667" height="15.3333"/>
+  <object id="48" x="192" y="304" width="16" height="31"/>
+  <object id="49" x="208" y="320" width="15.6667" height="47.6667"/>
+  <object id="50" x="175.667" y="400" width="64" height="15.6667"/>
+  <object id="51" x="143.667" y="448.333" width="64" height="15.6667"/>
+ </objectgroup>
+ <objectgroup id="8" name="CollisionWalls3">
+  <object id="52" x="0" y="512.333" width="14.6667" height="255"/>
+  <object id="53" x="15.3333" y="512.333" width="224.667" height="15.3333"/>
+  <object id="54" x="240" y="513" width="16" height="256"/>
+  <object id="55" x="16" y="752" width="224" height="16"/>
+ </objectgroup>
+ <objectgroup id="9" name="CollisionPlatforms3">
+  <object id="56" x="31.6667" y="544.333" width="47.6667" height="15.3333"/>
+  <object id="57" x="32" y="576.667" width="47.6667" height="15"/>
+  <object id="58" x="32" y="560.333" width="15.6667" height="16"/>
+  <object id="59" x="112" y="560.333" width="47.6667" height="15.3333"/>
+  <object id="60" x="127.667" y="544.333" width="16" height="16"/>
+  <object id="61" x="127.667" y="576.333" width="16" height="14.6667"/>
+  <object id="62" x="176.333" y="560.333" width="47.3333" height="15.3333"/>
+  <object id="63" x="192" y="544.333" width="15.6667" height="15.3333"/>
+  <object id="64" x="192" y="576.333" width="15.6667" height="15"/>
+  <object id="65" x="32" y="624.333" width="63.3333" height="15.3333"/>
+  <object id="66" x="80" y="608" width="95.3333" height="15.6667"/>
+  <object id="67" x="160" y="624" width="63.6667" height="15.3333"/>
+  <object id="68" x="32" y="656.333" width="191.667" height="15.3333"/>
+  <object id="69" x="32" y="704.667" width="191.333" height="14.6667"/>
+  <object id="70" x="207.667" y="672.333" width="15.6667" height="32"/>
+  <object id="71" x="160" y="672.333" width="15.3333" height="31.6667"/>
+  <object id="72" x="79.6667" y="672" width="15.6667" height="32.6667"/>
+  <object id="73" x="32.3333" y="671.667" width="15.6667" height="32.6667"/>
+  <object id="74" x="47.6667" y="736" width="15.6667" height="16"/>
+  <object id="75" x="96" y="736" width="47.6667" height="16"/>
+  <object id="76" x="192" y="736" width="16" height="16"/>
+ </objectgroup>
+</map>

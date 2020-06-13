@@ -1,17 +1,14 @@
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\minigin.pch
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\minigin.pdb
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\minigin.idb
-d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\audio.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\basecomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\boundingboxcomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\collisioncomponent.obj
-d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\entity.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\font.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\fpscomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\fpscounter.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\gameobject.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\levelmanager.obj
-d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\log.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\logger.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\miniginpch.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\physicscomponent.obj
@@ -25,7 +22,6 @@ d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\textcomponent.o
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\texture2d.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\texturecomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\tilemaploader.obj
-d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\transform.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\transformcomponent.obj
 d:\jordy\dae2-redo\programming 4\examproject\minigin\win32\debug\xboxcontroller.obj
 d:\jordy\dae2-redo\programming 4\examproject\win32\debug\minigin.lib

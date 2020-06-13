@@ -434,7 +434,7 @@ void dae::Minigin::RunMainUpdate()
 
 	while (m_DoContinue)
 	{
-		
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		//we calculated the lagg
 		auto currentTime = std::chrono::high_resolution_clock::now();
 		float elapsedSec = std::chrono::duration<float>(currentTime - lastTime).count();
@@ -442,11 +442,6 @@ void dae::Minigin::RunMainUpdate()
 		lag += elapsedSec;
 	
 		m_DoContinue = input.ProcessInput();
-
-		//if it's bigger than 0 we update
-
-		
-			//if lag < secperUpdate : update lag, if lag too big, update more than once
 		
 
 		float elapse = lag;

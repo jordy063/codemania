@@ -1,0 +1,47 @@
+﻿  BaseComponent.cpp
+  BoundingBoxComponent.cpp
+  CollisionComponent.cpp
+  Font.cpp
+  FpsComponent.cpp
+  FPSCounter.cpp
+  GameObject.cpp
+  LevelManager.cpp
+  Logger.cpp
+  MiniginPCH.cpp
+  PhysicsComponent.cpp
+  Renderer.cpp
+  ResourceManager.cpp
+  Scene.cpp
+  SceneManager.cpp
+  SoundManager2.cpp
+  SpriteComponent.cpp
+  TextComponent.cpp
+  Texture2D.cpp
+  TextureComponent.cpp
+  Compiling...
+  TileMapLoader.cpp
+  TransformComponent.cpp
+  XboxController.cpp
+  Minigin.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Release\Minigin.lib
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2\lib\x64\SDL2.dll
+  1 File(s) copied
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\libjpeg-9.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\libpng16-16.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\libtiff-5.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\libwebp-7.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\SDL2_image.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\zlib1.dll
+  6 File(s) copied
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_ttf\lib\x64\libfreetype-6.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_ttf\lib\x64\SDL2_ttf.dll
+  2 File(s) copied
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_mixer-2.0.4\lib\x64\libFLAC-8.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_mixer-2.0.4\lib\x64\libmodplug-1.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_mixer-2.0.4\lib\x64\libmpg123-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_mixer-2.0.4\lib\x64\libogg-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_mixer-2.0.4\lib\x64\libopus-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_mixer-2.0.4\lib\x64\libopusfile-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_mixer-2.0.4\lib\x64\libvorbis-0.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_mixer-2.0.4\lib\x64\libvorbisfile-3.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_mixer-2.0.4\lib\x64\SDL2_mixer.dll
+  9 File(s) copied

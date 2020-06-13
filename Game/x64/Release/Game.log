@@ -1,0 +1,52 @@
+﻿  BoulderComponent.cpp
+  BoulderManager.cpp
+  BubbleComponent.cpp
+  BubbleManager.cpp
+  Command.cpp
+  EndLevelMenu.cpp
+  EndMenuObserver.cpp
+  EnemyManager.cpp
+  EnemyObserver.cpp
+  GameInfo.cpp
+  GameOverMenu.cpp
+  GameOverMenuObserver.cpp
+  GhostAIComponent.cpp
+  HealthComponent.cpp
+  InputComponent.cpp
+  InputBaseObserver.cpp
+  InputManager.cpp
+  InputObserver.cpp
+  ItemComponent.cpp
+  ItemManager.cpp
+  Compiling...
+  Main.cpp
+  MaitaAIComponent.cpp
+  Menu.cpp
+  MenuObserver.cpp
+  Minigin.cpp
+  PlayerVersusComponent.cpp
+  ScoreBoard.cpp
+  ScorePopUpComponent.cpp
+  ScorePopUpManager.cpp
+  ShowHealthComponent.cpp
+  ShowScoreComponent.cpp
+  UI.cpp
+  ZenChanAIComponent.cpp
+     Creating library D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Release\Game.lib and object D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Release\Game.exp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 3787 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Game.vcxproj -> D:\Jordy\DAE2-Redo\programming 4\ExamProject\x64\Release\Game.exe
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2\lib\x64\SDL2.dll
+  1 File(s) copied
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\libjpeg-9.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\libpng16-16.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\libtiff-5.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\libwebp-7.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\SDL2_image.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_image\lib\x64\zlib1.dll
+  6 File(s) copied
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_ttf\lib\x64\libfreetype-6.dll
+  D:\Jordy\DAE2-Redo\programming 4\ExamProject\3rdParty\SDL2_ttf\lib\x64\SDL2_ttf.dll
+  2 File(s) copied

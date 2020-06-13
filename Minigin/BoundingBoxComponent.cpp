@@ -70,5 +70,3 @@ void comps::BoundingBoxComponent::Update(const dae::Scene& scene, float elapsedS
 
 }
 
-
-

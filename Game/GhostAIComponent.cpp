@@ -92,7 +92,7 @@ void comps::GhostAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	}
 
 	//check if the player should take damage
-	for (int i{}; i < m_pPlayerHealthComps.size(); ++i)
+	for (unsigned int i{}; i < m_pPlayerHealthComps.size(); ++i)
 	{
 		if(m_pPlayerBoundingBoxes[i] != nullptr && m_pPlayerHealthComps[i] != nullptr)
 		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))

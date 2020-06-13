@@ -68,7 +68,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	DoRandomJumps = false;
 
 	//we check if a player is above the enemy
-	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
+	for (unsigned int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
 		if (m_pPlayerBoundingBoxes[i] != nullptr)
 		{
@@ -166,7 +166,7 @@ void comps::MaitaAIComponent::Update(const dae::Scene& scene, float elapsedSecs,
 	}
 	
 	//when a player overlaps with the enemy we do damage
-	for (int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
+	for (unsigned int i{}; i < m_pPlayerBoundingBoxes.size(); ++i)
 	{
 		if (m_pPlayerBoundingBoxes[i] != nullptr && m_pPlayerHealthComps[i] != nullptr)
 		if (m_pPlayerBoundingBoxes[i]->IsOverlapping(m_pBoundingBoxComp))

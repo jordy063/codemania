@@ -34,11 +34,11 @@ void comps::BoulderComponent::Update(const dae::Scene& scene, float elapsedSecs,
 		BoulderManager::GetInstance().RemoveBoulder(m_pPhysicsComp->GetTransform());
 	}
 
-	for (int i{}; i < m_pPlayerHealthComps.size(); ++i)
+	for (unsigned int i{}; i < m_pPlayerHealthComps.size(); ++i)
 	{
 		//if i = 1 && gamemode = versus
 		//don't do anything
-		if (GameInfo::GetInstance().GetGameMode() != VERSUS && i != 1)
+		if (GameInfo::GetInstance().GetGameMode() == VERSUS && i == 1)
 		{
 
 		}
@@ -51,7 +51,6 @@ void comps::BoulderComponent::Update(const dae::Scene& scene, float elapsedSecs,
 				{
 					//do damage
 					m_pPlayerHealthComps[i]->DropHealth(1);
-					LevelManager::GetInstance().ResetPlayerPos(i);
 				}
 			}
 		}
